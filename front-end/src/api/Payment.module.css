@@ -1,0 +1,284 @@
+/* .body 클래스는 background-image 속성을 사용하여 배경 이미지를 설정 */
+.body {
+    background-image: url('https://static.toss.im/ml-illust/img-back_005.jpg');
+}
+
+/* .p 클래스는 패딩과 마진을 0으로 설정하고, 다양한 폰트 패밀리를 지정하며, 글자색을 설정, 단어가 잘리지 않고 줄을 넘기도록 설정 */
+.p {
+    padding: 0;
+    margin: 0;
+    font-family: Toss Product Sans, -apple-system, BlinkMacSystemFont,
+    Bazier Square, Noto Sans KR, Segoe UI, Apple SD Gothic Neo, Roboto,
+    Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Noto Color Emoji;
+    color: #4e5968;
+    word-break: keep-all;
+    word-wrap: break-word;
+}
+
+/* .h4 클래스는 글자 크기와 두께를 설정하고, 글자 색을 지정 */
+.h4 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333D4B;
+}
+
+/* .wrapper 클래스는 최대 너비를 800px로 설정하고, 중앙 정렬을 위해 자동 마진을 적용 */
+.wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* .button 클래스는 버튼 스타일을 정의
+기본 색상, 마진, 글자 크기와 두께, 줄 높이, 공백 처리, 텍스트 정렬, 커서, 테두리, 사용자 선택 불가, 전환 효과, 텍스트 장식 없음, 테두리 반경, 패딩 등을 설정 */
+.button {
+    color: #f9fafb;
+    background-color: #3182f6;
+    margin: 0;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    white-space: nowrap;
+    text-align: center;
+    cursor: pointer;
+    border: 0 solid transparent;
+    user-select: none;
+    transition: background 0.2s ease, color 0.1s ease;
+    text-decoration: none;
+    border-radius: 7px;
+    padding: 11px 16px;
+}
+
+/* .button:hover 클래스는 버튼에 마우스를 올렸을 때의 색상 변화를 정의  */
+.button:hover {
+    color: #fff;
+    background-color: #1b64da;
+}
+
+/* .title 클래스는 타이틀의 마진, 글자 크기와 두께, 색상을 설정 */
+.title {
+    margin: 0 0 4px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #4e5968;
+}
+
+/* .result 클래스는 요소를 수직으로 배치하고, 중앙 정렬하며, 텍스트를 중앙 정렬하고, 텍스트를 잘리지 않게 감쌈 */
+.result {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-wrap: balance;
+}
+
+/* .box_section 클래스는 배경 색, 테두리 반경, 그림자, 패딩, 위쪽과 아래쪽 마진, 글자 색을 설정 */
+.box_section {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgb(0 0 0 / 1%), 0 6px 6px rgb(0 0 0 / 6%);
+    padding: 40px 30px 50px 30px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    color: #333D4B;
+}
+
+/* :root는 CSS 변수(커스텀 프로퍼티)를 정의, 변수는 체크 가능한 항목의 크기, 입력 요소의 위치, 너비, 높이, SVG 아이콘, 레이블 텍스트 패딩 등을 포함 */
+:root {
+    --checkable-size: 20px;
+    --checkable-input-top: 3px;
+    --checkable-input-left: 5px;
+    --checkable-input-width: 14px;
+    --checkable-input-height: 10px;
+    --checkable-input-svg: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.343 4.574l4.243 4.243 7.07-7.071' fill='transparent' stroke-width='2' stroke='%23FFF' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --checkable-label-text-padding: 8px;
+    --indeterminate-checkable-input-top: 7px;
+    --indeterminate-checkable-input-left: 5px;
+    --indeterminate-checkable-input-width: 14px;
+}
+
+/* .checkable--small 클래스는 작은 체크 가능한 항목의 CSS 변수를 정의, 변수는 체크 가능한 항목의 크기, 입력 요소의 위치, 너비, 높이, SVG 아이콘 등을 포함 */
+:root .checkable--small {
+    --checkable-size: 20px;
+    --checkable-input-top: 2px;
+    --checkable-input-left: 4px;
+    --checkable-input-width: 12px;
+    --checkable-input-height: 9px;
+    --checkable-input-svg: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.286 3.645l3.536 3.536 5.892-5.893' fill='transparent' stroke-width='2' stroke='%23FFF' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --indeterminate-checkable-input-top: 5px;
+    --indeterminate-checkable-input-left: 4px;
+    --indeterminate-checkable-input-width: 12px;
+}
+
+/* .checkable 클래스는 체크 가능한 항목의 상대적 위치와 플렉스 디스플레이를 설정 */
+.checkable {
+    position: relative;
+    display: flex;
+}
+
+/* .checkable 클래스 다음에 오는 .checkable 클래스에 대해 위쪽 마진을 설정 */
+.checkable+.checkable {
+    margin-top: 12px;
+}
+
+/* .checkable--inline 클래스는 체크 가능한 항목을 인라인 블록으로 설정 */
+.checkable--inline {
+    display: inline-block;
+}
+
+/* .checkable--inline 클래스 다음에 오는 .checkable--inline 클래스에 대해 위쪽 마진을 0으로 설정하고, 왼쪽 마진을 설정 */
+.checkable--inline+.checkable--inline {
+    margin-top: 0;
+    margin-left: 18px;
+}
+
+/* .checkable__label 클래스는 레이블을 인라인 블록으로 설정하고, 최대 너비, 최소 높이, 줄 높이, 왼쪽 패딩, 아래쪽 마진, 색상, 커서를 설정 */
+.checkable__label {
+    display: inline-block;
+    max-width: 100%;
+    min-height: 20px;
+    min-height: var(--checkable-size);
+    line-height: 1.6;
+    padding-left: 20px;
+    padding-left: var(--checkable-size);
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #4e5968;
+    color: var(--grey700);
+    cursor: pointer;
+}
+
+/* .checkable__input 클래스는 입력 요소를 절대 위치로 설정하고, 마진, 위쪽 위치, 브라우저 기본 스타일 제거, 테두리 없음, 커서를 설정 */
+.checkable__input {
+    position: absolute;
+    margin: 0 0 0 -20px;
+    margin: 0 0 0 calc(var(--checkable-size)*-1);
+    top: 4px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* .checkable__input 클래스의 :after와 :before 가상 요소를 절대 위치로 설정하고, 내용이 비어 있도록 설정 */
+.checkable__input:after, .checkable__input:before {
+    content: "";
+    position: absolute;
+}
+
+/* .checkable__input:before 클래스는 입력 요소의 :before 가상 요소의 위치, 너비, 높이, 테두리, 배경색, 전환 효과를 설정 */
+.checkable__input:before {
+    top: -4px;
+    left: 0;
+    width: 20px;
+    width: var(--checkable-size);
+    height: 20px;
+    height: var(--checkable-size);
+    border: 2px solid #d1d6db;
+    border: 2px solid #d1d6db;
+    background-color: #fff;
+    background-color: white;
+    transition: border-color .1s ease, background-color .1s ease;
+}
+
+/* .checkable__input:after 클래스는 입력 요소의 :after 가상 요소의 투명도, 전환 효과, 위치, 너비, 높이, 배경 이미지를 설정 */
+.checkable__input:after {
+    opacity: 0;
+    transition: opacity .1s ease;
+    top: 3px;
+    top: var(--checkable-input-top);
+    left: 5px;
+    left: var(--checkable-input-left);
+    width: 14px;
+    width: var(--checkable-input-width);
+    height: 10px;
+    height: var(--checkable-input-height);
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.343 4.574l4.243 4.243 7.07-7.071' fill='transparent' stroke-width='2' stroke='%23FFF' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+}
+
+/* checkable__input[type=checkbox]:indeterminate:after 클래스는 체크박스가 중간 상태일 때의 :after 가상 요소의 위치, 너비, 높이, 테두리, 테두리 반경, 회전 효과를 설정 */
+.checkable__input[type=checkbox]:indeterminate:after {
+    top: 7px;
+    top: var(--indeterminate-checkable-input-top);
+    left: 5px;
+    left: var(--indeterminate-checkable-input-left);
+    width: 14px;
+    width: var(--indeterminate-checkable-input-width);
+    height: 0;
+    border: 1px solid var(--white);
+    border-radius: 1px;
+    transform: rotate(0);
+}
+
+/* .checkable__input:focus 클래스는 입력 요소가 포커스를 받을 때 아웃라인을 제거 */
+.checkable__input:focus {
+    outline: 0;
+}
+
+/* .checkable__input:focus:before와 .checkable__input:hover:before 클래스는 입력 요소가 포커스를 받거나 마우스를 올렸을 때 배경색과 테두리 색을 설정 */
+.checkable__input:focus:before, .checkable__input:hover:before {
+    background-color: #e8f3ff;
+    background-color: #e8f3ff;
+    border-color: #3182f6;
+    border-color: #3182f6;
+}
+
+/* .checkable__input:checked:before와 .checkable__input[type=checkbox]:indeterminate:before 클래스는 입력 요소가 체크되거나 중간 상태일 때 테두리 색과 배경색을 설정 */
+.checkable__input:checked:before, .checkable__input[type=checkbox]:indeterminate:before {
+    border-color: #3182f6;
+    border-color: #3182f6;
+    background-color: #3182f6;
+    background-color: #3182f6;
+}
+
+/* .checkable__input:checked:after와 .checkable__input[type=checkbox]:indeterminate:after 클래스는 입력 요소가 체크되거나 중간 상태일 때 투명도를 설정 */
+.checkable__input:checked:after, .checkable__input[type=checkbox]:indeterminate:after {
+    opacity: 1;
+}
+
+/* .checkable__input:disabled:before 클래스는 입력 요소가 비활성화되었을 때 배경색과 테두리 색을 설정 */
+.checkable__input:disabled:before {
+    background-color: var(--grey100);
+    border-color: var(--greyOpacity50);
+}
+
+/* .checkable__input:disabled:checked:before와 .checkable__input:disabled[type=checkbox]:indeterminate:before 클래스는 입력 요소가 비활성화되고 체크되거나 중간 상태일 때 배경색과 테두리 색을 설정 */
+.checkable__input:disabled:checked:before, .checkable__input:disabled[type=checkbox]:indeterminate:before {
+    background-color: var(--grey200);
+    border-color: var(--grey200);
+}
+
+/* .checkable__input[type=checkbox]:before 클래스는 체크박스의 테두리 반경을 설정 */
+.checkable__input[type=checkbox]:before {
+    border-radius: 6px;
+}
+
+/* .checkable__input[type=radio]:before 클래스는 라디오 버튼의 테두리 반경을 설정 */
+.checkable__input[type=radio]:before {
+    border-radius: 12px;
+}
+
+/* .checkable__label-text 클래스는 레이블 텍스트를 인라인 블록으로 설정하고, 왼쪽 패딩과 색을 설정 */
+.checkable__label-text {
+    display: inline-block;
+    padding-left: 13px;
+    color: #4e5968;
+}
+
+/* .checkable--disabled 클래스 내의 .checkable__input 요소는 커서를 "not-allowed"로 설정 */
+.checkable--disabled>.checkable__input {
+    cursor: not-allowed;
+}
+
+/* .checkable--disabled 클래스 내의 .checkable__label 요소는 색을 설정하고, 커서를 "not-allowed"로 설정 */
+.checkable--disabled>.checkable__label {
+    color: var(--grey400);
+    cursor: not-allowed;
+}
+
+/* .checkable--read-only 클래스는 포인터 이벤트를 비활성화 */
+.checkable--read-only {
+    pointer-events: none;
+}

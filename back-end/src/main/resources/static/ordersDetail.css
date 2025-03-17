@@ -1,0 +1,49 @@
+.container {
+    width: 400px; /* 원하는 너비로 조절 */
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.order-steps {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.step {
+    padding: 5px 10px;
+    border: none;
+    background-color: #f0f0f0; /* 기본 색상 */
+    cursor: default;
+}
+
+.step.active {
+    background-color: #4CAF50; /* 활성 상태 색상 */
+    color: white;
+}
+
+.order-details {
+    display: flex;
+    flex-wrap: wrap; /* 줄바꿈 */
+    justify-content: space-between;
+}
+
+.section {
+    width: 48%; /* 두 개의 섹션이 한 줄에 나오도록 */
+    margin-bottom: 15px;
+}
+
+.section.total {
+    text-align: right; /* 총 결제금액 오른쪽 정렬 */
+}
+
+.store-request {
+    margin-top: 20px;
+}

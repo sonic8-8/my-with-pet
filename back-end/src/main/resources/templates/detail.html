@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="/main.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{nav.html::navbar}"></div>
+
+<div class="detail" th:each="i : ${data}">
+    <h4>상세페이지</h4>
+    <img th:if="${i.img_url == null}" src="https://placehold.co/300">
+    <img th:if="${i.img_url != null}" th:src="@{${i.img_url}}">
+    <h4 th:text="${data.title}">title</h4>
+    <p th:text="${data.price + '원'}">price</p>
+</div>
+
+<form action="/orders" method="POST">
+    <input name="itemName" th:value="${data.title}" type="hidden">
+    <input type="number" name="count" placeholder="개수">
+    <input name="price" placeholder="가격" th:value="${data.price}" type="hidden">
+    <button type="submit">주문하기</button>
+</form>
+
+<div class="review-form">
+    <h4>리뷰 남기기</h4>
+    <form action="/comment" method="POST" th:each="i : ${data}">
+        <input name="username" type="hidden" th:value="${member.displayName}">
+        <div class="form-group">
+            <textarea name="content" placeholder="리뷰 내용"></textarea>
+        </div>
+        <input name="parentId" type="hidden" th:value="${i.id}">
+        <button type="submit">전송</button>
+    </form>
+</div>
+
+<div class="review-list">
+    <h4>리뷰 목록</h4>
+    <div th:each="i : ${comments}" class="review-card">
+        <p class="username" th:text="${i.username}">작성자</p>
+        <p class="content" th:text="${i.content}">내용</p>
+    </div>
+</div>
+
+</body>
+</html>

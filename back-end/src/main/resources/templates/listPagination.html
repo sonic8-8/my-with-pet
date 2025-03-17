@@ -1,0 +1,23 @@
+<!-- Pagination -->
+<nav aria-label="Page navigation example" th:fragment="pagination" th:if="${currentPage != null}">
+    <ul class="pagination">
+        <!-- 이전 -->
+        <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+            <a class="page-link" th:href="@{'/list/page/' + ${currentPage - 1}}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+
+        <!-- 페이지 개수 -->
+        <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i} == ${currentPage} ? 'active'">
+            <a class="page-link" th:href="@{'/list/page/' + ${i}}" th:text="${i}">number</a>
+        </li>
+
+        <!-- 다음 -->
+        <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+            <a class="page-link" th:href="@{'/list/page/' + ${currentPage + 1}}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

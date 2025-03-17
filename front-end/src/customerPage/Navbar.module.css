@@ -1,0 +1,132 @@
+@font-face {
+    font-family: 'Jalnan';
+    font-weight: normal;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.ttf') format("truetype");
+    font-display: swap;
+  }
+
+  p:hover {
+    animation-name: expansion;
+    animation-duration: 0.8s;
+    cursor: pointer;
+  }
+
+  @keyframes expansion {
+    10% { transform:scale(1.1) }
+  }
+
+.logo_img {
+    width: 70px;
+    height: 70px;
+    background-image: url(/public/logo.svg);
+    background-size: cover;
+  }
+
+.icon_container {
+    text-align: center;
+    align-items: center;
+    
+  }
+  
+.icon {
+    font-size: 20px; /* 크기 변경 */
+    transition: transform 0.2s; /* 애니메이션 효과 */
+    position: relative;
+    top: -10px;
+  }
+  
+.icon:hover {
+    transform: rotate(20deg); /* 호버 시 회전 효과 */
+  }
+
+.logo_name {
+    font-family : 'Jalnan';
+    font-size: 25px;
+    letter-spacing: 2px;
+    position: relative;
+    top: 8px;
+}
+
+.nav_container {
+    background-color: rgb(250, 250, 250, 0); /* 배경을 반투명으로 설정 */
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13;
+    position: fixed; /* fixed로 설정하여 페이지 스크롤 시에도 상단에 고정 */
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* 높은 z-index로 설정하여 동영상 위에 표시되도록 함 */
+    padding: 0 20px;
+    color: #FAFAFA;
+    transition: background-color 0.5s ease;
+}
+
+.nav_container:hover {
+    background-color: #FAFAFA;
+    color:#333;
+    opacity: 0.8;
+    transition: background-color 0.5s ease;
+}
+
+.logo_container {
+    display: flex;
+    align-items: center;
+    height: 20px;
+}
+
+.middle_container {
+  flex-grow : 1;
+}
+
+.menu_container {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: 10px;
+}
+
+.menu_container li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.menu_text {
+  font-size: 17px;
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  height : 100vh;
+  background-color:white;
+  transition: right 0.5s ease-in-out;
+  padding: 20px;
+  color:#333;
+  width: 300px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.panel.active {
+  right: 0;
+}
+
+.panel_content {
+  display: flex;
+  flex-direction: column;
+}

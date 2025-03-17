@@ -1,0 +1,42 @@
+.store_container {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.store {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 800px;
+    cursor:pointer;
+}
+
+.storeContent { /* 이미지와 텍스트 컨테이너 */
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+  }
+  
+  .storeImage { /* 이미지 스타일 */
+    width: 200px;
+    height: 200px; /* 이미지 높이 추가 */
+    object-fit: cover; /* 이미지 비율 유지 */
+    border-radius: 5px;
+    margin-right: 20px; /* 텍스트와 간격 */
+  }
+  
+  .storeInfo { /* 텍스트 정보 컨테이너 */
+    flex: 1; /* 남은 공간 차지 */
+  }
+  
+  .storeInfo p,
+  .storeInfo h4 { /* 텍스트 줄바꿈 */
+    margin: 5px 0;
+    word-break: break-all;
+  }

@@ -1,0 +1,122 @@
+.container {
+    display : flex;
+    flex-direction: column;
+}
+
+.box {
+    width: 300px;
+    height: 150px;
+    border-color: #81abe6;
+    border-width: 1px;
+}
+
+.box2 {
+    width: 100px;
+    height: 20px;
+    border-color: #81abe6;
+    border-width: 1px;
+}
+
+.info_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.info_container input {
+    width: 400px;
+    padding: 12px 16px; /* 패딩 조정으로 시각적인 안정감 */
+    margin: 10px 0; /* 위아래 마진만 주어 깔끔하게 */
+    border: 1px solid #ddd; /* 연한 회색 테두리 */
+    border-radius: 8px; /* 둥근 모서리 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* 은은한 그림자 효과 */
+    font-size: 16px; /* 폰트 크기 키워 가독성 향상 */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* 부드러운 효과 */
+  }
+  
+  .info_container input:focus {
+    outline: none; /* 기본 outline 제거 */
+    border-color: #999; /* 포커스 시 테두리 색상 변경 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12); /* 포커스 시 그림자 강조 */
+  }
+  
+  .info_container input::placeholder {
+    color: #bbb; /* placeholder 색상 */
+  }
+  
+
+.hidden {
+    display: none;
+}
+
+.pay_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.pay_container button {
+    color: grey;
+    background-color: #fff;
+    margin: 10px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    white-space: nowrap;
+    text-align: center;
+    cursor: pointer;
+    border: 0 solid transparent;
+    user-select: none;
+    transition: background 0.2s ease, color 0.1s ease;
+    text-decoration: none;
+    border-radius: 7px;
+    padding: 11px 16px;
+    border-width: 1px;
+    border-color:#d6d6d6;
+    width: 300px;
+    height: 50px;
+}
+
+/* .button:hover 클래스는 버튼에 마우스를 올렸을 때의 색상 변화를 정의  */
+.pay_container button:hover {
+    color: #ffffff;
+    background-color: #81abe6;
+}
+
+.coupon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.foot_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.cart_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.item_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.item {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 300px;
+    border-radius: 3%;
+}

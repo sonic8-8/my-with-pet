@@ -1,0 +1,27 @@
+<!-- 네비게이션 바-->
+<div class="nav" th:fragment="navbar" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <a class="logo">SpringMall</a>
+    <a href="/list/page/1">List</a>
+    <div sec:authorize="isAuthenticated()">
+        <a href="/write">Write</a>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <a href="/login">Login</a>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <a href="/register">회원가입</a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a href="/logout">Logout</a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a href="/my-page" sec:authentication="principal.username">로그인한 유저 아이디</a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a href="/ordersDetail">주문내역</a>
+    </div>
+</div>
+
+<!--th:fragment="작명"-->
+<!--파일에 사용할 UI 사용-->
+<!--파일-->

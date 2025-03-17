@@ -1,0 +1,222 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.store_container {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    
+    width: 80%;
+    margin: 0 auto;
+}
+
+.store {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 800px;
+    cursor:pointer;
+}
+
+.storeContent {
+    display: flex;
+    align-items: center;
+  }
+  
+  .storeImage {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 20px;
+  }
+  
+  .storeInfo {
+    flex: 1;
+  }
+  
+  .storeInfo p,
+  .storeInfo h4 {
+    margin: 5px 0;
+    word-break: break-all;
+  }
+
+.item_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 700px;
+    border-radius: 3%;
+}
+
+.hidden {
+    display: none;
+}
+
+.tap_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+.tap {
+    padding: 15px;
+    width: 200px;
+    cursor: pointer;
+    justify-content: center;
+  }
+  
+/* 태블릿 및 모바일 */
+@media (max-width: 768px) {
+    .tap_container {
+        flex-direction: column;
+    }
+}
+
+.tap_active {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 5%;
+    width: 200px;
+    text-align: center;
+  }
+
+  input[type="number"] {
+    width: 100px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    appearance: none;
+    -moz-appearance: textfield;
+  }
+  
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+
+  input[type="number"]:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  @media (max-width: 768px) {
+    input[type="number"] {
+      width: 80px;
+    }
+  }
+
+  
+.item button {
+    width: 150px;
+    height: 50px;
+    background-color: #01322000;
+    color: #013220;
+    border-width: 1px;
+    border-color:#01322017;
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; /* 부드러운 효과 */
+  }
+  
+  .item button:hover {
+    background-color: #e0e0e0; /* hover 시 배경색 변경 */
+    color: #222; /* hover 시 글씨 색상 변경 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* hover 시 그림자 추가 */
+  }
+  
+  .item button.active { 
+    background-color: #333; 
+    color: #fff;
+  }
+
+.item button {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10%;
+}
+
+.notice_container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 700px;
+    border-radius: 3%;
+}
+
+.notice_container h5 {
+    background-color: #0132201e;
+    border-radius: 5%;
+    text-align: center;
+    margin: 10px;
+    width: 200px;
+}
+
+.review_container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 700px;
+    border-radius: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.review {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  width: 600px;
+  border-radius: 3%;
+}
+
+
+.itemContent { /* 이미지와 텍스트 컨테이너 */
+    display: row;
+    align-items: center; /* 세로 중앙 정렬 */
+  }
+  
+.itemImage { /* 이미지 스타일 */
+    width: 200px;
+    height: 200px; /* 이미지 높이 추가 */
+    object-fit: cover; /* 이미지 비율 유지 */
+    border-radius: 5px;
+    margin-right: 20px; /* 텍스트와 간격 */
+}
+  
+.itemInfo { /* 텍스트 정보 컨테이너 */
+    flex: 1; /* 남은 공간 차지 */
+}
+  
+.itemInfo p,
+.itemInfo h4 { /* 텍스트 줄바꿈 */
+    margin: 5px 0;
+    word-break: break-all;
+}
+
+  .box {
+    width: 50px;
+    height: 150px;
+  }

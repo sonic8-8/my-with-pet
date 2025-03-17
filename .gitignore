@@ -1,0 +1,27 @@
+######## SECRET KEY INFO
+back-end/src/main/resources/application-SECRET-KEY.properties
+
+# Node modules
+front-end/node_modules
+back-end/node_modules
+
+# Build directories
+front-end/build
+back-end/build
+
+# Logs
+front-end/logs
+back-end/logs
+*.log
+
+# Environment variables
+front-end/.env
+back-end/.env
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.idea
+.vscode

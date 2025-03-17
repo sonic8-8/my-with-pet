@@ -1,0 +1,41 @@
+/* src/MypageNavpanel.css */
+
+.nav-panel {
+  width: 20%;
+  height: 100vh;
+  background-color: #f8f8f8;
+  color: #333;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  padding-top: 100px; 
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* 패널이 고정된 상태에서 내부 스크롤 가능하게 함 */
+}
+
+.nav-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.nav-panel li {
+  margin: 20px 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.nav-panel li:hover {
+  background-color: #e0e0e0;
+}
+
+.nav-panel li svg {
+  margin-right: 10px;
+}
