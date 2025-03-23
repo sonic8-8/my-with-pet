@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/withpet
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jwt:
+    secret: asdfijasdija123123
