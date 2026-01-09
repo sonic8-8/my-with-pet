@@ -1,0 +1,61 @@
+<h1 id="레거시-프로젝트-리뷰-및-리팩토링-계획">레거시 프로젝트 리뷰 및
+리팩토링 계획</h1>
+<h2 id="주요-이슈findings">주요 이슈(Findings)</h2>
+<ul>
+<li>Critical: 인증이 사실상 비활성화됨. <code>SecurityConfig</code>에서
+<code>/**</code>, <code>/api/**</code> 전체 허용.</li>
+<li>High: 로그인/토큰 흐름 불일치 (LoginFilter 헤더 토큰 vs
+<code>/api/login</code> 바디 토큰; 쿠키 지원은 있으나 미사용).</li>
+<li>High: <code>findById(...).get()</code>로 500 에러 가능성 다수
+(member/orders/auth 등).</li>
+<li>High: 프론트 빌드 위험 (문법/인코딩 문제,
+<code>Redux/store.js</code> 오류, <code>http://localhost8085</code>
+잘못된 URL).</li>
+<li>Medium: API 클라이언트 분산, 토큰 저장소 불일치 (Cookies vs
+localStorage).</li>
+<li>Medium: 운영 설정 리스크 (<code>ddl-auto: update</code>,
+<code>show-sql: true</code>), <code>gcp-key.json</code> 레포 포함.</li>
+<li>Low: 서비스 계층이 얕고 컨트롤러가 리포지토리를 직접 사용.</li>
+<li>Test gap: 핵심 흐름에 대한 백엔드/프론트 테스트 부족.</li>
+</ul>
+<h2 id="리팩토링-계획">리팩토링 계획</h2>
+<h3 id="phase-0-빌드인코딩환경-안정화">Phase 0: 빌드/인코딩/환경
+안정화</h3>
+<ul>
+<li>프론트 문법 오류와 잘못된 URL 수정
+(<code>front-end/src/Redux/store.js</code>).</li>
+<li>파일 인코딩을 UTF-8로 통일하고 깨진 주석/문자열 정리 (예:
+<code>front-end/src/App.js</code>).</li>
+<li><code>gcp-key.json</code> 레포 분리, 환경 변수/시크릿 매니저
+사용.</li>
+</ul>
+<h3 id="phase-1-인증보안-정리">Phase 1: 인증/보안 정리</h3>
+<ul>
+<li>로그인 플로우 통일: <code>/api/login</code> 또는
+<code>LoginFilter</code> 중 하나만 유지.</li>
+<li>토큰 전달 방식(헤더 vs 쿠키) 통일.</li>
+<li><code>SecurityConfig</code>에서 공개 엔드포인트만 허용, 나머지 인증
+필요.</li>
+<li><code>findById().get()</code> 제거, <code>orElseThrow</code> +
+적절한 상태 코드 반환.</li>
+</ul>
+<h3 id="phase-2-서비스-계층-정비">Phase 2: 서비스 계층 정비</h3>
+<ul>
+<li>컨트롤러 로직을 서비스로 이동.</li>
+<li>입력 검증(<code>@Valid</code>) 도입, 엔티티 직접 노출 최소화.</li>
+<li><code>@Transactional</code> 적용.</li>
+</ul>
+<h3 id="phase-3-프론트-구조-정리">Phase 3: 프론트 구조 정리</h3>
+<ul>
+<li>단일 API 클라이언트(<code>axiosConfig</code>)로 통일.</li>
+<li>토큰 저장/인터셉터 동작 일관화.</li>
+<li>Redux slice 정리, 비동기 처리 중복 제거.</li>
+<li>라우팅 분리 및 lazy loading 고려.</li>
+</ul>
+<h3 id="phase-4-테스트운영-품질">Phase 4: 테스트/운영 품질</h3>
+<ul>
+<li>백엔드: 인증/주문/카트 통합 테스트 추가.</li>
+<li>프론트: 로그인/장바구니/결제 테스트 추가.</li>
+<li>prod에서 <code>ddl-auto</code>, <code>show-sql</code> 제거,
+로깅/모니터링 강화.</li>
+</ul>

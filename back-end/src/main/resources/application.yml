@@ -1,9 +1,61 @@
 spring:
+  profiles:
+    active: local
+
+---
+# PROD PROFILE (for Docker/GCP)
+spring:
+  config:
+    activate:
+      on-profile: prod
+  
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+  cloud:
+    gcp:
+      storage:
+        bucket: ${GCS_BUCKET_NAME}
+        credentials:
+          location: file:${GCS_KEY_FILE_PATH} 
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: 6379
+
+  jwt:
+    secret: ${JWT_SECRET}
+
+---
+# LOCAL PROFILE (for Local Dev)
+spring:
+  config:
+    activate:
+      on-profile: local
+  
   datasource:
     url: jdbc:h2:tcp://localhost/~/withpet
     username: sa
     password:
     driver-class-name: org.h2.Driver
+  
+  data:
+    redis:
+      host: localhost
 
-  jwt:
-    secret: asdfijasdija123123
+  cloud:
+    gcp:
+      storage:
+        bucket: my-with-pet-local-bucket
+        credentials:
+          location: classpath:gcp-key.json

@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./back-end
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_URL=jdbc:mysql://mysql:3306/withpet?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=UTC
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - REDIS_HOST=redis
+      - GCS_BUCKET_NAME=${GCS_BUCKET_NAME}
+      # Mount the key file or pass via env
+      - GCS_KEY_FILE_PATH=/app/gcp-key.json
+    volumes:
+      - ./gcp-key.json:/app/gcp-key.json
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - with-pet-net
+
+  frontend:
+    build: ./front-end
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - with-pet-net
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: withpet
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - with-pet-net
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - with-pet-net
+
+volumes:
+  mysql-data:
+
+
+networks:
+  with-pet-net:
+    driver: bridge
