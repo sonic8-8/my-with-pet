@@ -72,3 +72,22 @@
 - **결정**: Backend 테스트 완료, Frontend 테스트는 의존성 해결 후 별도 진행
 - **이유**: 레거시 의존성 이슈 해결에 시간 소요가 커서 가독성 리팩토링을 우선 진행
 - **가설**: react-scripts 또는 babel 패키지 업그레이드 시 Frontend 테스트 정상화 예상
+
+## [2026-01-12 KST] Phase 5: JWTFilter 가독성 리팩토링 (Plan-02)
+
+### 5.1 실행 명령 (Command)
+- 명령 내용: "JWTFilter.doFilterInternal 53줄 → 20줄 이하로 분할"
+- 명령 내용: "System.out.println 디버그 로깅 제거"
+
+### 5.2 분석 결과 요약 (AI Analysis)
+- **Before**: doFilterInternal 53줄, 혼합된 추상화, 하드코딩된 디버그 로깅
+- **After**: 
+  - `doFilterInternal` 12줄 (Composed Method 패턴)
+  - 5개 메서드 추출: `extractToken`, `isValidToken`, `setAuthenticationContext`, `createMemberFromToken`, `createAuthenticationToken`
+  - `System.out.println` 4개 제거
+  - 매직 스트링 상수화 (`AUTHORIZATION_HEADER`, `BEARER_PREFIX`)
+- **테스트**: 단위 테스트 12/12 통과
+
+### 5.3 의사결정 (Decision)
+- **결정**: JWTFilter 리팩토링 완료, SecurityConfig 분할로 진행
+- **이유**: 핵심 인증 필터의 가독성/유지보수성 확보 완료

@@ -15,8 +15,13 @@ back-end/logs
 *.log
 
 # Environment variables
+.env
 front-end/.env
 back-end/.env
+
+# GCP Credentials
+gcp-key.json
+**/gcp-key.json
 
 # OS generated files
 .DS_Store

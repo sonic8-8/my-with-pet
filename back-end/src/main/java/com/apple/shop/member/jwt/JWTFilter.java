@@ -13,64 +13,79 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
 
+    private static final String AUTHORIZATION_HEADER = "Authorization";
+    private static final String BEARER_PREFIX = "Bearer ";
+
     private final JWTUtil jwtUtil;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain) throws ServletException, IOException {
+        Optional<String> token = extractToken(request);
 
-        //request에서 Authorization 헤더를 찾음
-        String authorization= request.getHeader("Authorization");
-        System.out.println(authorization); // 여기서 null 나오는 듯
-
-        //Authorization 헤더 검증
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
-
-            System.out.println("token null");
-//            SecurityContextHolder.getContext().setAuthentication(null);
+        if (token.isEmpty() || !isValidToken(token.get())) {
             filterChain.doFilter(request, response);
-
-            //조건이 해당되면 메소드 종료 (필수)
             return;
         }
 
-        System.out.println("authorization now");
-        //Bearer 부분 제거 후 순수 토큰만 획득
-        String token = authorization.split(" ")[1];
-
-        //토큰 소멸 시간 검증
-        if (jwtUtil.isExpired(token)) {
-
-            System.out.println("token expired");
-//            SecurityContextHolder.clearContext();
-            filterChain.doFilter(request, response);
-
-            //조건이 해당되면 메소드 종료 (필수)
-            return;
-        }
-
-        //토큰에서 username과 role 획득
-        String id = jwtUtil.getId(token);
-        String role = jwtUtil.getRole(token);
-
-        //Member를 생성하여 값 set
-        Member member = new Member();
-        member.setId(id);
-        member.setPw("temppassword");
-        member.setRole(role);
-
-        //UserDetails에 회원 정보 객체 담기
-        CustomUserDetails customUserDetails = new CustomUserDetails(member);
-
-        //스프링 시큐리티 인증 토큰 생성
-        Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-
-        //세션에 사용자 등록
-        SecurityContextHolder.getContext().setAuthentication(authToken);
-
+        setAuthenticationContext(token.get());
         filterChain.doFilter(request, response);
+    }
+
+    /**
+     * Authorization 헤더에서 Bearer 토큰을 추출합니다.
+     */
+    private Optional<String> extractToken(HttpServletRequest request) {
+        String authorization = request.getHeader(AUTHORIZATION_HEADER);
+
+        if (authorization == null || !authorization.startsWith(BEARER_PREFIX)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(authorization.substring(BEARER_PREFIX.length()));
+    }
+
+    /**
+     * 토큰의 유효성을 검증합니다.
+     */
+    private boolean isValidToken(String token) {
+        return !jwtUtil.isExpired(token);
+    }
+
+    /**
+     * 토큰 정보를 기반으로 SecurityContext에 인증 정보를 설정합니다.
+     */
+    private void setAuthenticationContext(String token) {
+        Member member = createMemberFromToken(token);
+        CustomUserDetails userDetails = new CustomUserDetails(member);
+        Authentication authToken = createAuthenticationToken(userDetails);
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+    }
+
+    /**
+     * 토큰에서 Member 객체를 생성합니다.
+     */
+    private Member createMemberFromToken(String token) {
+        Member member = new Member();
+        member.setId(jwtUtil.getId(token));
+        member.setPw("temppassword");
+        member.setRole(jwtUtil.getRole(token));
+        return member;
+    }
+
+    /**
+     * Spring Security 인증 토큰을 생성합니다.
+     */
+    private Authentication createAuthenticationToken(CustomUserDetails userDetails) {
+        return new UsernamePasswordAuthenticationToken(
+                userDetails,
+                null,
+                userDetails.getAuthorities());
     }
 }
