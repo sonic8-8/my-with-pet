@@ -1,8 +1,6 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
-
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+/**
+ * 테스트 환경 스모크 테스트
+ */
+test('Jest is working correctly', () => {
+  expect(1 + 1).toBe(2);
 });

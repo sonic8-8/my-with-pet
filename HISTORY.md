@@ -49,3 +49,26 @@
 ### 3.3 의사결정 (Decision)
 - **결정**: 프론트엔드도 가설 기반의 성능/가독성/테스트 리스크를 기준선으로 기록
 - **이유**: 이후 리팩토링 및 성능 측정 시 정량/정성 비교를 가능하게 하기 위해
+
+## [2026-01-12 KST] Phase 4: 테스트 인프라 구축 (Plan-01)
+
+### 4.1 실행 명령 (Command)
+- 명령 내용: "Backend 테스트 헬퍼 및 Service 단위 테스트 작성"
+- 명령 내용: "Frontend 깨진 테스트 수정 및 test-utils 생성"
+
+### 4.2 분석 결과 요약 (AI Analysis)
+- **Backend**: 
+  - `TestFixtures.java` 생성 (Member, StoreMember 픽스처 빌더)
+  - `MemberServiceTest.java` 5개 테스트 작성 (회원가입, 로그인, 조회)
+  - `StoreMemberServiceTest.java` 7개 테스트 작성 (점주 CRUD, 인증)
+  - `./gradlew test` 통과 ✅
+- **Frontend**:
+  - `Tosspay.test.js` 삭제 (깨진 테스트)
+  - `App.test.js` 기본 스모크 테스트로 교체
+  - `test-utils.js` Provider 래퍼 생성
+  - ⚠️ `babel-preset-react-app` 의존성 경고로 테스트 실행 불안정
+
+### 4.3 의사결정 (Decision)
+- **결정**: Backend 테스트 완료, Frontend 테스트는 의존성 해결 후 별도 진행
+- **이유**: 레거시 의존성 이슈 해결에 시간 소요가 커서 가독성 리팩토링을 우선 진행
+- **가설**: react-scripts 또는 babel 패키지 업그레이드 시 Frontend 테스트 정상화 예상
