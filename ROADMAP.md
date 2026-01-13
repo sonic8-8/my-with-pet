@@ -58,19 +58,20 @@
 
 ---
 
-## Phase 2: Frontend 가독성 리팩토링
+## Phase 2: Frontend 가독성 리팩토링 🔵 진행 중
 
-> 목표: Fat 컴포넌트 분해, Custom Hooks 추출
+> 목표: Fat 컴포넌트 분해, Custom Hooks 추출  
+> **상태**: 2A.1(StoreDetail), 2A.3(Navbar) 완료
 
 ### 2A. Fat 컴포넌트 분해
 
-| # | 대상 컴포넌트 | 추출할 요소 |
-|---|--------------|------------|
-| 2A.1 | `StoreDetail.js` | `StoreHeader`, `StoreTabs`, `ItemList`, `ReviewList`, `useStoreDetailData` |
-| 2A.2 | `Checkout.js` | `CartItemsList`, `OrderSummary`, `usePaymentWidget`, `useOrderForm` |
-| 2A.3 | `Navbar.js` | `NavMenu`, `CartPanel`, `AddressPanel`, `AlertPanel`, `usePanelState` |
-| 2A.4 | `BizInfoEdit.js` | `StoreInfoForm`, `StoreLogoUploader`, `useStoreInfoForm` |
-| 2A.5 | `App.js` | `RoutesConfig`, `useAuthSession` |
+| # | 대상 컴포넌트 | 추출할 요소 | 상태 |
+|---|--------------|------------|------|
+| 2A.1 | `StoreDetail.js` | `StoreHeader`, `StoreItemList`, `StoreNotice`, `StoreReviews`, `useStoreData` | ✅ 완료 |
+| 2A.2 | `Checkout.js` | `CartItemsList`, `OrderSummary`, `usePaymentWidget`, `useOrderForm` | ⏳ 대기 |
+| 2A.3 | `Navbar.js` | `AlertPanel`, `CartPanel`, `AddressPanel`, `SearchPanel`, `usePanelState`, `useAuth` | ✅ 완료 |
+| 2A.4 | `BizInfoEdit.js` | `StoreInfoForm`, `StoreLogoUploader`, `useStoreInfoForm` | ⏳ 대기 |
+| 2A.5 | `App.js` | `RoutesConfig`, `useAuthSession` | ⏳ 대기 |
 
 ### 2B. JSX 밀도 개선
 
@@ -125,7 +126,7 @@
 ```
 Phase 0 ████████████ 테스트 기반 구축 (BE 완료, FE 보류)
 Phase 1 ████████████ Backend 가독성 ✅ 완료
-Phase 2 ░░░░░░░░░░░░ Frontend 가독성
+Phase 2 ██████░░░░░░ Frontend 가독성 (2/5 완료)
 Phase 3 ░░░░░░░░░░░░ 보안 대응 (승인 후)
 Phase 4 ░░░░░░░░░░░░ 성능 가설 기록
 ```
