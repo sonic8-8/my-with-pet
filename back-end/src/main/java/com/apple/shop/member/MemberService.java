@@ -6,72 +6,86 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
 
+    private static final long JWT_EXPIRATION_MS = 3600000L; // 1시간
+    private static final String DEFAULT_ROLE = "user";
+
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JWTUtil jwtUtil;
 
-
     public void registerMember(MemberDTO memberDTO) {
-
-        String id = memberDTO.getId();
-        String pw = memberDTO.getPw();
-        String name = memberDTO.getName();
-        String phone = memberDTO.getPhone();
-        Instant joinedAt = Instant.now();
-
-        Boolean isExist = memberRepository.existsById(id);
-
-        if (isExist) {
-
+        if (isExistingMember(memberDTO.getId())) {
             return;
         }
 
-        Member data = new Member();
-        data.setId(id);
-        data.setPw(bCryptPasswordEncoder.encode(pw));
-        data.setName(name);
-        data.setPhone(phone);
-        data.setRole("user");
-        data.setJoinedAt(joinedAt);
-
-        memberRepository.save(data);
+        Member member = createMemberFromDTO(memberDTO);
+        memberRepository.save(member);
     }
 
-    // 로그인 로직
     public String login(MemberDTO memberDTO) {
-        String id = memberDTO.getId();
-        String pw = memberDTO.getPw();
+        Optional<Member> memberOpt = memberRepository.findById(memberDTO.getId());
 
-        Member member = memberRepository.findById(id).get();
-
-        System.out.println("프론트앤드 id : " + member);
-        System.out.println(bCryptPasswordEncoder.matches(pw, member.getPw()));
-        // 회원이 존재하고 비밀번호가 일치하는지 확인
-        if (member != null && bCryptPasswordEncoder.matches(pw, member.getPw())) {
-            // JWT 생성
-            return jwtUtil.createJwt(id, member.getRole(), 3600000L); // 1시간 유효 기간
-        } else {
+        if (memberOpt.isEmpty()) {
             return null;
         }
-    }
 
-    // 마이페이지 로직
-    public MemberDTO getMemberById(String id) {
-        Member member = memberRepository.findById(id).get();
-        if (member != null) {
-            MemberDTO memberDTO = new MemberDTO();
-            memberDTO.setId(member.getId());
-            memberDTO.setName(member.getName());
-            memberDTO.setPhone(member.getPhone());
-            memberDTO.setRole(member.getRole());
-            return memberDTO;
+        Member member = memberOpt.get();
+        if (isValidPassword(memberDTO.getPw(), member.getPw())) {
+            return jwtUtil.createJwt(member.getId(), member.getRole(), JWT_EXPIRATION_MS);
         }
+
         return null;
     }
 
+    public MemberDTO getMemberById(String id) {
+        return memberRepository.findById(id)
+                .map(this::convertToDTO)
+                .orElse(null);
+    }
+
+    /**
+     * 회원 ID 존재 여부를 확인합니다.
+     */
+    private boolean isExistingMember(String id) {
+        return memberRepository.existsById(id);
+    }
+
+    /**
+     * MemberDTO로부터 Member 엔티티를 생성합니다.
+     */
+    private Member createMemberFromDTO(MemberDTO dto) {
+        Member member = new Member();
+        member.setId(dto.getId());
+        member.setPw(bCryptPasswordEncoder.encode(dto.getPw()));
+        member.setName(dto.getName());
+        member.setPhone(dto.getPhone());
+        member.setRole(DEFAULT_ROLE);
+        member.setJoinedAt(Instant.now());
+        return member;
+    }
+
+    /**
+     * 비밀번호 일치 여부를 검증합니다.
+     */
+    private boolean isValidPassword(String rawPassword, String encodedPassword) {
+        return bCryptPasswordEncoder.matches(rawPassword, encodedPassword);
+    }
+
+    /**
+     * Member 엔티티를 MemberDTO로 변환합니다.
+     */
+    private MemberDTO convertToDTO(Member member) {
+        MemberDTO dto = new MemberDTO();
+        dto.setId(member.getId());
+        dto.setName(member.getName());
+        dto.setPhone(member.getPhone());
+        dto.setRole(member.getRole());
+        return dto;
+    }
 }

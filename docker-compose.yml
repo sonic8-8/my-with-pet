@@ -12,7 +12,6 @@ services:
       - DB_PASSWORD=root
       - REDIS_HOST=redis
       - GCS_BUCKET_NAME=${GCS_BUCKET_NAME}
-      # Mount the key file or pass via env
       - GCS_KEY_FILE_PATH=/app/gcp-key.json
     volumes:
       - ./gcp-key.json:/app/gcp-key.json

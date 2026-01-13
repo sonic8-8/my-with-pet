@@ -110,3 +110,22 @@
 ### 6.3 의사결정 (Decision)
 - **결정**: SecurityConfig 리팩토링 완료, permitAll 보안 이슈는 ADR로 별도 진행
 - **이유**: 인가 정책 변경은 시스템 동작에 큰 영향을 미치므로 신중한 접근 필요
+
+## [2026-01-13 KST] Phase 7: Controller/Service/Filter 가독성 리팩토링 (Plan-04)
+
+### 7.1 실행 명령 (Command)
+- 명령 내용: "AddressController, MemberService, LoginFilter 리팩토링"
+- 명령 내용: "System.out.println 10개 제거, 메서드 분할"
+
+### 7.2 분석 결과 요약 (AI Analysis)
+- **AddressController**: addAddress 분할, addAddress1→updateAllAddresses 이름 변경
+- **MemberService**: registerMember/login 분할, 상수 추출 (JWT_EXPIRATION_MS)
+- **LoginFilter**: attemptAuthentication 분할, 상수 추출 (4개)
+- **System.out.println 제거**: 총 10개
+- **메서드 추출**: 총 8개
+- **상수 추출**: 총 6개
+- **테스트**: 컴파일 성공, 단위 테스트 12/12 통과
+
+### 7.3 의사결정 (Decision)
+- **결정**: Phase 1A 핵심 리팩토링 완료
+- **이유**: 가독성 향상 및 디버그 로깅 제거로 보안/유지보수성 확보
