@@ -245,3 +245,20 @@
 ### 14.3 의사결정 (Decision)
 - **결정**: ADR-001 구현 완료, Plan-12 완료
 - **이유**: 무인가 API 접근 차단으로 보안 강화
+
+## [2026-01-13 KST] Phase 15: ADR-002 Address API IDOR 해결 (Plan-13)
+
+### 15.1 실행 명령 (Command)
+- 명령 내용: "AddressController JWT 토큰 기반 사용자 검증"
+- 명령 내용: "IDOR 취약점 해결"
+
+### 15.2 분석 결과 요약 (AI Analysis)
+- **getAddress**: JWT 토큰에서 사용자 ID 추출로 변경
+- **addAddress**: DTO memberId 대신 JWT 토큰 사용
+- **deleteAddress**: 소유자 검증 로직 추가 (403 Forbidden 반환)
+- **updateAllAddresses**: body userId 대신 JWT 토큰 사용
+- **extractMemberIdFromToken**: 헬퍼 메서드 추가
+
+### 15.3 의사결정 (Decision)
+- **결정**: ADR-002 구현 완료, Plan-13 완료
+- **이유**: 타인 주소 접근 원천 차단으로 개인정보 보호

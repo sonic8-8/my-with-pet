@@ -94,7 +94,7 @@
 | # | 이슈 | 심각도 | Plan | 상태 |
 |---|------|--------|------|------|
 | 3A.1 | `SecurityConfig` 전체 permitAll | 🔴 CRITICAL | Plan-12 | ✅ 완료 |
-| 3A.2 | Address API IDOR | 🔴 CRITICAL | Plan-13 | ⏳ 대기 |
+| 3A.2 | Address API IDOR | 🔴 CRITICAL | Plan-13 | ✅ 완료 |
 | 3A.3 | 민감 정보 로깅 (JWT, 비밀번호) | 🟡 HIGH | Plan-15 | ⏳ 대기 |
 | 3A.4 | StoreMember 인증 부재 | 🟡 HIGH | Plan-16 | ⏳ 대기 |
 
@@ -132,14 +132,6 @@ Phase 2 ████████████ Frontend 가독성 ✅ 완료
 Phase 3 ░░░░░░░░░░░░ 보안 대응 (승인 후)
 Phase 4 ░░░░░░░░░░░░ 성능 가설 기록
 ```
-
----
-
-## 다음 단계
-
-1. [ ] 이 ROADMAP 승인
-2. [ ] Phase 0 상세 계획 작성 (`plans/plan-01.md`)
-3. [ ] `HISTORY.md` 초기화
 
 ---
 
