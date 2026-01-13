@@ -91,3 +91,22 @@
 ### 5.3 의사결정 (Decision)
 - **결정**: JWTFilter 리팩토링 완료, SecurityConfig 분할로 진행
 - **이유**: 핵심 인증 필터의 가독성/유지보수성 확보 완료
+
+## [2026-01-13 KST] Phase 6: SecurityConfig 가독성 리팩토링 (Plan-03)
+
+### 6.1 실행 명령 (Command)
+- 명령 내용: "SecurityConfig.filterChain 35줄 → 20줄 이하로 분할"
+- 명령 내용: "주석 처리된 코드 삭제"
+
+### 6.2 분석 결과 요약 (AI Analysis)
+- **Before**: filterChain 35줄, 주석 처리 코드, 혼합된 보안 설정
+- **After**: 
+  - `filterChain` 7줄 (Composed Method 패턴)
+  - 4개 메서드 추출: `configureBasicSecurity`, `configureAuthorization`, `configureFilters`, `configureSessionManagement`
+  - 주석 처리된 인가 설정 코드 삭제
+  - TODO 주석 추가 (ADR 필요 표시)
+- **테스트**: 컴파일 성공, 단위 테스트 12/12 통과
+
+### 6.3 의사결정 (Decision)
+- **결정**: SecurityConfig 리팩토링 완료, permitAll 보안 이슈는 ADR로 별도 진행
+- **이유**: 인가 정책 변경은 시스템 동작에 큰 영향을 미치므로 신중한 접근 필요

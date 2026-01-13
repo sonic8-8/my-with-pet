@@ -22,58 +22,62 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    //AuthenticationManager가 인자로 받을 AuthenticationConfiguraion 객체 생성자 주입
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
 
-    //AuthenticationManager Bean 등록
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-
         return configuration.getAuthenticationManager();
     }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        configureBasicSecurity(http);
+        configureAuthorization(http);
+        configureFilters(http);
+        configureSessionManagement(http);
+        return http.build();
+    }
 
+    /**
+     * CSRF, 폼 로그인, HTTP Basic 인증을 비활성화합니다.
+     */
+    private void configureBasicSecurity(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable());
+        http.formLogin(form -> form.disable());
+        http.httpBasic(basic -> basic.disable());
+    }
 
-        http.csrf((auth) -> auth.disable());
-
-        http.formLogin((auth) -> auth.disable());
-
-        http.httpBasic((auth) -> auth.disable());
-
-//        http.authorizeHttpRequests((auth) -> auth
-//                        .requestMatchers("/api/login", "/", "/api/sign-up",
-//                                "/api/business/login","/api/business/sign-up",
-//                                "/api/product-list", "/api/business",
-//                                "/api/store-list", "/widget/confirm",
-//                                "/api/address-add").permitAll() // /Member/join 추가
-//                        .anyRequest().authenticated());
-
-        http.authorizeHttpRequests((auth) -> auth
+    /**
+     * URL 기반 인가 규칙을 설정합니다.
+     * TODO: 현재 모든 요청을 허용 중 - 보안 강화 필요 (ADR 작성 후 진행)
+     */
+    private void configureAuthorization(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/**", "/api/**").permitAll()
                 .anyRequest().authenticated());
+    }
 
-
-
-        //JWTFilter 등록
+    /**
+     * JWT 필터와 로그인 필터를 등록합니다.
+     */
+    private void configureFilters(HttpSecurity http) throws Exception {
         http.addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
+        http.addFilterAt(
+                new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
+                UsernamePasswordAuthenticationFilter.class);
+    }
 
-        //필터 추가 LoginFilter()는 인자를 받음 (AuthenticationManager() 메소드에 authenticationConfiguration 객체를 넣어야 함) 따라서 등록 필요
-        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
-
-        http
-                .sessionManagement((session) -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        return http.build();
+    /**
+     * 세션 정책을 STATELESS로 설정합니다.
+     */
+    private void configureSessionManagement(HttpSecurity http) throws Exception {
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
     }
 
     @Bean
@@ -88,7 +92,5 @@ public class SecurityConfig {
                         .allowCredentials(true);
             }
         };
-
     }
-
 }
