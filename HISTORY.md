@@ -179,3 +179,20 @@
 ### 10.3 의사결정 (Decision)
 - **결정**: Plan-07 완료, Phase 2A 두 번째 Fat 컴포넌트 분해 완료
 - **이유**: 패널별 관심사 분리로 재사용성 및 테스트 용이성 확보
+
+## [2026-01-13 KST] Phase 11: Checkout 컴포넌트 분해 (Plan-08)
+
+### 11.1 실행 명령 (Command)
+- 명령 내용: "Checkout.js Fat 컴포넌트 분해"
+- 명령 내용: "결제 위젯 및 주문 폼 로직 Custom Hook으로 추출"
+
+### 11.2 분석 결과 요약 (AI Analysis)
+- **Checkout.js**: 246줄 → 79줄 (68% 감소)
+- **usePaymentWidget Hook**: Toss 결제 위젯 로딩/렌더링/요청 로직 추출
+- **useOrderForm Hook**: 주문 폼 상태 관리 및 제출 로직 추출
+- **서브 컴포넌트**: OrderForm, CartItemsList, OrderSummary (3개)
+- **검증**: ESLint 에러 없음
+
+### 11.3 의사결정 (Decision)
+- **결정**: Plan-08 완료, Phase 2A 세 번째 Fat 컴포넌트 분해 완료 (3/5)
+- **이유**: 결제 로직과 UI 분리로 테스트 용이성 및 재사용성 확보

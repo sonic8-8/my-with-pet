@@ -68,7 +68,7 @@
 | # | 대상 컴포넌트 | 추출할 요소 | 상태 |
 |---|--------------|------------|------|
 | 2A.1 | `StoreDetail.js` | `StoreHeader`, `StoreItemList`, `StoreNotice`, `StoreReviews`, `useStoreData` | ✅ 완료 |
-| 2A.2 | `Checkout.js` | `CartItemsList`, `OrderSummary`, `usePaymentWidget`, `useOrderForm` | ⏳ 대기 |
+| 2A.2 | `Checkout.js` | `OrderForm`, `CartItemsList`, `OrderSummary`, `usePaymentWidget`, `useOrderForm` | ✅ 완료 |
 | 2A.3 | `Navbar.js` | `AlertPanel`, `CartPanel`, `AddressPanel`, `SearchPanel`, `usePanelState`, `useAuth` | ✅ 완료 |
 | 2A.4 | `BizInfoEdit.js` | `StoreInfoForm`, `StoreLogoUploader`, `useStoreInfoForm` | ⏳ 대기 |
 | 2A.5 | `App.js` | `RoutesConfig`, `useAuthSession` | ⏳ 대기 |
