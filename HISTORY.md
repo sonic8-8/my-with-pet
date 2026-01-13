@@ -146,3 +146,19 @@
 ### 8.3 의사결정 (Decision)
 - **결정**: Phase 1B 네이밍 개선 완료, Phase 2 (Frontend 가독성) 진행 준비
 - **이유**: Backend 가독성 리팩토링(Phase 1A, 1B) 완료
+
+## [2026-01-13 KST] Phase 9: StoreDetail 컴포넌트 분해 (Plan-06)
+
+### 9.1 실행 명령 (Command)
+- 명령 내용: "StoreDetail.js Fat 컴포넌트 분해"
+- 명령 내용: "Custom Hook 및 서브 컴포넌트 추출"
+
+### 9.2 분석 결과 요약 (AI Analysis)
+- **StoreDetail.js**: 297줄 → 82줄 (72% 감소)
+- **useStoreData Hook**: 매장 정보, 상품 목록, 리뷰 로딩 로직 추출
+- **서브 컴포넌트**: StoreHeader, StoreItemList, StoreNotice, StoreReviews (4개)
+- **검증**: 개발 서버 정상 실행, 빌드는 babel-preset 의존성 이슈로 실패(기존 문제)
+
+### 9.3 의사결정 (Decision)
+- **결정**: Plan-06 완료, Phase 2A 첫 번째 Fat 컴포넌트 분해 완료
+- **이유**: 관심사 분리로 유지보수성/테스트 용이성 확보
