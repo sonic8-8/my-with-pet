@@ -73,12 +73,14 @@
 | 2A.4 | `BizInfoEdit.js` | `NoticeInfoSection`, `StoreInfoSection`, `StoreLogoUploader`, `useStoreInfoForm`, `useImagePreview` | ✅ 완료 |
 | 2A.5 | `App.js` | `CustomerRoutes`, `BusinessRoutes`, `PaymentRoutes` | ✅ 완료 |
 
-### 2B. JSX 밀도 개선
+### 2B. JSX 밀도 개선 ✅ 완료
 
-| # | 대상 | 개선 방향 |
-|---|------|----------|
-| 2B.1 | `StoreDetail.js` 탭 콘텐츠 | 각 탭별 서브 컴포넌트 추출 |
-| 2B.2 | `Navbar.js` 패널 콘텐츠 | 패널별 서브 컴포넌트 추출 |
+> **상태**: Plan-06, Plan-07에서 함께 완료
+
+| # | 대상 | 개선 방향 | 상태 |
+|---|------|----------|------|
+| 2B.1 | `StoreDetail.js` 탭 콘텐츠 | `StoreHeader`, `StoreItemList`, `StoreNotice`, `StoreReviews` 추출 | ✅ Plan-06 |
+| 2B.2 | `Navbar.js` 패널 콘텐츠 | `AlertPanel`, `CartPanel`, `AddressPanel`, `SearchPanel` 추출 | ✅ Plan-07 |
 
 ---
 
