@@ -86,25 +86,25 @@
 
 ## Phase 3: 보안 이슈 대응
 
-> **⚠️ 승인 프로세스**: 보안 관련 변경은 시스템 동작에 큰 영향을 미치므로,  
-> **ADR 작성 → 사용자 검토 → 승인 → 구현** 순서로 진행합니다.
+> **작업 워크플로우**: 보안 관련 변경은 시스템 동작에 큰 영향을 미치므로,  
+> **ADR 작성 → Plan 작성 → 구현 → HISTORY 업데이트** 순서로 진행합니다.
 
-### 3A. Backend 보안 (ADR 승인 후 구현)
+### 3A. Backend 보안
 
-| # | 이슈 | 심각도 | 대응 |
-|---|------|--------|------|
-| 3A.1 | `SecurityConfig` 전체 permitAll | 🔴 CRITICAL | ADR 작성 → 승인 후 수정 |
-| 3A.2 | Address API IDOR | 🔴 CRITICAL | ADR 작성 → 승인 후 수정 |
-| 3A.3 | 민감 정보 로깅 (JWT, 비밀번호) | 🟡 HIGH | 로깅 레벨 조정 제안 |
-| 3A.4 | StoreMember 인증 부재 | 🟡 HIGH | ADR 작성 → 승인 후 수정 |
+| # | 이슈 | 심각도 | Plan | 상태 |
+|---|------|--------|------|------|
+| 3A.1 | `SecurityConfig` 전체 permitAll | 🔴 CRITICAL | Plan-12 | ✅ 완료 |
+| 3A.2 | Address API IDOR | 🔴 CRITICAL | Plan-13 | ⏳ 대기 |
+| 3A.3 | 민감 정보 로깅 (JWT, 비밀번호) | 🟡 HIGH | Plan-15 | ⏳ 대기 |
+| 3A.4 | StoreMember 인증 부재 | 🟡 HIGH | Plan-16 | ⏳ 대기 |
 
-### 3B. Frontend 보안 (문서화 후 승인 필요)
+### 3B. Frontend 보안
 
-| # | 이슈 | 심각도 | 대응 |
-|---|------|--------|------|
-| 3B.1 | OpenAI API Key 클라이언트 노출 | 🔴 CRITICAL | Backend Proxy 제안 → ADR |
-| 3B.2 | Firebase Config 하드코딩 | 🟡 MEDIUM | 환경변수 분리 제안 |
-| 3B.3 | LocalStorage 토큰 저장 | 🟡 MEDIUM | HttpOnly Cookie 전환 제안 → ADR |
+| # | 이슈 | 심각도 | Plan | 상태 |
+|---|------|--------|------|------|
+| 3B.1 | OpenAI API Key 클라이언트 노출 | 🔴 CRITICAL | Plan-14 | ⏳ 대기 |
+| 3B.2 | Firebase Config 하드코딩 | 🟡 MEDIUM | Plan-17 | ⏳ 대기 |
+| 3B.3 | LocalStorage 토큰 저장 | 🟡 MEDIUM | Plan-18 | ⏳ 대기 |
 
 ---
 
