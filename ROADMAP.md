@@ -58,10 +58,10 @@
 
 ---
 
-## Phase 2: Frontend 가독성 리팩토링 🔵 진행 중
+## Phase 2: Frontend 가독성 리팩토링 ✅ 완료
 
 > 목표: Fat 컴포넌트 분해, Custom Hooks 추출  
-> **상태**: 2A.1(StoreDetail), 2A.3(Navbar) 완료
+> **상태**: Phase 2A 전체 완료 (5/5)
 
 ### 2A. Fat 컴포넌트 분해
 
@@ -71,7 +71,7 @@
 | 2A.2 | `Checkout.js` | `OrderForm`, `CartItemsList`, `OrderSummary`, `usePaymentWidget`, `useOrderForm` | ✅ 완료 |
 | 2A.3 | `Navbar.js` | `AlertPanel`, `CartPanel`, `AddressPanel`, `SearchPanel`, `usePanelState`, `useAuth` | ✅ 완료 |
 | 2A.4 | `BizInfoEdit.js` | `NoticeInfoSection`, `StoreInfoSection`, `StoreLogoUploader`, `useStoreInfoForm`, `useImagePreview` | ✅ 완료 |
-| 2A.5 | `App.js` | `RoutesConfig`, `useAuthSession` | ⏳ 대기 |
+| 2A.5 | `App.js` | `CustomerRoutes`, `BusinessRoutes`, `PaymentRoutes` | ✅ 완료 |
 
 ### 2B. JSX 밀도 개선
 
@@ -126,7 +126,7 @@
 ```
 Phase 0 ████████████ 테스트 기반 구축 (BE 완료, FE 보류)
 Phase 1 ████████████ Backend 가독성 ✅ 완료
-Phase 2 ██████░░░░░░ Frontend 가독성 (2/5 완료)
+Phase 2 ████████████ Frontend 가독성 ✅ 완료
 Phase 3 ░░░░░░░░░░░░ 보안 대응 (승인 후)
 Phase 4 ░░░░░░░░░░░░ 성능 가설 기록
 ```
