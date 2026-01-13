@@ -229,3 +229,19 @@
 ### 13.3 의사결정 (Decision)
 - **결정**: Plan-10 완료, **Phase 2A 전체 완료** (5/5)
 - **이유**: 라우트 분리로 관심사 분리 및 유지보수성 향상
+
+## [2026-01-13 KST] Phase 14: ADR-001 SecurityConfig RBAC 구현 (Plan-12)
+
+### 14.1 실행 명령 (Command)
+- 명령 내용: "SecurityConfig 인증 정책 구현"
+- 명령 내용: "역할 기반 접근 제어 (RBAC) 적용"
+
+### 14.2 분석 결과 요약 (AI Analysis)
+- **공개 API**: `/api/login`, `/api/store-list/**`, `/api/shop/**` 등 인증 불필요
+- **고객 API**: `/api/address/**`, `/api/order/**` → `ROLE_USER` 필요
+- **사업자 API**: `/api/business/**` → `ROLE_BUSINESS` 필요
+- **URL 경로 상수화**: 관리 용이성 향상
+
+### 14.3 의사결정 (Decision)
+- **결정**: ADR-001 구현 완료, Plan-12 완료
+- **이유**: 무인가 API 접근 차단으로 보안 강화
