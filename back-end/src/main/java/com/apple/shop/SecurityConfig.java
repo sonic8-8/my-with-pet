@@ -25,6 +25,25 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
 
+    // 공개 API 경로 (인증 불필요)
+    private static final String[] PUBLIC_URLS = {
+            "/api/login", "/api/register",
+            "/api/store-list/**", "/api/shop/**", "/api/store-info",
+            "/api/review", "/api/main/**"
+    };
+
+    // 고객 전용 API 경로
+    private static final String[] USER_URLS = {
+            "/api/address/**", "/api/address-add", "/api/address-update", "/api/address-delete/**",
+            "/api/order/**", "/api/cart/**", "/api/pay/**",
+            "/api/memberinfo"
+    };
+
+    // 사업자 전용 API 경로
+    private static final String[] BUSINESS_URLS = {
+            "/api/business/**"
+    };
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
@@ -55,11 +74,17 @@ public class SecurityConfig {
 
     /**
      * URL 기반 인가 규칙을 설정합니다.
-     * TODO: 현재 모든 요청을 허용 중 - 보안 강화 필요 (ADR 작성 후 진행)
+     * ADR-001: 역할 기반 접근 제어 (RBAC) 적용
      */
     private void configureAuthorization(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/**", "/api/**").permitAll()
+                // 공개 API - 인증 불필요
+                .requestMatchers(PUBLIC_URLS).permitAll()
+                // 고객 전용 API - USER 역할 필요
+                .requestMatchers(USER_URLS).hasAnyRole("USER", "ADMIN")
+                // 사업자 전용 API - BUSINESS 역할 필요
+                .requestMatchers(BUSINESS_URLS).hasAnyRole("BUSINESS", "ADMIN")
+                // 그 외 모든 요청은 인증 필요
                 .anyRequest().authenticated());
     }
 
