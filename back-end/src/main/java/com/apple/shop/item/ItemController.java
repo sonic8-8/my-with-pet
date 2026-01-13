@@ -1,14 +1,11 @@
 package com.apple.shop.item;
 
-import com.apple.shop.store.Store;
 import com.apple.shop.store.StoreRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -19,44 +16,42 @@ public class ItemController {
     private final ItemRepository itemRepository;
     private final StoreRepository storeRepository;
 
-
+    /**
+     * 기본 상품 목록을 조회합니다. (storeIdx=0)
+     */
     @GetMapping("/product-list")
-    public List<ItemDTO> mainProduct() {
-
-        var temp = itemRepository.findAllByStoreIdx(0L);
-        System.out.println(temp);
-
-        List<ItemDTO> itemDTOList = new ArrayList<>();
-        System.out.println(itemDTOList);
-
-        for (int i = 0 ; i < temp.size() ; i++) {
-            ItemDTO a = new ItemDTO(
-                    temp.get(i).getName(),
-                    temp.get(i).getPrice(),
-                    temp.get(i).getImg(),
-                    temp.get(i).getInfo(),
-                    temp.get(i).getStock(),
-                    0L
-                    );
-            itemDTOList.add(a);
-        }
-
-        System.out.println(itemDTOList);
-        for (ItemDTO d : itemDTOList) {
-            System.out.println(d);
-        }
-
-        System.out.println(itemDTOList);
-
-        return itemDTOList;
+    public List<ItemDTO> getProductsByType() {
+        List<Item> items = itemRepository.findAllByStoreIdx(0L);
+        return convertToItemDTOList(items);
     }
 
+    /**
+     * 특정 매장의 상품 목록을 조회합니다.
+     */
     @GetMapping("/shop")
-    public List<Item> mainShop(@RequestParam Long idx) {
-
-        List<Item> List = itemRepository.findAllByStoreIdx(idx);
-
-        return List;
+    public List<Item> getItemsByStoreIdx(@RequestParam Long idx) {
+        return itemRepository.findAllByStoreIdx(idx);
     }
 
+    /**
+     * Item 목록을 ItemDTO 목록으로 변환합니다.
+     */
+    private List<ItemDTO> convertToItemDTOList(List<Item> items) {
+        return items.stream()
+                .map(this::convertToItemDTO)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Item을 ItemDTO로 변환합니다.
+     */
+    private ItemDTO convertToItemDTO(Item item) {
+        return new ItemDTO(
+                item.getName(),
+                item.getPrice(),
+                item.getImg(),
+                item.getInfo(),
+                item.getStock(),
+                0L);
+    }
 }

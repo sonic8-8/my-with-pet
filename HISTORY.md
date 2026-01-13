@@ -129,3 +129,20 @@
 ### 7.3 의사결정 (Decision)
 - **결정**: Phase 1A 핵심 리팩토링 완료
 - **이유**: 가독성 향상 및 디버그 로깅 제거로 보안/유지보수성 확보
+
+## [2026-01-13 KST] Phase 8: 네이밍 개선 (Plan-05)
+
+### 8.1 실행 명령 (Command)
+- 명령 내용: "ItemController, StoreController 네이밍 개선"
+- 명령 내용: "mainProduct→getProductsByType, getStoreListByStoreIdx→getStoreById"
+
+### 8.2 분석 결과 요약 (AI Analysis)
+- **ItemController**: mainProduct→getProductsByType, mainShop→getItemsByStoreIdx, Stream API 적용
+- **StoreController**: getStoreListByStoreIdx→getStoreById, Optional 처리 적용
+- **System.out.println 제거**: 추가 13개 (누적 23개)
+- **헬퍼 메서드 추출**: 6개
+- **테스트**: 컴파일 성공, 단위 테스트 12/12 통과
+
+### 8.3 의사결정 (Decision)
+- **결정**: Phase 1B 네이밍 개선 완료, Phase 2 (Frontend 가독성) 진행 준비
+- **이유**: Backend 가독성 리팩토링(Phase 1A, 1B) 완료
