@@ -196,3 +196,20 @@
 ### 11.3 의사결정 (Decision)
 - **결정**: Plan-08 완료, Phase 2A 세 번째 Fat 컴포넌트 분해 완료 (3/5)
 - **이유**: 결제 로직과 UI 분리로 테스트 용이성 및 재사용성 확보
+
+## [2026-01-13 KST] Phase 12: BizInfoEdit 컴포넌트 분해 (Plan-09)
+
+### 12.1 실행 명령 (Command)
+- 명령 내용: "BizInfoEdit.js Fat 컴포넌트 분해"
+- 명령 내용: "12개 폼 상태를 Custom Hook으로 통합"
+
+### 12.2 분석 결과 요약 (AI Analysis)
+- **BizInfoEdit.js**: 234줄 → 47줄 (80% 감소)
+- **useStoreInfoForm Hook**: 12개 폼 상태 통합, 저장 로직 추출
+- **useImagePreview Hook**: 이미지 미리보기 로직 추출
+- **서브 컴포넌트**: NoticeInfoSection, StoreInfoSection, StoreLogoUploader (3개)
+- **검증**: ESLint 에러 없음
+
+### 12.3 의사결정 (Decision)
+- **결정**: Plan-09 완료, Phase 2A 네 번째 Fat 컴포넌트 분해 완료 (4/5)
+- **이유**: 폼 상태 통합 및 UI 분리로 유지보수성 향상
