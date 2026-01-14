@@ -44,7 +44,7 @@ spring:
       on-profile: local
   
   datasource:
-    url: jdbc:h2:tcp://localhost/~/withpet
+    url: jdbc:h2:file:./data/withpet;AUTO_SERVER=TRUE
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -59,3 +59,6 @@ spring:
         bucket: my-with-pet-local-bucket
         credentials:
           location: classpath:gcp-key.json
+
+jwt:
+  secret: local-dev-secret-key-for-testing-only-do-not-use-in-production

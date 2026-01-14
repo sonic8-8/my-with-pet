@@ -354,3 +354,18 @@
 ### 21.3 의사결정 (Decision)
 - **결정**: Phase 4 성능 가설 기록 완료
 - **이유**: 성능 최적화는 프로파일링 기반으로 추후 결정
+
+## [2026-01-14 KST] Phase 22: H2 데이터베이스 파일 모드 변경 (Plan-20)
+
+### 22.1 실행 명령 (Command)
+- 명령 내용: "H2 TCP 모드를 File 모드로 변경"
+- 명령 내용: "jdbc:h2:tcp → jdbc:h2:file 변경"
+
+### 22.2 분석 결과 요약 (AI Analysis)
+- **application.yml**: `jdbc:h2:tcp://localhost/~/withpet` → `jdbc:h2:file:./data/withpet;AUTO_SERVER=TRUE`
+- **결과**: H2 파일 `back-end/data/withpet.mv.db` 자동 생성 확인
+- **참고**: Redis/GCP 연결 이슈는 별도 Plan-21로 분리
+
+### 22.3 의사결정 (Decision)
+- **결정**: Plan-20 완료 (H2 파일 모드 변경 성공)
+- **이유**: 별도 H2 서버 없이 로컬 실행 가능
