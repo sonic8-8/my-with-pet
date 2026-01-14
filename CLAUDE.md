@@ -107,6 +107,7 @@ Refs: plan-02
 | `HISTORY.md` | 모든 작업 과정의 타임라인 로그 | 작업 직후 자동 기록 |
 | `SUMMARY.md` | 각 Phase 종료 시 성과 요약 | 결과 보고용 |
 | `ADR.md` | 프로젝트 전반에 영향을 주는 중대한 아키텍처 결정 | 중대 결정 시 |
+| `TROUBLE_SHOOTING.md` | 발생한 에러/이슈 상세 기록 (트러블슈팅 후보) | 에러 발생 시 즉시 |
 
 ### HISTORY.md 기록 항목
 - `[Timestamp]`: 작업 시점
