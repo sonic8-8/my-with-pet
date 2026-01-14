@@ -292,3 +292,18 @@
 ### 17.3 의사결정 (Decision)
 - **결정**: ADR-004 구현 완료, Plan-15 완료
 - **이유**: 민감 정보 로그 노출 방지로 보안 강화
+
+## [2026-01-14 KST] Phase 18: ADR-005 StoreMember 인증 확인 (Plan-16)
+
+### 18.1 실행 명령 (Command)
+- 명령 내용: "StoreMember ROLE_BUSINESS 역할 확인"
+- 명령 내용: "Plan-12 RBAC 연계 확인"
+
+### 18.2 분석 결과 요약 (AI Analysis)
+- **StoreMember role 필드**: "ceo" 값 사용 확인
+- **SecurityConfig RBAC**: `/api/business/**` 경로에 `hasAnyRole("BUSINESS", "ADMIN")` 적용 확인 (Plan-12)
+- **결론**: Plan-12에서 이미 인증 요구 적용됨
+
+### 18.3 의사결정 (Decision)
+- **결정**: ADR-005 완료, Plan-16 완료
+- **이유**: Plan-12 RBAC로 사업자 API 인증 이미 적용됨
