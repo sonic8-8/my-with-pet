@@ -369,3 +369,20 @@
 ### 22.3 의사결정 (Decision)
 - **결정**: Plan-20 완료 (H2 파일 모드 변경 성공)
 - **이유**: 별도 H2 서버 없이 로컬 실행 가능
+
+## [2026-01-14 KST] Phase 23: Local 서버 실행 - Redis/GCP 비활성화 (Plan-21)
+
+### 23.1 실행 명령 (Command)
+- 명령 내용: "Redis/GCP 의존성 및 코드 주석 처리"
+- 명령 내용: "Local 서버 정상 실행 확인"
+
+### 23.2 분석 결과 요약 (AI Analysis)
+- **build.gradle**: Redis/GCP 의존성 주석 처리
+- **application.yml**: Redis/GCP 설정 제거, JWT secret 경로 수정
+- **StorageService.java**: 전체 주석 처리
+- **common/lock/**: 3개 파일 전체 주석 처리
+- **서버 시작 성공**: `Started ShopApplication in 4.117 seconds`
+
+### 23.3 의사결정 (Decision)
+- **결정**: Plan-21 완료, Local 서버 정상 실행
+- **이유**: Redis/GCP 없이 로컬 개발 가능 (성능 최적화/배포 시 활성화)

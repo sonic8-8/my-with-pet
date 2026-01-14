@@ -48,17 +48,8 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
-  
-  data:
-    redis:
-      host: localhost
 
-  cloud:
-    gcp:
-      storage:
-        bucket: my-with-pet-local-bucket
-        credentials:
-          location: classpath:gcp-key.json
+  # Redis/GCP는 prod profile에서만 사용 (Plan-21)
 
-jwt:
-  secret: local-dev-secret-key-for-testing-only-do-not-use-in-production
+  jwt:
+    secret: local-dev-secret-key-for-testing-only-do-not-use-in-production
