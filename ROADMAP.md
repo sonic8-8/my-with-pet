@@ -102,7 +102,7 @@
 
 | # | 이슈 | 심각도 | Plan | 상태 |
 |---|------|--------|------|------|
-| 3B.1 | OpenAI API Key 클라이언트 노출 | 🔴 CRITICAL | Plan-14 | ⏳ 대기 |
+| 3B.1 | OpenAI API Key 클라이언트 노출 | 🔴 CRITICAL | Plan-14 | ✅ 완료 |
 | 3B.2 | Firebase Config 하드코딩 | 🟡 MEDIUM | Plan-17 | ⏳ 대기 |
 | 3B.3 | LocalStorage 토큰 저장 | 🟡 MEDIUM | Plan-18 | ⏳ 대기 |
 

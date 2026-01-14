@@ -262,3 +262,19 @@
 ### 15.3 의사결정 (Decision)
 - **결정**: ADR-002 구현 완료, Plan-13 완료
 - **이유**: 타인 주소 접근 원천 차단으로 개인정보 보호
+
+## [2026-01-14 KST] Phase 16: ADR-003 OpenAI Backend Proxy 구현 (Plan-14)
+
+### 16.1 실행 명령 (Command)
+- 명령 내용: "OpenAI API Key Backend Proxy 구현"
+- 명령 내용: "Frontend에서 직접 API 호출 제거"
+
+### 16.2 분석 결과 요약 (AI Analysis)
+- **ChatController.java**: OpenAI API Proxy 컨트롤러 생성
+- **ChatRequest.java**: 요청 DTO 생성
+- **Chatgpt.js**: OpenAI 직접 호출 → `/api/chat` Backend Proxy 호출로 변경
+- **API Key**: Frontend 환경변수에서 Backend application.properties로 이동
+
+### 16.3 의사결정 (Decision)
+- **결정**: ADR-003 구현 완료, Plan-14 완료, CRITICAL 이슈 3개 모두 해결
+- **이유**: API Key 클라이언트 노출 방지로 과금 피해 예방
