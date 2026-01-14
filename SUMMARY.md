@@ -69,20 +69,30 @@
 
 ---
 
-## Phase 3: 보안 이슈 대응 🔵 진행 중
+## Phase 3: 보안 이슈 대응 ✅ 완료
 
-### 상태: ADR 작성 완료, 구현 Plan 작성 필요
+### 완료일: 2026-01-14
 
-### 작성된 ADR
+### 변경 요약
 
-| ADR | 이슈 | 심각도 |
-|-----|------|--------|
-| ADR-001 | SecurityConfig permitAll | 🔴 CRITICAL |
-| ADR-002 | Address API IDOR | 🔴 CRITICAL |
-| ADR-003 | OpenAI API Key 노출 | 🔴 CRITICAL |
-| ADR-004 | 민감 정보 로깅 | 🟡 HIGH |
-| ADR-005 | StoreMember 인증 부재 | 🟡 HIGH |
-| ADR-006 | 토큰 저장 방식 | 🟡 MEDIUM |
+| 심각도 | 이슈 | 해결 방법 | Plan |
+|--------|------|-----------|------|
+| 🔴 CRITICAL | SecurityConfig permitAll | RBAC 적용 | Plan-12 |
+| 🔴 CRITICAL | Address API IDOR | JWT 토큰 검증 | Plan-13 |
+| 🔴 CRITICAL | OpenAI API Key 노출 | Backend Proxy | Plan-14 |
+| 🟡 HIGH | 민감 정보 로깅 | System.out.println 제거 | Plan-15 |
+| 🟡 HIGH | StoreMember 인증 부재 | Plan-12 RBAC 연계 | Plan-16 |
+| 🟡 MEDIUM | Firebase Config 하드코딩 | 환경변수 분리 | Plan-17 |
+| 🟡 MEDIUM | 토큰 저장 방식 | 향후 개선 문서화 | Plan-18 |
+
+### 향후 개선 권장사항
+- **ADR-006**: HTTPS 전환 시 HttpOnly Cookie 적용 권장
+
+---
+
+## 다음 단계
+
+1. Phase 4: 성능 가설 기록 (구현하지 않고 문서화만)
 
 ---
 

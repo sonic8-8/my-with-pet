@@ -322,3 +322,20 @@
 ### 19.3 의사결정 (Decision)
 - **결정**: Plan-17 완료
 - **이유**: Firebase API Key 소스코드 노출 방지
+
+## [2026-01-14 KST] Phase 20: ADR-006 토큰 저장 문서화 (Plan-18) + Phase 3 완료
+
+### 20.1 실행 명령 (Command)
+- 명령 내용: "ADR-006 향후 개선으로 표시"
+- 명령 내용: "Phase 3 완료 처리"
+
+### 20.2 분석 결과 요약 (AI Analysis)
+- **ADR-006**: 향후 개선 (HTTPS 전환 시 HttpOnly Cookie 적용 권장)
+- **Plan-18**: 문서화 완료
+- **Phase 3 전체**: 7개 보안 이슈 처리 완료
+
+### 20.3 의사결정 (Decision)
+- **결정**: Phase 3 보안 이슈 대응 완료
+- **CRITICAL 3개**: 모두 해결 (SecurityConfig RBAC, IDOR, OpenAI Key)
+- **HIGH 2개**: 모두 해결 (민감 로깅, StoreMember)
+- **MEDIUM 2개**: 모두 해결 (Firebase Config, 토큰 저장 문서화)

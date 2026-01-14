@@ -84,7 +84,7 @@
 
 ---
 
-## Phase 3: 보안 이슈 대응
+## Phase 3: 보안 이슈 대응 ✅ 완료
 
 > **작업 워크플로우**: 보안 관련 변경은 시스템 동작에 큰 영향을 미치므로,  
 > **ADR 작성 → Plan 작성 → 구현 → HISTORY 업데이트** 순서로 진행합니다.
@@ -104,7 +104,7 @@
 |---|------|--------|------|------|
 | 3B.1 | OpenAI API Key 클라이언트 노출 | 🔴 CRITICAL | Plan-14 | ✅ 완료 |
 | 3B.2 | Firebase Config 하드코딩 | 🟡 MEDIUM | Plan-17 | ✅ 완료 |
-| 3B.3 | LocalStorage 토큰 저장 | 🟡 MEDIUM | Plan-18 | ⏳ 대기 |
+| 3B.3 | LocalStorage 토큰 저장 | 🟡 MEDIUM | Plan-18 | ✅ 완료 (문서화) |
 
 ---
 
