@@ -95,7 +95,7 @@
 |---|------|--------|------|------|
 | 3A.1 | `SecurityConfig` 전체 permitAll | 🔴 CRITICAL | Plan-12 | ✅ 완료 |
 | 3A.2 | Address API IDOR | 🔴 CRITICAL | Plan-13 | ✅ 완료 |
-| 3A.3 | 민감 정보 로깅 (JWT, 비밀번호) | 🟡 HIGH | Plan-15 | ⏳ 대기 |
+| 3A.3 | 민감 정보 로깅 (JWT, 비밀번호) | 🟡 HIGH | Plan-15 | ✅ 완료 |
 | 3A.4 | StoreMember 인증 부재 | 🟡 HIGH | Plan-16 | ⏳ 대기 |
 
 ### 3B. Frontend 보안

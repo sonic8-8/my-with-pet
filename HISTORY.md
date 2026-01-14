@@ -278,3 +278,17 @@
 ### 16.3 의사결정 (Decision)
 - **결정**: ADR-003 구현 완료, Plan-14 완료, CRITICAL 이슈 3개 모두 해결
 - **이유**: API Key 클라이언트 노출 방지로 과금 피해 예방
+
+## [2026-01-14 KST] Phase 17: ADR-004 민감 정보 로깅 제거 (Plan-15)
+
+### 17.1 실행 명령 (Command)
+- 명령 내용: "남은 System.out.println 디버그 로깅 제거"
+
+### 17.2 분석 결과 요약 (AI Analysis)
+- **OrdersController.java**: `System.out.println(userId)` 제거
+- **ReviewController.java**: `System.out.println(reviewList)` 제거
+- **Backend 컴파일 성공** (exit 0)
+
+### 17.3 의사결정 (Decision)
+- **결정**: ADR-004 구현 완료, Plan-15 완료
+- **이유**: 민감 정보 로그 노출 방지로 보안 강화

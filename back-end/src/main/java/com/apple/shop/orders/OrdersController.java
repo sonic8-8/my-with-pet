@@ -27,7 +27,6 @@ public class OrdersController {
     @PostMapping("/orders/orderhistory")
     public List<Orders> loadOrderHistory(@RequestBody Map<String, String> data) {
         String userId = data.get("userId");
-        System.out.println(userId);
 
         Long userIdx = memberRepository.findById(userId).get().getIdx();
         List<Orders> orders = ordersRepository.findByMemberIdx(userIdx);

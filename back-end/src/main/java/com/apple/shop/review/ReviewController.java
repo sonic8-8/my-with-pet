@@ -21,7 +21,6 @@ public class ReviewController {
     public List<Review> getReviews(@RequestParam Long idx) {
 
         List<Review> reviewList = reviewRepository.findAllByStoreIdx(idx);
-        System.out.println(reviewList);
 
         return reviewList;
     }
