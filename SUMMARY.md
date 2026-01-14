@@ -81,9 +81,11 @@
 |------|------|------|
 | H2 파일 모드 변경 | `jdbc:h2:tcp` → `jdbc:h2:file` | Plan-20 |
 | Redis/GCP 비활성화 | 의존성 주석 처리, 관련 코드 비활성화 | Plan-21 |
+| 프론트엔드 라우팅 수정 | React Router v6 자식 요소 위반 해결 | Plan-22 |
 
 ### 결과
-- 로컬 서버 정상 시작: `Started ShopApplication in 3.803 seconds`
+- 로컬 백엔드 서버 정상 시작: `Started ShopApplication in 3.803 seconds`
+- 프론트엔드 서버 정상 구동 확인 (CRA `npm start`)
 
 ---
 

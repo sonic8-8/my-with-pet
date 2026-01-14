@@ -11,9 +11,9 @@ import Footer from './customerPage/Footer.js';
 import Chatgpt from './api/Chatgpt.js';
 
 // 라우트 설정
-import CustomerRoutes from './routes/CustomerRoutes.js';
-import BusinessRoutes from './routes/BusinessRoutes.js';
-import PaymentRoutes from './routes/PaymentRoutes.js';
+import { CustomerRoutes } from './routes/CustomerRoutes.js';
+import { BusinessRoutes } from './routes/BusinessRoutes.js';
+import { PaymentRoutes } from './routes/PaymentRoutes.js';
 
 /**
  * 메인 애플리케이션 컴포넌트
@@ -42,9 +42,9 @@ function App() {
         {/* 라우트 컨테이너 */}
         <div className={styles.route_container}>
           <Routes>
-            <CustomerRoutes />
-            <BusinessRoutes />
-            <PaymentRoutes />
+            {CustomerRoutes}
+            {BusinessRoutes}
+            {PaymentRoutes}
           </Routes>
         </div>
       </div>

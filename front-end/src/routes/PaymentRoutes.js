@@ -9,14 +9,10 @@ import Fail from '../Tosspayments/Fail.js';
 /**
  * 결제 관련 라우트 설정
  */
-function PaymentRoutes() {
-    return (
-        <>
-            <Route path="/pay" element={<Checkout />} />
-            <Route path="/success" element={<Success />} />
-            <Route path="/fail" element={<Fail />} />
-        </>
-    );
-}
-
-export default PaymentRoutes;
+export const PaymentRoutes = (
+    <>
+        <Route path="/pay" element={<Checkout />} />
+        <Route path="/success" element={<Success />} />
+        <Route path="/fail" element={<Fail />} />
+    </>
+);

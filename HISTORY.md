@@ -386,3 +386,20 @@
 ### 23.3 의사결정 (Decision)
 - **결정**: Plan-21 완료, Local 서버 정상 실행
 - **이유**: Redis/GCP 없이 로컬 개발 가능 (성능 최적화/배포 시 활성화)
+
+## [2026-01-14 KST] Phase 24: 프론트엔드 라우팅 오류 수정 (Plan-22)
+
+### 24.1 실행 명령 (Command)
+- 명령 내용: "App.js <Routes> 자식 요소 규칙 위반 수정"
+- 명령 내용: "CustomerRoutes, BusinessRoutes, PaymentRoutes JSX 변수로 리팩토링"
+- 명령 내용: ".gitignore에 back-end/data/ 제외 추가"
+
+### 24.2 분석 결과 요약 (AI Analysis)
+- **App.js**: `<CustomerRoutes />` 태그 호출 → `{CustomerRoutes}` JSX 변수 삽입으로 변경 (React Router v6 규칙 준수)
+- **Route 컴포넌트**: `export default function` → `export const` (JSX Fragment) 형태로 변경
+- **.gitignore**: 로컬 H2 데이터베이스 파일(`back-end/data/`)이 Git 인덱싱을 방해하는 문제 해결을 위해 제외 설정 추가
+- **검증**: `npm start` 시 런타임 오류(`Invalid children of <Routes>`) 해결 확인됨
+
+### 24.3 의사결정 (Decision)
+- **결정**: Plan-22 완료, 로컬 개발 환경(Phase 5) 최종 정비 완료
+- **이유**: 프론트엔드 실행 환경 구축 및 Git 작업 안정성 확보

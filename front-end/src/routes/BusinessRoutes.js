@@ -18,30 +18,26 @@ import BizOrderList from '../businessPage/BizOrderList.js';
 /**
  * 비즈니스 관련 라우트 설정
  */
-function BusinessRoutes() {
-    return (
-        <>
-            {/* 비즈니스 메인 */}
-            <Route path="/business" element={<BizMain />} />
+export const BusinessRoutes = (
+    <>
+        {/* 비즈니스 메인 */}
+        <Route path="/business" element={<BizMain />} />
 
-            {/* 로그인/회원가입 */}
-            <Route path="/business/login" element={<BizLogin />} />
-            <Route path="/business/sign-up" element={<BizSignUp />} />
-            <Route path="/business/biz-num" element={<BizNumAuth />} />
+        {/* 로그인/회원가입 */}
+        <Route path="/business/login" element={<BizLogin />} />
+        <Route path="/business/sign-up" element={<BizSignUp />} />
+        <Route path="/business/biz-num" element={<BizNumAuth />} />
 
-            {/* 마이페이지 */}
-            <Route path="/business/mypage" element={<BizMypage />} />
-            <Route path="/business/temp-close" element={<BizTempClose />} />
+        {/* 마이페이지 */}
+        <Route path="/business/mypage" element={<BizMypage />} />
+        <Route path="/business/temp-close" element={<BizTempClose />} />
 
-            {/* 가게 관리 */}
-            <Route path="/business/item-edit" element={<BizItemEdit />} />
-            <Route path="/business/info-edit" element={<BizInfoEdit />} />
-            <Route path="/business/review" element={<BizReview />} />
-            <Route path="/business/order-status" element={<BizOrderStatus />} />
-            <Route path="/business/like-list" element={<BizLikeList />} />
-            <Route path="/business/order-list" element={<BizOrderList />} />
-        </>
-    );
-}
-
-export default BusinessRoutes;
+        {/* 가게 관리 */}
+        <Route path="/business/item-edit" element={<BizItemEdit />} />
+        <Route path="/business/info-edit" element={<BizInfoEdit />} />
+        <Route path="/business/review" element={<BizReview />} />
+        <Route path="/business/order-status" element={<BizOrderStatus />} />
+        <Route path="/business/like-list" element={<BizLikeList />} />
+        <Route path="/business/order-list" element={<BizOrderList />} />
+    </>
+);
