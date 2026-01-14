@@ -307,3 +307,18 @@
 ### 18.3 의사결정 (Decision)
 - **결정**: ADR-005 완료, Plan-16 완료
 - **이유**: Plan-12 RBAC로 사업자 API 인증 이미 적용됨
+
+## [2026-01-14 KST] Phase 19: Firebase Config 환경변수 분리 (Plan-17)
+
+### 19.1 실행 명령 (Command)
+- 명령 내용: "Firebase Config 하드코딩 제거"
+- 명령 내용: "환경변수 분리"
+
+### 19.2 분석 결과 요약 (AI Analysis)
+- **front-end/.env.example**: Firebase 환경변수 템플릿 추가
+- **Login.js**: 하드코딩된 API Key → `process.env.REACT_APP_FIREBASE_*` 변경
+- **ESLint**: 에러 0개 (경고만 존재)
+
+### 19.3 의사결정 (Decision)
+- **결정**: Plan-17 완료
+- **이유**: Firebase API Key 소스코드 노출 방지

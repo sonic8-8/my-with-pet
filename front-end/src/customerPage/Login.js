@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import styles from './Login.module.css';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-import { getAuth, signInWithPopup,GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { useCookies } from 'react-cookie';
 
 
@@ -23,7 +23,7 @@ function StoreLogin() {
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const auth = getAuth();
-    const btn1 = ()=>{
+    const btn1 = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -31,13 +31,13 @@ function StoreLogin() {
                 const user = result.user;
                 console.log(result);
             }).catch((error) => {
-            
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            const email = error.customData.email;
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
-        });
+
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                const email = error.customData.email;
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // ...
+            });
     }
 
     const nav = useNavigate();
@@ -66,10 +66,10 @@ function StoreLogin() {
                 console.log(response.data);
                 if (response.data.message === '로그인 성공') {
                     const token = response.data.token;
-                    Cookies.set('token', token, { 
-                      expires: 7, // 쿠키에 토큰 저장 (7일 유효)
-                      path: '/'
-                     }); 
+                    Cookies.set('token', token, {
+                        expires: 7, // 쿠키에 토큰 저장 (7일 유효)
+                        path: '/'
+                    });
                     Cookies.set('MemberId', MemberId, { expires: 7 }); // 쿠키에 사용자 이름 저장 (7일 유효)
                     alert('로그인 성공');
                     nav('/');
@@ -89,19 +89,19 @@ function StoreLogin() {
             <h1>로그인</h1>
 
             <label>아이디</label>
-            <input type="text" value={MemberId} onChange={(e) => setMemberId(e.target.value)} 
-                placeholder='아이디를 입력해주세요.' /><br/>
+            <input type="text" value={MemberId} onChange={(e) => setMemberId(e.target.value)}
+                placeholder='아이디를 입력해주세요.' /><br />
             {errors.MemberId && <div className={styles.error}>{errors.MemberId}</div>}
             {message && <div className={styles.error}>{message}</div>}
 
             <label>비밀번호</label>
             <input type="password" value={MemberPw} onChange={(e) => setMemberPw(e.target.value)}
-                placeholder='비밀번호를 입력해주세요.' /><br/>
+                placeholder='비밀번호를 입력해주세요.' /><br />
             {errors.MemberPw && <div className={styles.error}>{errors.MemberPw}</div>}
 
             <button onClick={login}>로그인</button>
-            
-            <div className={styles.box}/>
+
+            <div className={styles.box} />
 
             <button onClick={btn1}>구글 로그인</button>
         </div>
