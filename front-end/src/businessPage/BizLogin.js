@@ -22,7 +22,7 @@ function BizLogin() {
         }
 
         axios
-            .post('http://localhost:8085/api/business/login', {
+            .post('/api/business/login', {
                 id: MemberId,
                 pw: MemberPw,
             })
@@ -49,14 +49,14 @@ function BizLogin() {
             <h1>Member 로그인</h1>
 
             <label>아이디</label>
-            <input type="text" value={MemberId} onChange={(e) => setMemberId(e.target.value)} 
-                placeholder='아이디를 입력해주세요.' /><br/>
+            <input type="text" value={MemberId} onChange={(e) => setMemberId(e.target.value)}
+                placeholder='아이디를 입력해주세요.' /><br />
             {errors.MemberId && <div className={styles.error}>{errors.MemberId}</div>}
             {message && <div className={styles.error}>{message}</div>}
 
             <label>비밀번호</label>
             <input type="password" value={MemberPw} onChange={(e) => setMemberPw(e.target.value)}
-                placeholder='비밀번호를 입력해주세요.' /><br/>
+                placeholder='비밀번호를 입력해주세요.' /><br />
             {errors.MemberPw && <div className={styles.error}>{errors.MemberPw}</div>}
 
             <button onClick={login}>로그인하기</button>

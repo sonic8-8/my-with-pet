@@ -10,18 +10,18 @@ export const asyncAddAddress = createAsyncThunk('addressSlice/asyncAddAddress',
   async (data) => {
 
     try {
-    const loginedId = Cookies.get('MemberId');
-    const addressData = {
-      address : data.address,
-      memberId : loginedId
-    }
+      const loginedId = Cookies.get('MemberId');
+      const addressData = {
+        address: data.address,
+        memberId: loginedId
+      }
 
-    const token = Cookies.get('token');
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      const token = Cookies.get('token');
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-    const response = axios.post('http://localhost8085/api/address-add',
-      JSON.stringify(addressData), {
-        headers : {
+      const response = axios.post('/api/address-add',
+        JSON.stringify(addressData), {
+        headers: {
           'Content-Type': 'application/json'
         }
       })
@@ -48,9 +48,9 @@ export const asyncLoadAddress = createAsyncThunk(
   async () => {
 
     try {
-    const loginedId = Cookies.get('MemberId');
-    const response = await axios.get(
-      `http://localhost8085/api/address?memberId=${loginedId}`
+      const loginedId = Cookies.get('MemberId');
+      const response = await axios.get(
+        `/api/address?memberId=${loginedId}`
       )
 
       if (response.status === 200) {
@@ -71,8 +71,8 @@ export const asyncLoadAddress = createAsyncThunk(
 
 // 장바구니 아이템 추가 비동기 액션 생성
 // 어떤 정보를 가져올지 여기서 선택하면 됨
-export const asyncAddCart = createAsyncThunk('cartSlice/asyncAxiosCart', 
-  
+export const asyncAddCart = createAsyncThunk('cartSlice/asyncAxiosCart',
+
   async (item) => {
 
     // 여기서 item은 장바구니에서 담은 item을 의미함
@@ -89,8 +89,8 @@ export const asyncAddCart = createAsyncThunk('cartSlice/asyncAxiosCart',
       memberId: item.memberId // 쿠키에서 로그인한 사람의 Id를 찾아왔음
     }
 
-    const response = await axios.post('http://localhost:8085/api/cart/add',
-    JSON.stringify(cartData), {
+    const response = await axios.post('/api/cart/add',
+      JSON.stringify(cartData), {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -98,7 +98,7 @@ export const asyncAddCart = createAsyncThunk('cartSlice/asyncAxiosCart',
 
     if (response.status === 200) { // 성공하면 관례적으로 200 띄워줌
       console.log('장바구니에 물건을 담았습니다.');
-    // 주문 완료 후 처리 (예: 페이지 이동, 장바구니 비우기 등)
+      // 주문 완료 후 처리 (예: 페이지 이동, 장바구니 비우기 등)
     } else {
       console.log('물건담기에 실패했습니다.');
       console.error('물건담기 실패:', response.data);
@@ -118,41 +118,41 @@ const addressSlice = createSlice({
   },
   // 동기 처리
   reducers: {
-    addAddress: (state, action) => {},
-    removeAddress: (state, action) => {},
-    updateAddress: (state, action) => {}
+    addAddress: (state, action) => { },
+    removeAddress: (state, action) => { },
+    updateAddress: (state, action) => { }
   },
 
   // 비동기 처리
-  extraReducers: ( (builder) => 
+  extraReducers: ((builder) =>
     builder
-      .addCase( asyncAddAddress.pending, (state, action) => {
+      .addCase(asyncAddAddress.pending, (state, action) => {
         state.status = '로딩중'
       })
-      .addCase( asyncAddAddress.fulfilled, (state, action) => {
+      .addCase(asyncAddAddress.fulfilled, (state, action) => {
         state.status = '성공'
         state.addresses.push(action.payload);
       })
-      .addCase( asyncAddAddress.rejected, (state, action) => {
+      .addCase(asyncAddAddress.rejected, (state, action) => {
         state.status = '실패'
         state.error = action.error.message;
       })
   ),
 
-  extraReducers: ( (builder) =>
+  extraReducers: ((builder) =>
     builder
-      .addCase( asyncLoadAddress.pending, (state, action) => {
+      .addCase(asyncLoadAddress.pending, (state, action) => {
         state.status = '로딩중';
       })
-      .addCase( asyncLoadAddress.fulfilled, (state, action) => {
+      .addCase(asyncLoadAddress.fulfilled, (state, action) => {
         state.status = '성공';
         state.addresses = action.payload;
       })
-      .addCase( asyncLoadAddress.rejected, (state, action) => {
+      .addCase(asyncLoadAddress.rejected, (state, action) => {
         state.status = '실패';
         state.error = action.error.message;
       })
-)
+  )
 })
 
 // 만든 함수 export
@@ -161,48 +161,48 @@ export const { addAddress, removeAddress, updateAddress } = addressSlice.actions
 // -------------------------------------------------------------------
 
 const cartSlice = createSlice({
-    name: 'cart',
-    initialState: {
-      items: [],
-      status: '',
-      error: null
+  name: 'cart',
+  initialState: {
+    items: [],
+    status: '',
+    error: null
+  },
+  // 동기 처리 함수
+  reducers: {
+    addItem: (state, action) => {
+      const existingItem = state.items.find(item => item.idx === action.payload.idx);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        state.items.push({ ...action.payload, quantity: 1 });
+      }
     },
-    // 동기 처리 함수
-    reducers: {
-      addItem: (state, action) => {
-        const existingItem = state.items.find(item => item.idx === action.payload.idx);
-        if (existingItem) {
-          existingItem.quantity += 1;
-        } else {
-          state.items.push({ ...action.payload, quantity: 1 });
-        }
-      },
-      removeItem: (state, action) => {
-        state.items = state.items.filter(item => item.idx !== action.payload);
-      },
-      updateItemQuantity: (state, action) => {
-        const item = state.items.find(item => item.idx === action.payload.idx);
-        if (item) {
-          item.quantity = action.payload.quantity;
-        }
-      },
+    removeItem: (state, action) => {
+      state.items = state.items.filter(item => item.idx !== action.payload);
     },
-    // 비동기 처리 메서드
-    extraReducers: ( (builder) => {
-        builder
-          .addCase(asyncAddCart.pending, (state, action) => {
-            state.status = '로딩중';
-          })
-          .addCase(asyncAddCart.fulfilled, (state, action) => {
-            state.status = '성공';
-            state.items.push(action.payload);
-          })
-          .addCase(asyncAddCart.rejected, (state, action) => {
-            state.status = '실패';
-            state.error = action.error.message;
-          });
+    updateItemQuantity: (state, action) => {
+      const item = state.items.find(item => item.idx === action.payload.idx);
+      if (item) {
+        item.quantity = action.payload.quantity;
+      }
+    },
+  },
+  // 비동기 처리 메서드
+  extraReducers: ((builder) => {
+    builder
+      .addCase(asyncAddCart.pending, (state, action) => {
+        state.status = '로딩중';
       })
-  });
+      .addCase(asyncAddCart.fulfilled, (state, action) => {
+        state.status = '성공';
+        state.items.push(action.payload);
+      })
+      .addCase(asyncAddCart.rejected, (state, action) => {
+        state.status = '실패';
+        state.error = action.error.message;
+      });
+  })
+});
 
 // 만든 함수 export
 export const { addItem, removeItem, updateItemQuantity } = cartSlice.actions;
@@ -211,8 +211,8 @@ export const { addItem, removeItem, updateItemQuantity } = cartSlice.actions;
 // -----------------------------------------------------------------
 // 등록하는 곳
 export default configureStore({
-reducer: {
-    cart : cartSlice.reducer,
-    address : addressSlice.reducer
-    }
+  reducer: {
+    cart: cartSlice.reducer,
+    address: addressSlice.reducer
+  }
 });

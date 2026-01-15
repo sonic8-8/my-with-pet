@@ -16,7 +16,7 @@ function Success() {
     };
 
     async function confirm() {
-      const response = await fetch("http://localhost:8085/api/confirm", {
+      const response = await fetch("/api/confirm", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -10,13 +10,13 @@ const Success = () => {
     const urlParams = new URLSearchParams(window.location.search);
     setPaymentKey(urlParams.get('paymentKey'));
     setOrderId(urlParams.get('orderId'));
-    setAmount(urlParams.get('amount'));  
+    setAmount(urlParams.get('amount'));
     //현재 URL의 쿼리 문자열을 파싱하여 urlParams라는 변수에 저장-> URL 쿼리 파리미터 접근 가능
     //URL의 쿼리 파라미터를 파싱하여 paymentKey, orderId, amount 상태를 설정
 
     const confirmPayment = async () => {
       try {
-        const response = await fetch('http://localhost:8085/api/confirm', {  // URL을 8085로 설정
+        const response = await fetch('/api/confirm', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

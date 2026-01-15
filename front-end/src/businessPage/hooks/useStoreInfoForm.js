@@ -86,7 +86,7 @@ export function useStoreInfoForm() {
             }
 
             await axios.post(
-                "http://localhost:8085/api/business/storeinfo",
+                "/api/business/storeinfo",
                 formData,
                 { headers: { "Content-Type": "multipart/form-data" } }
             );

@@ -17,7 +17,7 @@ export function useStoreData(storeIdx) {
     useEffect(() => {
         if (!storeIdx) return;
 
-        axios.get('http://localhost:8085/api/store-info', {
+        axios.get('/api/store-info', {
             params: { idx: storeIdx }
         })
             .then(response => setStore(response.data))
@@ -28,7 +28,7 @@ export function useStoreData(storeIdx) {
     useEffect(() => {
         if (!storeIdx) return;
 
-        axios.get('http://localhost:8085/api/shop', {
+        axios.get('/api/shop', {
             params: { idx: storeIdx }
         })
             .then(response => setItems(response.data))
@@ -41,7 +41,7 @@ export function useStoreData(storeIdx) {
 
         const fetchReviews = async () => {
             try {
-                const response = await axios.get('http://localhost:8085/api/review', {
+                const response = await axios.get('/api/review', {
                     params: { idx: storeIdx }
                 });
                 setReviews(response.data);

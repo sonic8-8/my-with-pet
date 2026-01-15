@@ -58,7 +58,7 @@ function StoreLogin() {
         }
 
         axios
-            .post('http://localhost:8085/api/login', {
+            .post('/api/login', {
                 id: MemberId,
                 pw: MemberPw,
             })

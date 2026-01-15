@@ -39,26 +39,26 @@ function SignUp() {
         }
 
         axios
-    .post('http://localhost:8085/api/sign-up', {
-        id: MemberId,
-        pw: MemberPw,
-        name: MemberName,
-        phone: MemberPhone,
-    })
-    .then((response) => {
-        console.log(response.data);
-        if(response.data === '회원가입 성공'){
-            alert('회원가입 성공');
-            nav('/');
-        } else{
-            setMessage(response.data);
-        }
-    })
-    .catch((error) => {
-        console.log('통신 실패', error);
-        alert('회원가입 실패');
-    });
-    
+            .post('/api/sign-up', {
+                id: MemberId,
+                pw: MemberPw,
+                name: MemberName,
+                phone: MemberPhone,
+            })
+            .then((response) => {
+                console.log(response.data);
+                if (response.data === '회원가입 성공') {
+                    alert('회원가입 성공');
+                    nav('/');
+                } else {
+                    setMessage(response.data);
+                }
+            })
+            .catch((error) => {
+                console.log('통신 실패', error);
+                alert('회원가입 실패');
+            });
+
     };
 
     return (
@@ -66,26 +66,26 @@ function SignUp() {
             <h1>Member 회원가입</h1>
 
             <label>아이디</label>
-            <input type="text" value={MemberId} onChange={(e) => setMemberId(e.target.value)} 
-                placeholder='아이디를 입력해주세요.' /><br/>
+            <input type="text" value={MemberId} onChange={(e) => setMemberId(e.target.value)}
+                placeholder='아이디를 입력해주세요.' /><br />
             {errors.MemberId && <div className="error">{errors.MemberId}</div>}
             {message && <div className={styles.error}>{message}</div>}
 
             <label>비밀번호</label>
             <input type="password" value={MemberPw} onChange={(e) => setMemberPw(e.target.value)}
-                placeholder='비밀번호를 입력해주세요.' /><br/>
+                placeholder='비밀번호를 입력해주세요.' /><br />
             {errors.MemberPw && <div className={styles.error}>{errors.MemberPw}</div>}
 
 
             <label>이름</label>
             <input type="text" value={MemberName} onChange={(e) => setMemberName(e.target.value)}
-                placeholder='이름을 입력해주세요.' /><br/>
+                placeholder='이름을 입력해주세요.' /><br />
             {errors.MemberName && <div className={styles.error}>{errors.MemberName}</div>}
 
 
             <label>전화번호</label>
-            <input type="text" value={MemberPhone} onChange={handlePhoneChange} 
-                placeholder='전화번호를 입력해주세요.'/><br/>
+            <input type="text" value={MemberPhone} onChange={handlePhoneChange}
+                placeholder='전화번호를 입력해주세요.' /><br />
             {errors.MemberPhone && <div className={styles.error}>{errors.MemberPhone}</div>}
 
 

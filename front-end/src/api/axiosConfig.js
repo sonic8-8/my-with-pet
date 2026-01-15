@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8080',
+  baseURL: process.env.REACT_APP_API_URL || '/api',
   headers: {
     'Content-Type': 'application/json',
   },
-//  withCredentials: true, // If using cookies
+  //  withCredentials: true, // If using cookies
 });
 
 // Request Interceptor
@@ -30,8 +30,8 @@ api.interceptors.response.use(
   (error) => {
     // Handle 401/403 errors (e.g. redirect to login)
     if (error.response && error.response.status === 401) {
-        // Redirect to login or refresh token
-        console.log("Unauthorized, redirecting to login...");
+      // Redirect to login or refresh token
+      console.log("Unauthorized, redirecting to login...");
     }
     return Promise.reject(error);
   }

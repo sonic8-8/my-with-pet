@@ -17,7 +17,7 @@ function BizMypage() {
         }
 
         axios
-            .get('http://localhost:8085/api/business/mypage', {
+            .get('/api/business/mypage', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

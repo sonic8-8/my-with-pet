@@ -17,10 +17,10 @@ function ProfileEdit() {
     // 사용자 정보를 불러오는 함수
     const fetchUserInfo = async () => {
       try {
-       
-        const response = await axios.post('http://localhost:8085/api/memberinfo', {
-        userid
-           // 실제 사용자 ID를 여기에 넣으세요
+
+        const response = await axios.post('/api/memberinfo', {
+          userid
+          // 실제 사용자 ID를 여기에 넣으세요
         });
         setUserInfo(response.data);
       } catch (error) {
@@ -43,7 +43,7 @@ function ProfileEdit() {
   const handleSubmit = async (e) => {
     // e.preventDefault();
     // try {
-    //   const response = await axios.put('http://localhost:8085/api/edit-profile', userInfo);
+    //   const response = await axios.put('/api/edit-profile', userInfo);
     //   console.log('Profile updated successfully:', response.data);
     // } catch (error) {
     //   console.error('There was an error updating the profile!', error);
@@ -52,12 +52,12 @@ function ProfileEdit() {
   };
 
 
-  
+
   return (
 
-  <div>
+    <div>
 
-<h1>개인정보 수정 페이지</h1>
+      <h1>개인정보 수정 페이지</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <label>
@@ -81,7 +81,7 @@ function ProfileEdit() {
           />
         </label>
         <br />
-        
+
         <label>
           비밀번호:
           <input
@@ -116,7 +116,7 @@ function ProfileEdit() {
       </form>
 
 
-  </div>
+    </div>
 
   )
 }

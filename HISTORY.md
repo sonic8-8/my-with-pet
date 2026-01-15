@@ -403,3 +403,24 @@
 ### 24.3 의사결정 (Decision)
 - **결정**: Plan-22 완료, 로컬 개발 환경(Phase 5) 최종 정비 완료
 - **이유**: 프론트엔드 실행 환경 구축 및 Git 작업 안정성 확보
+
+## [2026-01-15 KST] Phase 25: FE-BE 프록시 설정 통일 (Plan-23)
+
+### 25.1 실행 명령 (Command)
+- 명령 내용: "setupProxy.js 타겟을 8085에서 8080으로 변경"
+- 명령 내용: "axiosConfig.js baseURL을 '/api'로 설정"
+- 명령 내용: "전체 소스코드에서 하드코딩된 localhost:8085 URL을 상대경로(/api/...)로 변경"
+
+### 25.2 분석 결과 요약 (AI Analysis)
+- **setupProxy.js**: `target: 'http://localhost:8085'` → `target: 'http://localhost:8080'`
+- **axiosConfig.js**: `baseURL: 'http://localhost:8080'` → `baseURL: '/api'`
+- **Redux/store.js**: 오타(`localhost8085`) 2건 및 절대경로 1건 수정
+- **customerPage**: Main.js, Login.js, SignUp.js, Cart.js, StoreList.js, hooks/useStoreData.js (3건)
+- **mypage**: AddressEdit.js, OrderList.js, ProfileEdit.js (2건)
+- **businessPage**: BizLogin.js, BizSignUp.js, BizNumAuth.js, BizMypage.js, hooks/useStoreInfoForm.js
+- **Tosspayments/api**: Success.js (2개 파일)
+- **총 수정**: 21건의 하드코딩된 URL → 상대경로
+
+### 25.3 의사결정 (Decision)
+- **결정**: Plan-23 완료, FE-BE 프록시 설정 통일 완료
+- **이유**: 프론트엔드에서 백엔드 서버(8080)로의 안정적인 API 통신 기반 마련

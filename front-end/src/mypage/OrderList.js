@@ -12,7 +12,7 @@ function OrderList() {
 
     const fetchOrderHistory = async () => {
       try {
-        const response = await axios.post('http://localhost:8085/api/orders/orderhistory', {
+        const response = await axios.post('/api/orders/orderhistory', {
           userId: userId
         });
         setOrders(response.data);
@@ -28,8 +28,8 @@ function OrderList() {
 
   return (
 
-  <div>
-     <h1>주문 내역</h1>
+    <div>
+      <h1>주문 내역</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <table border="1">
         <thead>
@@ -62,7 +62,7 @@ function OrderList() {
         </tbody>
       </table>
 
-  </div>
+    </div>
 
   )
 
