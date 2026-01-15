@@ -27,6 +27,27 @@
 
 ---
 
+### [2026-01-14] FE-BE 프록시 설정 불일치
+
+**문제**
+- Frontend에서 Backend API 호출 시 CORS 오류 또는 404 발생
+- `setupProxy.js` 타겟과 `axiosConfig.js` baseURL 불일치
+
+**원인**
+- `setupProxy.js`: `http://localhost:8080/api` 타겟
+- `axiosConfig.js`: `baseURL: 'http://localhost:8080/api'`
+- 프록시와 axios 모두 절대 경로 사용 → 프록시가 제대로 동작하지 않음
+
+**해결 방법**
+- `setupProxy.js`: 타겟을 `http://localhost:8080`으로 변경
+- `axiosConfig.js`: `baseURL`을 `/api`로 변경 (상대 경로)
+- 모든 API 호출이 프록시를 통해 Backend로 전달되도록 통일
+
+**참고**
+- Plan-23: Frontend-Backend Proxy 설정 통일
+
+---
+
 ## 템플릿
 
 ### [날짜] 문제 제목

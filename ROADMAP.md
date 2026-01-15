@@ -1,7 +1,7 @@
 # Refactoring Roadmap - my-with-pet
 
 > **문서 상태**: 진행 중  
-> **마지막 업데이트**: 2026-01-14  
+> **마지막 업데이트**: 2026-01-15  
 > **승인 상태**: ✅ 승인됨
 
 ---
@@ -148,64 +148,133 @@
 
 ---
 
-## Phase 6: Docker 컨테이너화 🔄 진행 예정
+## Phase 6: 코드 리뷰 이슈 해결 🔄 진행 예정
+
+> 목표: Codex 코드 리뷰에서 발견된 Critical/High 이슈 해결  
+> **참조**: `REVIEW.md`
+
+### 📌 의사결정 요약
+
+| 항목 | 결정 | 비고 |
+|------|------|------|
+| 역할 표준화 | **DB 저장 값 변경** | `user`→`ROLE_USER`, `ceo`→`ROLE_BUSINESS` |
+| 토큰 저장 방식 | **HttpOnly Cookie** | Spring Security 표준 방식, XSS 방어 |
+| 미완성 화면 | **"준비 중" UI 표시** | 라우팅 유지, Placeholder 컴포넌트 적용 |
+| SSR | **제거** | Thymeleaf 의존성/템플릿/정적파일 삭제 |
+| 미구현 API | **전부 구현** | `/api/confirm`, `/api/order` 등 |
+
+---
+
+### 6A. 인증/보안 이슈 (🔴 Critical)
+
+| # | 이슈 | 설명 | Plan | 상태 |
+|---|------|------|------|------|
+| 6A.1 | 역할(Role) 표준화 | DB 저장 값을 `ROLE_USER`/`ROLE_BUSINESS`로 변경 | Plan-24 | ⬜ 대기 |
+| 6A.2 | 공개 URL 수정 | SecurityConfig 공개 경로를 실제 엔드포인트에 맞춤 (`/api/sign-up` 등) | Plan-24 | ⬜ 대기 |
+| 6A.3 | JWT 만료 시간 단위 수정 | LoginFilter에서 ms 단위로 통일 (36000ms → 10시간) | Plan-24 | ⬜ 대기 |
+| 6A.4 | JWT 예외 처리 | JWTFilter에서 서명/만료 오류 시 401 응답 추가 | Plan-24 | ⬜ 대기 |
+| 6A.5 | 주문/장바구니 IDOR 수정 | `@AuthenticationPrincipal`로 사용자 ID 추출 | Plan-25 | ⬜ 대기 |
+
+### 6B. FE-BE 연동 이슈 (🟡 High)
+
+| # | 이슈 | 설명 | Plan | 상태 |
+|---|------|------|------|------|
+| 6B.1 | API 경로 표준화 | FE/BE 경로 통일 (`/api/address-add1` → `/api/address`) | Plan-26 | ⬜ 대기 |
+| 6B.2 | 이중 /api 경로 수정 | baseURL이 `/api`일 때 요청 경로에서 `/api` 제거 | Plan-26 | ⬜ 대기 |
+| 6B.3 | 토큰 저장/조회 통일 | **HttpOnly Cookie 기반**으로 FE/BE 모두 수정 | Plan-26 | ⬜ 대기 |
+| 6B.4 | 미구현 API 구현 | `/api/confirm`, `/api/order`, `/api/business/verify` 등 BE 구현 | Plan-27 | ⬜ 대기 |
+
+### 6C. 정리 작업 (🟢 Low)
+
+| # | 이슈 | 설명 | Plan | 상태 |
+|---|------|------|------|------|
+| 6C.1 | SSR(Thymeleaf) 제거 | `build.gradle` 의존성, `templates/`, `static/` CSS 삭제 | Plan-28 | ⬜ 대기 |
+| 6C.2 | 미사용 코드 정리 | 미사용 import, 중복 파일(`api/Success.js` 등) 삭제 | Plan-28 | ⬜ 대기 |
+| 6C.3 | 미완성 화면 정리 | **"서비스 준비 중" Placeholder UI** 적용 (라우팅 유지) | Plan-29 | ⬜ 대기 |
+
+#### 6C.3 대상 컴포넌트
+
+| 영역 | 파일 |
+|------|------|
+| Business | `BizLikeList.js`, `BizOrderList.js`, `BizOrderStatus.js`, `BizReview.js`, `BizTempClose.js` |
+| MyPage | `DeleteId.js`, `Mypage.js`, `MyPet.js`, `LikeList.js` |
+
+#### 📋 향후 구현 예정 기능 (Backlog)
+
+> 현재는 "준비 중" UI를 적용하고, 아래 기능들은 추후 구현 예정
+
+| 화면 | 구현 예정 기능 | 우선순위 |
+|------|---------------|----------|
+| `BizOrderList` | 사업자 주문 내역 조회 | 🟡 High |
+| `BizOrderStatus` | 주문 상태 변경 (접수/배송중/완료) | 🟡 High |
+| `BizReview` | 고객 리뷰 조회 및 답글 작성 | 🟢 Medium |
+| `BizLikeList` | 가게 찜 목록 조회 | 🟢 Medium |
+| `BizTempClose` | 가게 임시 휴무 설정 | 🟢 Medium |
+| `Mypage` | 마이페이지 대시보드 | 🟡 High |
+| `LikeList` | 사용자 찜 목록 조회/관리 | 🟢 Medium |
+| `MyPet` | 반려동물 정보 등록/수정 | 🟢 Medium |
+| `DeleteId` | 회원 탈퇴 기능 | 🟢 Low |
+
+---
+
+## Phase 7: Docker 컨테이너화 🔄 진행 예정
 
 > 목표: 전체 스택을 Docker Compose로 구성
 
 | # | 작업 | 설명 | 상태 |
 |---|------|------|------|
-| 6.1 | Backend Dockerfile | Spring Boot JAR 빌드 및 실행 | ⬜ 대기 |
-| 6.2 | Frontend Dockerfile | React 빌드 및 Nginx 서빙 | ⬜ 대기 |
-| 6.3 | docker-compose.yml | Backend + Frontend + MySQL + Redis | ⬜ 대기 |
-| 6.4 | 환경변수 관리 | .env 파일로 설정 분리 | ⬜ 대기 |
+| 7.1 | Backend Dockerfile | Spring Boot JAR 빌드 및 실행 | ⬜ 대기 |
+| 7.2 | Frontend Dockerfile | React 빌드 및 Nginx 서빙 | ⬜ 대기 |
+| 7.3 | docker-compose.yml | Backend + Frontend + MySQL + Redis | ⬜ 대기 |
+| 7.4 | 환경변수 관리 | .env 파일로 설정 분리 | ⬜ 대기 |
 
 ---
 
-## Phase 7: GCP 배포 및 자동화 ⬜ 대기
+## Phase 8: GCP 배포 및 자동화 ⬜ 대기
 
 > 목표: GCP 프로덕션 환경 구성 및 GitHub Actions 배포 자동화
 
 | # | 작업 | 설명 | 상태 |
 |---|------|------|------|
-| 7.1 | Cloud SQL 설정 | MySQL 인스턴스 생성 및 연결 | ⬜ 대기 |
-| 7.2 | Cloud Storage 활성화 | GCS 버킷 및 서비스 계정 설정 | ⬜ 대기 |
-| 7.3 | Redis (Memorystore) | Redis 인스턴스 설정 | ⬜ 대기 |
-| 7.4 | Cloud Run 배포 | Backend/Frontend 컨테이너 배포 | ⬜ 대기 |
-| 7.5 | GitHub Actions 워크플로우 | PR 시 자동 빌드/테스트 | ⬜ 대기 |
-| 7.6 | Docker 이미지 자동 빌드 | Container Registry 푸시 | ⬜ 대기 |
-| 7.7 | Cloud Run 자동 배포 | main 브랜치 푸시 시 자동 배포 | ⬜ 대기 |
+| 8.1 | Cloud SQL 설정 | MySQL 인스턴스 생성 및 연결 | ⬜ 대기 |
+| 8.2 | Cloud Storage 활성화 | GCS 버킷 및 서비스 계정 설정 | ⬜ 대기 |
+| 8.3 | Redis (Memorystore) | Redis 인스턴스 설정 | ⬜ 대기 |
+| 8.4 | Cloud Run 배포 | Backend/Frontend 컨테이너 배포 | ⬜ 대기 |
+| 8.5 | GitHub Actions 워크플로우 | PR 시 자동 빌드/테스트 | ⬜ 대기 |
+| 8.6 | Docker 이미지 자동 빌드 | Container Registry 푸시 | ⬜ 대기 |
+| 8.7 | Cloud Run 자동 배포 | main 브랜치 푸시 시 자동 배포 | ⬜ 대기 |
 
 ---
 
-## Phase 8: 모니터링 및 부하테스트 ⬜ 대기
+## Phase 9: 모니터링 및 부하테스트 ⬜ 대기
 
 > 목표: **배포된 GCP 서버**에서 성능 모니터링 및 부하테스트
 > **도구**: K6 + Prometheus + Grafana (별도 인스턴스 불필요, Docker Compose로 구성)
 
 | # | 작업 | 설명 | 상태 |
 |---|------|------|------|
-| 8.1 | Prometheus 구성 | 메트릭 수집 서버 컨테이너 | ⬜ 대기 |
-| 8.2 | Grafana 구성 | 메트릭 시각화 대시보드 | ⬜ 대기 |
-| 8.3 | K6 부하테스트 스크립트 | JavaScript 기반 테스트 시나리오 작성 | ⬜ 대기 |
-| 8.4 | K6 → Prometheus 연동 | remote write로 메트릭 전송 | ⬜ 대기 |
-| 8.5 | Grafana 대시보드 구성 | K6 공식 대시보드 (ID: 19665) 적용 | ⬜ 대기 |
-| 8.6 | 부하테스트 실행 및 분석 | 병목 지점 식별 | ⬜ 대기 |
+| 9.1 | Prometheus 구성 | 메트릭 수집 서버 컨테이너 | ⬜ 대기 |
+| 9.2 | Grafana 구성 | 메트릭 시각화 대시보드 | ⬜ 대기 |
+| 9.3 | K6 부하테스트 스크립트 | JavaScript 기반 테스트 시나리오 작성 | ⬜ 대기 |
+| 9.4 | K6 → Prometheus 연동 | remote write로 메트릭 전송 | ⬜ 대기 |
+| 9.5 | Grafana 대시보드 구성 | K6 공식 대시보드 (ID: 19665) 적용 | ⬜ 대기 |
+| 9.6 | 부하테스트 실행 및 분석 | 병목 지점 식별 | ⬜ 대기 |
 
 ---
 
-## Phase 9: 성능 최적화 ⬜ 대기
+## Phase 10: 성능 최적화 ⬜ 대기
 
 > 목표: 부하테스트에서 발견된 병목 지점 최적화 및 **Before/After 수치 기록**
 > **포트폴리오 핵심**: 개선 전후 수치 비교로 정량적 성과 증명
 
 | # | 작업 | 설명 | 상태 |
 |---|------|------|------|
-| 9.1 | 병목 지점 우선순위 선정 | 부하테스트 결과 기반 개선 대상 선정 | ⬜ 대기 |
-| 9.2 | DB 쿼리 최적화 | N+1 문제, 인덱스 추가, 쿼리 튜닝 | ⬜ 대기 |
-| 9.3 | 캐싱 전략 적용 | Redis 캐싱, 응답 캐싱 | ⬜ 대기 |
-| 9.4 | 커넥션 풀 튜닝 | HikariCP, Redis 커넥션 최적화 | ⬜ 대기 |
-| 9.5 | 재부하테스트 | 최적화 후 동일 조건 테스트 | ⬜ 대기 |
-| 9.6 | 성능 지표 문서화 | Before/After 수치 기록 (TPS, P99, 응답시간) | ⬜ 대기 |
+| 10.1 | 병목 지점 우선순위 선정 | 부하테스트 결과 기반 개선 대상 선정 | ⬜ 대기 |
+| 10.2 | DB 쿼리 최적화 | N+1 문제, 인덱스 추가, 쿼리 튜닝 | ⬜ 대기 |
+| 10.3 | 캐싱 전략 적용 | Redis 캐싱, 응답 캐싱 | ⬜ 대기 |
+| 10.4 | 커넥션 풀 튜닝 | HikariCP, Redis 커넥션 최적화 | ⬜ 대기 |
+| 10.5 | 재부하테스트 | 최적화 후 동일 조건 테스트 | ⬜ 대기 |
+| 10.6 | 성능 지표 문서화 | Before/After 수치 기록 (TPS, P99, 응답시간) | ⬜ 대기 |
 
 ### 📊 성능 지표 기록 템플릿
 
@@ -227,9 +296,10 @@ Phase 3 ████████████ 보안 대응 ✅ 완료
 Phase 4 ████████████ 성능 가설 기록 ✅ 완료
 
 [Part B: 인프라 및 배포]
-Phase 5 ████████████ 로컬 환경 정비 ✅ 완료
-Phase 6 ░░░░░░░░░░░░ Docker 컨테이너화 🔄 진행 예정
-Phase 7 ░░░░░░░░░░░░ GCP 배포 및 자동화 ⬜ 대기
-Phase 8 ░░░░░░░░░░░░ 모니터링 & 부하테스트 (K6, Prometheus, Grafana) ⬜ 대기
-Phase 9 ░░░░░░░░░░░░ 성능 최적화 ⬜ 대기
+Phase 5   ████████████ 로컬 환경 정비 ✅ 완료
+Phase 6   ░░░░░░░░░░░░ 코드 리뷰 이슈 해결 🔄 진행 예정
+Phase 7   ░░░░░░░░░░░░ Docker 컨테이너화 ⬜ 대기
+Phase 8   ░░░░░░░░░░░░ GCP 배포 및 자동화 ⬜ 대기
+Phase 9   ░░░░░░░░░░░░ 모니터링 & 부하테스트 ⬜ 대기
+Phase 10  ░░░░░░░░░░░░ 성능 최적화 ⬜ 대기
 ```
