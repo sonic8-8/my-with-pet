@@ -29,13 +29,34 @@ public class JWTFilter extends OncePerRequestFilter {
             FilterChain filterChain) throws ServletException, IOException {
         Optional<String> token = extractToken(request);
 
-        if (token.isEmpty() || !isValidToken(token.get())) {
+        if (token.isEmpty()) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        setAuthenticationContext(token.get());
-        filterChain.doFilter(request, response);
+        try {
+            if (jwtUtil.isExpired(token.get())) {
+                sendUnauthorizedResponse(response, "Token expired");
+                return;
+            }
+            setAuthenticationContext(token.get());
+            filterChain.doFilter(request, response);
+        } catch (io.jsonwebtoken.ExpiredJwtException e) {
+            sendUnauthorizedResponse(response, "Token expired");
+        } catch (io.jsonwebtoken.JwtException e) {
+            sendUnauthorizedResponse(response, "Invalid token");
+        }
+    }
+
+    /**
+     * 401 Unauthorized 응답을 전송합니다.
+     */
+    private void sendUnauthorizedResponse(HttpServletResponse response, String message)
+            throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"error\": \"" + message + "\"}");
     }
 
     /**
@@ -49,13 +70,6 @@ public class JWTFilter extends OncePerRequestFilter {
         }
 
         return Optional.of(authorization.substring(BEARER_PREFIX.length()));
-    }
-
-    /**
-     * 토큰의 유효성을 검증합니다.
-     */
-    private boolean isValidToken(String token) {
-        return !jwtUtil.isExpired(token);
     }
 
     /**

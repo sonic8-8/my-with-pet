@@ -169,10 +169,10 @@
 
 | # | 이슈 | 설명 | Plan | 상태 |
 |---|------|------|------|------|
-| 6A.1 | 역할(Role) 표준화 | DB 저장 값을 `ROLE_USER`/`ROLE_BUSINESS`로 변경 | Plan-24 | ⬜ 대기 |
-| 6A.2 | 공개 URL 수정 | SecurityConfig 공개 경로를 실제 엔드포인트에 맞춤 (`/api/sign-up` 등) | Plan-24 | ⬜ 대기 |
-| 6A.3 | JWT 만료 시간 단위 수정 | LoginFilter에서 ms 단위로 통일 (36000ms → 10시간) | Plan-24 | ⬜ 대기 |
-| 6A.4 | JWT 예외 처리 | JWTFilter에서 서명/만료 오류 시 401 응답 추가 | Plan-24 | ⬜ 대기 |
+| 6A.1 | 역할(Role) 표준화 | DB 저장 값을 `ROLE_USER`/`ROLE_BUSINESS`로 변경 | Plan-24 | ✅ 완료 |
+| 6A.2 | 공개 URL 수정 | SecurityConfig 공개 경로를 실제 엔드포인트에 맞춤 (`/api/sign-up` 등) | Plan-24 | ✅ 완료 |
+| 6A.3 | JWT 만료 시간 단위 수정 | LoginFilter에서 ms 단위로 통일 (36000ms → 10시간) | Plan-24 | ✅ 완료 |
+| 6A.4 | JWT 예외 처리 | JWTFilter에서 서명/만료 오류 시 401 응답 추가 | Plan-24 | ✅ 완료 |
 | 6A.5 | 주문/장바구니 IDOR 수정 | `@AuthenticationPrincipal`로 사용자 ID 추출 | Plan-25 | ⬜ 대기 |
 
 ### 6B. FE-BE 연동 이슈 (🟡 High)

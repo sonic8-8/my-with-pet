@@ -19,7 +19,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private static final String USERNAME_PARAM = "id";
     private static final String PASSWORD_PARAM = "pw";
-    private static final long JWT_EXPIRATION_SECONDS = 60 * 60 * 10L; // 10시간
+    private static final long JWT_EXPIRATION_MS = 1000L * 60 * 60 * 10; // 10시간 (ms)
     private static final int UNAUTHORIZED_STATUS = 401;
 
     private final AuthenticationManager authenticationManager;
@@ -46,7 +46,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String id = userDetails.getUsername();
         String role = extractRoleFromAuthorities(authentication.getAuthorities());
 
-        String token = jwtUtil.createJwt(id, role, JWT_EXPIRATION_SECONDS);
+        String token = jwtUtil.createJwt(id, role, JWT_EXPIRATION_MS);
         response.addHeader("Authorization", "Bearer " + token);
     }
 

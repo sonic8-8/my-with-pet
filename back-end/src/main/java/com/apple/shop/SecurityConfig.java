@@ -27,7 +27,8 @@ public class SecurityConfig {
 
     // 공개 API 경로 (인증 불필요)
     private static final String[] PUBLIC_URLS = {
-            "/api/login", "/api/register",
+            "/api/login", "/api/sign-up",
+            "/api/business/login", "/api/business/sign-up",
             "/api/store-list/**", "/api/shop/**", "/api/store-info",
             "/api/review", "/api/main/**"
     };

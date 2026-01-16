@@ -13,7 +13,7 @@ import java.util.Optional;
 public class MemberService {
 
     private static final long JWT_EXPIRATION_MS = 3600000L; // 1시간
-    private static final String DEFAULT_ROLE = "user";
+    private static final String DEFAULT_ROLE = "ROLE_USER";
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;

@@ -23,7 +23,7 @@ public class StoreMemberService {
         storeMember.setPw(hash);
         storeMember.setName(data.getName());
         storeMember.setPhone(data.getPhone());
-        storeMember.setRole("ceo");
+        storeMember.setRole("ROLE_BUSINESS");
         storeMember.setJoinedAt(Instant.now());
 
         Optional<StoreMember> optional = storeMemberRepository.findById(data.getId());
