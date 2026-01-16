@@ -23,7 +23,7 @@ public class StoreMemberController {
     @PostMapping("/sign-up")
     public String join(@RequestBody StoreMember storeMember) {
 
-        if(storeMemberService.checkDuplicateId(storeMember.getId())){
+        if (storeMemberService.checkDuplicateId(storeMember.getId())) {
             return "이미 등록된 아이디입니다.";
         }
         storeMemberService.registerMember(storeMember);
@@ -65,6 +65,45 @@ public class StoreMemberController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    /**
+     * 사업자등록번호 인증
+     * TODO: 실제 국세청 API 연동 필요
+     */
+    @PostMapping("/verify")
+    public ResponseEntity<java.util.Map<String, Boolean>> verifyBusinessNumber(
+            @RequestBody java.util.Map<String, java.util.List<String>> request) {
+        java.util.List<String> businessNumbers = request.get("b_no");
+
+        if (businessNumbers == null || businessNumbers.isEmpty()) {
+            return ResponseEntity.badRequest().body(java.util.Map.of("valid", false));
+        }
+
+        // TODO: 실제 사업자번호 검증 API 연동 (국세청 API 등)
+        // 현재는 더미 검증 (10자리 숫자 체크)
+        String bNo = businessNumbers.get(0);
+        boolean valid = bNo != null && bNo.matches("\\d{10}");
+
+        return ResponseEntity.ok(java.util.Map.of("valid", valid));
+    }
+
+    /**
+     * 가게 정보 저장
+     * TODO: Store 엔티티에 저장 로직 구현
+     */
+    @PostMapping("/storeinfo")
+    public ResponseEntity<String> saveStoreInfo(
+            @RequestBody StoreInfoDTO storeInfo,
+            HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        // TODO: Store 엔티티에 저장 로직 구현
+        // 현재는 성공 응답만 반환
+        return ResponseEntity.ok("가게 정보가 저장되었습니다.");
     }
 
 }

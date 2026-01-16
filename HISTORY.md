@@ -487,3 +487,26 @@
 ### 28.3 의사결정 (Decision)
 - **결정**: Plan-26 완료, Phase 6B.1~6B.3 완료
 - **이유**: FE-BE 간 API 경로 통일 및 토큰 관리 일관성 확보
+
+## [2026-01-16 KST] Phase 29: 미구현 API 구현 (Plan-27)
+
+### 29.1 실행 명령 (Command)
+- 명령 내용: "사업자번호 인증 API 구현 (/api/business/verify)"
+- 명령 내용: "가게 정보 저장 API 구현 (/api/business/storeinfo)"
+- 명령 내용: "결제 승인 API 구현 (/api/confirm, /api/v1/payment/confirm)"
+- 명령 내용: "주문 저장 API 구현 (/api/order)"
+
+### 29.2 분석 결과 요약 (AI Analysis)
+- **StoreInfoDTO.java**: 가게 정보 저장용 DTO 생성
+- **PaymentConfirmDTO.java**: 결제 확인용 DTO 생성
+- **PaymentController.java**: 결제 승인 API (더미 구현)
+- **StoreMemberController.java**: 
+  - `verify`: 사업자번호 형식 검증 (10자리 숫자)
+  - `storeinfo`: 가게 정보 저장 (더미 응답)
+- **OrdersController.java**: `saveOrder` 실제 저장 로직 구현
+- **OrdersDTO.java**: 누락 필드 추가 (recipientName, payMethod, payAmount, storeIdx)
+- **검증**: Gradle 빌드 성공
+
+### 29.3 의사결정 (Decision)
+- **결정**: Plan-27 완료, Phase 6B 전체 완료
+- **이유**: FE에서 호출하는 모든 API 엔드포인트 구현 완료 (더미 포함)

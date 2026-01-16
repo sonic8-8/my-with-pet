@@ -27,7 +27,26 @@ public class OrdersController {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        // TODO: 주문 저장 로직 구현 (Plan-27)
+
+        String memberId = userDetails.getUsername();
+        Member member = memberRepository.findById(memberId).orElse(null);
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        Orders order = new Orders();
+        order.setMemberIdx(member.getIdx());
+        order.setDeliveryAddr(data.getDeliveryAddr() != null ? data.getDeliveryAddr() : "");
+        order.setRecipientPhone(data.getRecipientPhone() != null ? data.getRecipientPhone() : "");
+        order.setRecipientName(data.getRecipientName() != null ? data.getRecipientName() : "");
+        order.setOrderMemo(data.getOrderMemo() != null ? data.getOrderMemo() : "");
+        order.setOrderStatus(data.getStatus() != null ? data.getStatus() : "주문완료");
+        order.setPayMethod(data.getPayMethod() != null ? data.getPayMethod() : "카드");
+        order.setPayAmount(data.getPayAmount() != null ? data.getPayAmount() : 0);
+        order.setStoreIdx(data.getStoreIdx() != null ? data.getStoreIdx() : 0L);
+        order.setOrderedAt(java.time.Instant.now());
+
+        ordersRepository.save(order);
         return ResponseEntity.ok("주문이 완료되었습니다.");
     }
 
