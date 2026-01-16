@@ -188,8 +188,8 @@
 
 | # | 이슈 | 설명 | Plan | 상태 |
 |---|------|------|------|------|
-| 6C.1 | SSR(Thymeleaf) 제거 | `build.gradle` 의존성, `templates/`, `static/` CSS 삭제 | Plan-28 | ⬜ 대기 |
-| 6C.2 | 미사용 코드 정리 | 미사용 import, 중복 파일(`api/Success.js` 등) 삭제 | Plan-28 | ⬜ 대기 |
+| 6C.1 | SSR(Thymeleaf) 제거 | `build.gradle` 의존성, `templates/`, `static/` CSS 삭제 | Plan-28 | ✅ 완료 |
+| 6C.2 | 미사용 코드 정리 | 미사용 import, 중복 파일(`api/Success.js` 등) 삭제 | Plan-28 | ✅ 완료 |
 | 6C.3 | 미완성 화면 정리 | **"서비스 준비 중" Placeholder UI** 적용 (라우팅 유지) | Plan-29 | ⬜ 대기 |
 
 #### 6C.3 대상 컴포넌트

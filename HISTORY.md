@@ -510,3 +510,21 @@
 ### 29.3 의사결정 (Decision)
 - **결정**: Plan-27 완료, Phase 6B 전체 완료
 - **이유**: FE에서 호출하는 모든 API 엔드포인트 구현 완료 (더미 포함)
+
+## [2026-01-16 KST] Phase 30: SSR 제거 및 미사용 코드 정리 (Plan-28)
+
+### 30.1 실행 명령 (Command)
+- 명령 내용: "templates/ 디렉토리 삭제 (15개 HTML 파일)"
+- 명령 내용: "static/ 디렉토리 삭제 (3개 CSS 파일)"
+- 명령 내용: "api/Success.js 중복 파일 삭제"
+
+### 30.2 분석 결과 요약 (AI Analysis)
+- **삭제 파일**: 
+  - `back-end/src/main/resources/templates/` (15개 HTML)
+  - `back-end/src/main/resources/static/` (3개 CSS)
+  - `front-end/src/api/Success.js` (중복)
+- **검증**: Gradle 빌드 성공
+
+### 30.3 의사결정 (Decision)
+- **결정**: Plan-28 완료, Phase 6C.1~6C.2 완료
+- **이유**: React SPA 전환 후 불필요한 SSR 코드 제거
