@@ -467,3 +467,23 @@
 ### 27.3 의사결정 (Decision)
 - **결정**: Plan-25 완료, Phase 6A.5 완료
 - **이유**: IDOR 취약점 해결로 타 사용자 데이터 접근 차단
+
+## [2026-01-16 KST] Phase 28: FE-BE 연동 이슈 해결 (Plan-26)
+
+### 28.1 실행 명령 (Command)
+- 명령 내용: "API 경로 표준화 - /api/address-add1 → /address-add"
+- 명령 내용: "이중 /api 경로 수정 - paymentApi, useOrderForm"
+- 명령 내용: "토큰 저장/조회 통일 - localStorage → Cookie"
+
+### 28.2 분석 결과 요약 (AI Analysis)
+- **AddressEdit.js**: `/api/address-add1` → `/address-add`
+- **paymentApi.js**: `/api/v1/payment/confirm` → `/v1/payment/confirm`
+- **useOrderForm.js**: `/api/order` → `/order`
+- **axiosConfig.js**: 
+  - `import Cookies from 'js-cookie'` 추가
+  - `localStorage.getItem('token')` → `Cookies.get('token')`
+  - `withCredentials: true` 활성화
+
+### 28.3 의사결정 (Decision)
+- **결정**: Plan-26 완료, Phase 6B.1~6B.3 완료
+- **이유**: FE-BE 간 API 경로 통일 및 토큰 관리 일관성 확보

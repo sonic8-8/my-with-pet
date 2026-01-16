@@ -32,7 +32,7 @@ export function useOrderForm(cartItems) {
         };
 
         try {
-            const response = await api.post('/api/order', JSON.stringify(orderData));
+            const response = await api.post('/order', JSON.stringify(orderData));
             if (response.status !== 200) {
                 alert('주문에 실패하였습니다.');
                 console.error('주문 실패:', response.data);

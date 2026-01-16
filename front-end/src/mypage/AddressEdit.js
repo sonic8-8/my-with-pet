@@ -11,7 +11,7 @@ const AddressEdit = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('/api/address-add1', {
+      const response = await axios.post('/address-add', {
         userId: userId,
         address: address
       });

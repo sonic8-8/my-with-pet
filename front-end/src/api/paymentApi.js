@@ -2,7 +2,7 @@ import api from './axiosConfig';
 
 export const requestPayment = async (orderId, amount, paymentKey) => {
     try {
-        const response = await api.post('/api/v1/payment/confirm', {
+        const response = await api.post('/v1/payment/confirm', {
             orderId,
             amount,
             paymentKey

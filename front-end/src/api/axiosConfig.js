@@ -1,19 +1,20 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL || '/api',
   headers: {
     'Content-Type': 'application/json',
   },
-  //  withCredentials: true, // If using cookies
+  withCredentials: true, // Cookie 전송을 위해 활성화
 });
 
 // Request Interceptor
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token'); // Or wherever token is stored
+    const token = Cookies.get('token'); // Cookie에서 토큰 조회
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`; // Authorization 헤더에 토큰 추가
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
