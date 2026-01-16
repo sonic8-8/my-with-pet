@@ -1,14 +1,15 @@
 package com.apple.shop.orders;
 
+import com.apple.shop.member.CustomUserDetails;
+import com.apple.shop.member.Member;
 import com.apple.shop.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -20,17 +21,34 @@ public class OrdersController {
     private final MemberRepository memberRepository;
 
     @PostMapping("/order")
-    public void SaveOrder(@RequestBody OrdersDTO data) {
-
+    public ResponseEntity<String> saveOrder(
+            @RequestBody OrdersDTO data,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        // TODO: 주문 저장 로직 구현 (Plan-27)
+        return ResponseEntity.ok("주문이 완료되었습니다.");
     }
 
-    @PostMapping("/orders/orderhistory")
-    public List<Orders> loadOrderHistory(@RequestBody Map<String, String> data) {
-        String userId = data.get("userId");
+    /**
+     * 주문 이력 조회 - JWT 토큰에서 사용자 ID 추출 (IDOR 방지)
+     */
+    @GetMapping("/orders/history")
+    public ResponseEntity<List<Orders>> loadOrderHistory(
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
-        Long userIdx = memberRepository.findById(userId).get().getIdx();
-        List<Orders> orders = ordersRepository.findByMemberIdx(userIdx);
+        String userId = userDetails.getUsername();
+        Member member = memberRepository.findById(userId).orElse(null);
 
-        return orders;
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        List<Orders> orders = ordersRepository.findByMemberIdx(member.getIdx());
+        return ResponseEntity.ok(orders);
     }
 }

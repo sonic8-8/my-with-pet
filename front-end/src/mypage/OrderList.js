@@ -8,13 +8,10 @@ function OrderList() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const userId = 'sr2907'; // 실제 사용자 ID를 여기에 넣으세요
-
     const fetchOrderHistory = async () => {
       try {
-        const response = await axios.post('/api/orders/orderhistory', {
-          userId: userId
-        });
+        // JWT 토큰에서 사용자 ID를 추출하므로 userId 불필요
+        const response = await axios.get('/api/orders/history');
         setOrders(response.data);
       } catch (error) {
         console.error('There was an error fetching the order history!', error);

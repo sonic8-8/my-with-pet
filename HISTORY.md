@@ -424,3 +424,46 @@
 ### 25.3 의사결정 (Decision)
 - **결정**: Plan-23 완료, FE-BE 프록시 설정 통일 완료
 - **이유**: 프론트엔드에서 백엔드 서버(8080)로의 안정적인 API 통신 기반 마련
+
+## [2026-01-16 KST] Phase 26: 인증/보안 이슈 해결 (Plan-24)
+
+### 26.1 실행 명령 (Command)
+- 명령 내용: "역할(Role) 표준화 - user/ceo → ROLE_USER/ROLE_BUSINESS"
+- 명령 내용: "공개 URL 불일치 수정"
+- 명령 내용: "JWT 만료 시간 단위 수정 (seconds → ms)"
+- 명령 내용: "JWT 예외 처리 추가"
+
+### 26.2 분석 결과 요약 (AI Analysis)
+- **MemberService.java**: `DEFAULT_ROLE = "user"` → `"ROLE_USER"`
+- **StoreMemberService.java**: `role = "ceo"` → `"ROLE_BUSINESS"`
+- **SecurityConfig.java**: PUBLIC_URLS에 `/api/sign-up`, `/api/business/sign-up` 추가
+- **LoginFilter.java**: `JWT_EXPIRATION_SECONDS` → `JWT_EXPIRATION_MS` (36초 → 10시간)
+- **JWTFilter.java**: try-catch 예외 처리 추가, `sendUnauthorizedResponse` 메서드 생성
+- **검증**: Gradle 빌드 성공
+
+### 26.3 의사결정 (Decision)
+- **결정**: Plan-24 완료, Phase 6A.1~6A.4 완료
+- **이유**: Spring Security hasAnyRole()과 실제 저장 역할 불일치 해결, JWT 취약점 수정
+
+## [2026-01-16 KST] Phase 27: 주문/장바구니 IDOR 취약점 수정 (Plan-25)
+
+### 27.1 실행 명령 (Command)
+- 명령 내용: "OrdersController에 @AuthenticationPrincipal 적용"
+- 명령 내용: "CartController에 @AuthenticationPrincipal 적용, CartDTO 생성"
+- 명령 내용: "Frontend OrderList.js API 호출 수정"
+
+### 27.2 분석 결과 요약 (AI Analysis)
+- **CartDTO.java**: memberId 없는 DTO 생성 (IDOR 방지)
+- **OrdersController.java**: 
+  - `loadOrderHistory`: POST → GET, body userId → JWT 추출
+  - `saveOrder`: @AuthenticationPrincipal 추가
+- **CartController.java**: 
+  - `addCart`: CartDTO 사용, memberId를 JWT에서 추출
+  - `getCart`, `deleteCartItem` 추가 (IDOR 방지)
+- **CartRepository.java**: `findByMemberId` 쿼리 메서드 추가
+- **OrderList.js**: `POST /api/orders/orderhistory` → `GET /api/orders/history`
+- **검증**: Gradle 빌드 성공
+
+### 27.3 의사결정 (Decision)
+- **결정**: Plan-25 완료, Phase 6A.5 완료
+- **이유**: IDOR 취약점 해결로 타 사용자 데이터 접근 차단
