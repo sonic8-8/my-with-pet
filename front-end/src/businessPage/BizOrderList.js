@@ -1,12 +1,7 @@
-import styles from './BizOrderList.module.css';
+import ComingSoon from '../common/ComingSoon';
 
 function BizOrderList() {
-
-    return(
-        <div className={styles.orderList_container}>
-
-        </div>
-    )
+    return <ComingSoon title="주문 내역" />;
 }
 
 export default BizOrderList;

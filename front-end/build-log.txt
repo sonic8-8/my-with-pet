@@ -1,0 +1,11 @@
+
+> front@0.1.0 build
+> react-scripts build
+
+Creating an optimized production build...
+Failed to compile.
+
+The target environment doesn't support dynamic import() syntax so it's not possible to use external type 'module' within a script
+Did you mean to build a EcmaScript Module ('output.module: true')?
+
+

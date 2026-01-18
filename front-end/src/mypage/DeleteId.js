@@ -1,14 +1,7 @@
-import styles from './DeleteId.module.css';
+import ComingSoon from '../common/ComingSoon';
 
 function DeleteId() {
-
-
-    return (
-        <div>
-            
-        </div>
-    )
-
+    return <ComingSoon title="회원 탈퇴" />;
 }
 
 export default DeleteId;

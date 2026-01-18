@@ -1,12 +1,7 @@
-import styles from './Mypet.module.css';
+import ComingSoon from '../common/ComingSoon';
 
-function Mypet() {
-
-    return(
-        <div className={styles.container}>
-
-        </div>
-    )
+function MyPet() {
+    return <ComingSoon title="반려동물 정보" />;
 }
 
-export default Mypet;
+export default MyPet;

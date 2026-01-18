@@ -528,3 +528,30 @@
 ### 30.3 의사결정 (Decision)
 - **결정**: Plan-28 완료, Phase 6C.1~6C.2 완료
 - **이유**: React SPA 전환 후 불필요한 SSR 코드 제거
+
+## [2026-01-18 KST] Phase 31: 미완성 화면 Placeholder UI 적용 (Plan-29)
+
+### 31.1 실행 명령 (Command)
+- 명령 내용: "공통 ComingSoon 컴포넌트 생성"
+- 명령 내용: "9개 미완성 컴포넌트에 Placeholder UI 적용"
+
+### 31.2 분석 결과 요약 (AI Analysis)
+- **신규 파일**:
+  - `src/common/ComingSoon.js`: 재사용 가능한 Placeholder 컴포넌트
+  - `src/common/ComingSoon.module.css`: Placeholder 스타일
+- **수정 파일 (Business)**:
+  - `BizLikeList.js`: "찜 목록" Placeholder
+  - `BizOrderList.js`: "주문 내역" Placeholder
+  - `BizOrderStatus.js`: "주문 상태 관리" Placeholder
+  - `BizReview.js`: "리뷰 관리" Placeholder
+  - `BizTempClose.js`: "임시 휴무 설정" Placeholder
+- **수정 파일 (MyPage)**:
+  - `DeleteId.js`: "회원 탈퇴" Placeholder
+  - `Mypage.js`: "마이페이지" Placeholder
+  - `MyPet.js`: "반려동물 정보" Placeholder
+  - `LikeList.js`: "찜한 가게" Placeholder
+- **검증**: 개발 서버 실행, 브라우저에서 Placeholder UI 정상 표시 확인
+
+### 31.3 의사결정 (Decision)
+- **결정**: Plan-29 완료, Phase 6C.3 완료
+- **이유**: 미완성 화면에 사용자 친화적 "서비스 준비 중" UI 표시로 UX 개선

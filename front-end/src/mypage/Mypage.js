@@ -1,17 +1,7 @@
-import React from 'react';
-import styles from './Mypage.module.css';
+import ComingSoon from '../common/ComingSoon';
 
 function Mypage() {
-  return (
-    <div className={styles.container}>
-      
-      <div>
-
-      
-
-      </div>
-    </div>
-  );
+  return <ComingSoon title="마이페이지" />;
 }
 
 export default Mypage;

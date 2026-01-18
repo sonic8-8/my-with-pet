@@ -1,14 +1,7 @@
-import styles from './BizLikeList.module.css';
+import ComingSoon from '../common/ComingSoon';
 
 function BizLikeList() {
-
-
-
-    return(
-        <div className={styles.like_container}>
-
-        </div>
-    )
+    return <ComingSoon title="찜 목록" />;
 }
 
 export default BizLikeList;

@@ -1,11 +1,7 @@
-import React from 'react';
+import ComingSoon from '../common/ComingSoon';
 
 function LikeList() {
-  return (
-    <div>
-    좋아요한가게 페이지
-    </div>
-  )
+  return <ComingSoon title="찜한 가게" />;
 }
 
 export default LikeList;
