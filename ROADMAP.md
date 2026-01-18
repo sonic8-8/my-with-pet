@@ -148,7 +148,7 @@
 
 ---
 
-## Phase 6: 코드 리뷰 이슈 해결 ✅ 완료
+## Phase 6: 코드 리뷰 이슈 해결 🔄 진행 중
 
 > 목표: Codex 코드 리뷰에서 발견된 Critical/High 이슈 해결  
 > **참조**: `REVIEW.md`
@@ -214,6 +214,19 @@
 | `LikeList` | 사용자 찜 목록 조회/관리 | 🟢 Medium |
 | `MyPet` | 반려동물 정보 등록/수정 | 🟢 Medium |
 | `DeleteId` | 회원 탈퇴 기능 | 🟢 Low |
+
+### 6D. 컨테이너화 전 필수 수정 (🔴 Critical) - REVIEW_2.md
+
+> 목표: Docker 컨테이너화 전 발견된 Critical/High 이슈 해결  
+> **참조**: `REVIEW_2.md`
+
+| # | 이슈 | 설명 | Plan | 상태 |
+|---|------|------|------|------|
+| 6D.1 | 사업자 로그인 JWT 미발급 | `/api/business/login`이 문자열만 반환, JWT 발급 필요 | Plan-30 | ⬜ 대기 |
+| 6D.2 | 로그인 경로 이중화 | Controller/LoginFilter 공존 → LoginFilter로 통일 | Plan-30 | ⬜ 대기 |
+| 6D.3 | CustomUserDetailsService 예외 | `.get()` → `orElseThrow()` 변경 | Plan-30 | ⬜ 대기 |
+| 6D.4 | FE 주소 API 계약 불일치 | memberId 쿼리 → Authorization 헤더 | Plan-30 | ⬜ 대기 |
+| 6D.5 | Redux extraReducers 중복 | 앞 블록이 덮어쓰기 되는 문제 | Plan-30 | ⬜ 대기 |
 
 ---
 
@@ -297,7 +310,7 @@ Phase 4 ████████████ 성능 가설 기록 ✅ 완료
 
 [Part B: 인프라 및 배포]
 Phase 5   ████████████ 로컬 환경 정비 ✅ 완료
-Phase 6   ████████████ 코드 리뷰 이슈 해결 ✅ 완료
+Phase 6   ██████████░░ 코드 리뷰 이슈 해결 🔄 진행 중 (6D 추가)
 Phase 7   ░░░░░░░░░░░░ Docker 컨테이너화 ⬜ 대기
 Phase 8   ░░░░░░░░░░░░ GCP 배포 및 자동화 ⬜ 대기
 Phase 9   ░░░░░░░░░░░░ 모니터링 & 부하테스트 ⬜ 대기
