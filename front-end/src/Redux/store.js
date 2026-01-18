@@ -1,6 +1,5 @@
 import { configureStore, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { useCookies } from 'react-cookie';
 import Cookies from 'js-cookie';
 
 
@@ -19,7 +18,8 @@ export const asyncAddAddress = createAsyncThunk('addressSlice/asyncAddAddress',
       const token = Cookies.get('token');
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const response = axios.post('/api/address-add',
+      // await 추가 (Plan-30)
+      const response = await axios.post('/api/address-add',
         JSON.stringify(addressData), {
         headers: {
           'Content-Type': 'application/json'
@@ -48,13 +48,17 @@ export const asyncLoadAddress = createAsyncThunk(
   async () => {
 
     try {
-      const loginedId = Cookies.get('MemberId');
-      const response = await axios.get(
-        `/api/address?memberId=${loginedId}`
-      )
+      // Authorization 헤더 사용 (memberId 쿼리 대신) - Plan-30
+      const token = Cookies.get('token');
+      const response = await axios.get('/api/address', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
 
       if (response.status === 200) {
         console.log('주소 불러오기 성공');
+        return response.data;
       } else {
         console.log('주소 불러오기 실패');
         console.error(response.data);
@@ -123,9 +127,10 @@ const addressSlice = createSlice({
     updateAddress: (state, action) => { }
   },
 
-  // 비동기 처리
+  // 비동기 처리 - 하나의 extraReducers로 병합 (Plan-30)
   extraReducers: ((builder) =>
     builder
+      // asyncAddAddress 처리
       .addCase(asyncAddAddress.pending, (state, action) => {
         state.status = '로딩중'
       })
@@ -137,10 +142,7 @@ const addressSlice = createSlice({
         state.status = '실패'
         state.error = action.error.message;
       })
-  ),
-
-  extraReducers: ((builder) =>
-    builder
+      // asyncLoadAddress 처리
       .addCase(asyncLoadAddress.pending, (state, action) => {
         state.status = '로딩중';
       })

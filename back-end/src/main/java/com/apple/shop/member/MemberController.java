@@ -7,9 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -28,22 +25,7 @@ public class MemberController {
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody MemberDTO memberDTO) {
-        try {
-            String token = memberService.login(memberDTO);
-            if (token != null) {
-                Map<String, String> response = new HashMap<>();
-                response.put("message", "로그인 성공");
-                response.put("token", token);
-                return ResponseEntity.ok(response);
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "로그인 실패"));
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "로그인 실패"));
-        }
-    }
+    // login() 메서드 삭제됨 - LoginFilter 방식으로 통일 (Plan-30)
 
     @GetMapping("/mypage")
     public ResponseEntity<MemberDTO> getMyInfo(HttpServletRequest request) {

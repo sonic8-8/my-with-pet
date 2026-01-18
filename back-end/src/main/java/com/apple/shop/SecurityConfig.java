@@ -1,13 +1,17 @@
 package com.apple.shop;
 
+import com.apple.shop.member.CustomUserDetailsService;
 import com.apple.shop.member.jwt.JWTFilter;
 import com.apple.shop.member.jwt.JWTUtil;
 import com.apple.shop.member.jwt.LoginFilter;
+import com.apple.shop.storeMember.StoreMemberLoginFilter;
+import com.apple.shop.storeMember.StoreMemberUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -22,12 +26,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final StoreMemberUserDetailsService storeMemberUserDetailsService;
 
     // 공개 API 경로 (인증 불필요)
     private static final String[] PUBLIC_URLS = {
-            "/api/login", "/api/sign-up",
+            "/login", "/api/sign-up",
             "/api/business/login", "/api/business/sign-up",
             "/api/store-list/**", "/api/shop/**", "/api/store-info",
             "/api/review", "/api/main/**"
@@ -37,7 +42,7 @@ public class SecurityConfig {
     private static final String[] USER_URLS = {
             "/api/address/**", "/api/address-add", "/api/address-update", "/api/address-delete/**",
             "/api/order/**", "/api/cart/**", "/api/pay/**",
-            "/api/memberinfo"
+            "/api/memberinfo", "/api/mypage"
     };
 
     // 사업자 전용 API 경로
@@ -45,9 +50,26 @@ public class SecurityConfig {
             "/api/business/**"
     };
 
+    /**
+     * 일반 사용자(Member) 인증용 AuthenticationManager
+     */
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
+    public AuthenticationManager memberAuthenticationManager() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(customUserDetailsService);
+        provider.setPasswordEncoder(bCryptPasswordEncoder());
+        return new ProviderManager(provider);
+    }
+
+    /**
+     * 사업자(StoreMember) 인증용 AuthenticationManager
+     */
+    @Bean
+    public AuthenticationManager storeMemberAuthenticationManager() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(storeMemberUserDetailsService);
+        provider.setPasswordEncoder(bCryptPasswordEncoder());
+        return new ProviderManager(provider);
     }
 
     @Bean
@@ -93,10 +115,21 @@ public class SecurityConfig {
      * JWT 필터와 로그인 필터를 등록합니다.
      */
     private void configureFilters(HttpSecurity http) throws Exception {
-        http.addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
-        http.addFilterAt(
-                new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
-                UsernamePasswordAuthenticationFilter.class);
+        // 일반 사용자 로그인 필터 (/login)
+        LoginFilter memberLoginFilter = new LoginFilter(memberAuthenticationManager(), jwtUtil);
+        memberLoginFilter.setFilterProcessesUrl("/login");
+
+        // 사업자 로그인 필터 (/api/business/login)
+        StoreMemberLoginFilter storeMemberLoginFilter = new StoreMemberLoginFilter(
+                storeMemberAuthenticationManager(), jwtUtil);
+        storeMemberLoginFilter.setFilterProcessesUrl("/api/business/login");
+
+        // JWT 검증 필터
+        http.addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+        // 일반 사용자 로그인 필터
+        http.addFilterAt(memberLoginFilter, UsernamePasswordAuthenticationFilter.class);
+        // 사업자 로그인 필터 (일반 로그인 필터 뒤에 추가)
+        http.addFilterAfter(storeMemberLoginFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     /**
@@ -115,6 +148,7 @@ public class SecurityConfig {
                         .allowedOrigins("http://localhost:3000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*")
+                        .exposedHeaders("Authorization")
                         .allowCredentials(true);
             }
         };

@@ -555,3 +555,32 @@
 ### 31.3 의사결정 (Decision)
 - **결정**: Plan-29 완료, Phase 6C.3 완료
 - **이유**: 미완성 화면에 사용자 친화적 "서비스 준비 중" UI 표시로 UX 개선
+
+## [2026-01-19 KST] Phase 32: 로그인 흐름 통일 및 사업자 JWT 발급 (Plan-30)
+
+### 32.1 실행 명령 (Command)
+- 명령 내용: "사업자 로그인 JWT 발급을 위한 StoreMemberLoginFilter 구현"
+- 명령 내용: "로그인 경로 통일 - Controller 방식 → LoginFilter 방식"
+- 명령 내용: "CustomUserDetailsService 예외 처리 개선"
+- 명령 내용: "프론트엔드 로그인 수정 - Header에서 토큰 추출"
+- 명령 내용: "Redux extraReducers 중복 및 await 누락 수정"
+
+### 32.2 분석 결과 요약 (AI Analysis)
+- **신규 파일 (Backend)**:
+  - `StoreMemberUserDetails.java`: 사업자 인증 정보 래퍼
+  - `StoreMemberUserDetailsService.java`: 사업자 테이블 조회 서비스
+  - `StoreMemberLoginFilter.java`: `/api/business/login` 전용 필터
+- **수정 파일 (Backend)**:
+  - `SecurityConfig.java`: 두 개의 AuthenticationManager 설정, 필터 등록
+  - `MemberController.java`: login() 메서드 삭제
+  - `StoreMemberController.java`: login() 메서드 삭제
+  - `CustomUserDetailsService.java`: .get() → orElseThrow() 변경
+- **수정 파일 (Frontend)**:
+  - `Login.js`: form-urlencoded 전송, Header에서 토큰 추출
+  - `BizLogin.js`: 동일하게 LoginFilter 방식으로 변경
+  - `Redux/store.js`: extraReducers 중복 제거, await 추가, Authorization 헤더 사용
+- **검증**: Gradle 빌드 성공 (exit 0)
+
+### 32.3 의사결정 (Decision)
+- **결정**: Plan-30 완료, Phase 6D 완료, Phase 6 전체 완료
+- **이유**: Spring Security 표준 방식(LoginFilter)으로 통일, 사업자 JWT 발급으로 `/api/business/**` 접근 가능

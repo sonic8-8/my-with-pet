@@ -6,18 +6,16 @@ import styles from './Login.module.css';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { useCookies } from 'react-cookie';
-
 
 function StoreLogin() {
     const firebaseConfig = {
-        apiKey: "AIzaSyA84xPtsglofD_O6n71ZUTUFSeA95IVbU0",
-        authDomain: "flowing-code-427002-h8.firebaseapp.com",
-        projectId: "flowing-code-427002-h8",
-        storageBucket: "flowing-code-427002-h8.appspot.com",
-        messagingSenderId: "218939777301",
-        appId: "1:218939777301:web:77f3f41f478558eddcc91c",
-        measurementId: "G-CTLHYS0E6M"
+        apiKey: process.env.REACT_APP_FIREBASE_API_KEY || "AIzaSyA84xPtsglofD_O6n71ZUTUFSeA95IVbU0",
+        authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || "flowing-code-427002-h8.firebaseapp.com",
+        projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID || "flowing-code-427002-h8",
+        storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET || "flowing-code-427002-h8.appspot.com",
+        messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID || "218939777301",
+        appId: process.env.REACT_APP_FIREBASE_APP_ID || "1:218939777301:web:77f3f41f478558eddcc91c",
+        measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID || "G-CTLHYS0E6M"
     };
     const provider = new GoogleAuthProvider();
     const app = initializeApp(firebaseConfig);
@@ -45,7 +43,6 @@ function StoreLogin() {
     const [MemberPw, setMemberPw] = useState('');
     const [message, setMessage] = useState('');
     const [errors, setErrors] = useState({});
-    const [token, setToken] = useCookies('token');
 
     const login = () => {
         let newErrors = {};
@@ -57,30 +54,39 @@ function StoreLogin() {
             return;
         }
 
+        // LoginFilter 방식: form-urlencoded로 전송, Header에서 토큰 추출
+        const formData = new URLSearchParams();
+        formData.append('id', MemberId);
+        formData.append('pw', MemberPw);
+
         axios
-            .post('/api/login', {
-                id: MemberId,
-                pw: MemberPw,
+            .post('/login', formData, {
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
             .then((response) => {
-                console.log(response.data);
-                if (response.data.message === '로그인 성공') {
-                    const token = response.data.token;
+                // LoginFilter는 Header에 Authorization 반환
+                const authHeader = response.headers['authorization'];
+                if (authHeader && authHeader.startsWith('Bearer ')) {
+                    const token = authHeader.substring(7);
                     Cookies.set('token', token, {
                         expires: 7, // 쿠키에 토큰 저장 (7일 유효)
                         path: '/'
                     });
-                    Cookies.set('MemberId', MemberId, { expires: 7 }); // 쿠키에 사용자 이름 저장 (7일 유효)
+                    Cookies.set('MemberId', MemberId, { expires: 7 });
                     alert('로그인 성공');
                     nav('/');
                     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 } else {
-                    setMessage(response.data.message);
+                    setMessage('로그인 응답에서 토큰을 찾을 수 없습니다.');
                 }
             })
             .catch((error) => {
-                console.log('통신 실패', error);
-                alert('로그인 실패');
+                console.log('로그인 실패', error);
+                if (error.response && error.response.status === 401) {
+                    setMessage('아이디 또는 비밀번호가 올바르지 않습니다.');
+                } else {
+                    alert('로그인 실패');
+                }
             });
     };
 

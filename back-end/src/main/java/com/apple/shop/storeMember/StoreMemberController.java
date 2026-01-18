@@ -1,14 +1,13 @@
 package com.apple.shop.storeMember;
 
-import com.apple.shop.member.MemberDTO;
 import com.apple.shop.member.jwt.JWTUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,17 +29,7 @@ public class StoreMemberController {
         return "회원가입 성공";
     }
 
-    @PostMapping("/login")
-    public String login(@RequestBody StoreMember request) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-
-        if (storeMemberService.authenticate(request.getId(), request.getPw())) {
-            return "로그인 성공";
-        } else {
-            return "아이디 또는 비밀번호가 일치하지 않습니다.";
-        }
-    }
+    // login() 메서드 삭제됨 - StoreMemberLoginFilter 방식으로 통일 (Plan-30)
 
     @GetMapping("/current-user")
     public UserDetails getCurrentUser() {

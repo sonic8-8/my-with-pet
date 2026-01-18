@@ -21,32 +21,42 @@ function BizLogin() {
             return;
         }
 
+        // LoginFilter 방식: form-urlencoded로 전송, Header에서 토큰 추출
+        const formData = new URLSearchParams();
+        formData.append('id', MemberId);
+        formData.append('pw', MemberPw);
+
         axios
-            .post('/api/business/login', {
-                id: MemberId,
-                pw: MemberPw,
+            .post('/api/business/login', formData, {
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
             .then((response) => {
-                console.log(response.data);
-                if (response.data.message === '로그인 성공') {
-                    const token = response.data.token;
-                    Cookies.set('token', token, { expires: 7 }); // 쿠키에 토큰 저장 (7일 유효)
-                    Cookies.set('MemberId', MemberId, { expires: 7 }); // 쿠키에 사용자 이름 저장 (7일 유효)
+                // LoginFilter는 Header에 Authorization 반환
+                const authHeader = response.headers['authorization'];
+                if (authHeader && authHeader.startsWith('Bearer ')) {
+                    const token = authHeader.substring(7);
+                    Cookies.set('token', token, { expires: 7 });
+                    Cookies.set('MemberId', MemberId, { expires: 7 });
                     alert('로그인 성공');
                     nav('/business');
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 } else {
-                    setMessage(response.data.message);
+                    setMessage('로그인 응답에서 토큰을 찾을 수 없습니다.');
                 }
             })
             .catch((error) => {
-                console.log('통신 실패', error);
-                alert('로그인 실패');
+                console.log('로그인 실패', error);
+                if (error.response && error.response.status === 401) {
+                    setMessage('아이디 또는 비밀번호가 올바르지 않습니다.');
+                } else {
+                    alert('로그인 실패');
+                }
             });
     };
 
     return (
         <div className={styles.login_form}>
-            <h1>Member 로그인</h1>
+            <h1>사업자 로그인</h1>
 
             <label>아이디</label>
             <input type="text" value={MemberId} onChange={(e) => setMemberId(e.target.value)}

@@ -14,14 +14,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        //DB에서 조회
-        Member memberData = memberRepository.findById(id).get();
+        // DB에서 조회 - orElseThrow로 예외 처리 개선 (Plan-30)
+        Member memberData = memberRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + id));
 
-        if(memberData != null){
-            //UserDetails에 담아서 return하면 AutneticationManager가 검증 함
-            return new CustomUserDetails(memberData);
-        }
-
-        throw new UsernameNotFoundException("User not found");
+        // UserDetails에 담아서 return하면 AuthenticationManager가 검증 함
+        return new CustomUserDetails(memberData);
     }
 }
