@@ -243,6 +243,21 @@
 | 6E.5 | 로그인 경로 통일 | `/api/login` 경로 통일 및 Security/FE 업데이트 | Plan-31 | ✅ 완료 |
 | 6E.6 | 기능 오류 수정 | 중복 가입 처리, Optional.get() 제거 | Plan-31 | ✅ 완료 |
 
+### 6F. JWT HttpOnly Cookie 전환 (REVIEW_4.md)
+
+> 목표: JWT를 HttpOnly 쿠키로 전환하여 XSS 탈취 위험 제거  
+> **참조**: `REVIEW_4.md`  
+> **상태**: ✅ 완료
+
+| # | 이슈 | 설명 | Plan | 상태 |
+|---|------|------|------|------|
+| 6F.1 | 백엔드 Set-Cookie 발급 | LoginFilter에서 JWT를 Set-Cookie로 발급 | Plan-32 | ✅ 완료 |
+| 6F.2 | JWTFilter 쿠키 읽기 | 쿠키에서 토큰 추출하도록 수정 | Plan-32 | ✅ 완료 |
+| 6F.3 | Cookie 속성 설정 | HttpOnly/Secure/SameSite 설정 | Plan-32 | ✅ 완료 |
+| 6F.4 | CORS 설정 | allowCredentials(true), 도메인 제한 | Plan-32 | ✅ 완료 |
+| 6F.5 | 프론트엔드 토큰 저장 제거 | Cookies.set() 제거, 헤더 주입 제거 | Plan-32 | ✅ 완료 |
+| 6F.6 | QA 로그인 플로우 | 로컬/배포 환경에서 인증 테스트 | Plan-32 | ⬜ 수동테스트 |
+
 ---
 
 ## Phase 7: Docker 컨테이너화 🔄 진행 예정

@@ -584,35 +584,56 @@
 ### 32.3 의사결정 (Decision)
 - **결정**: Plan-30 완료, Phase 6D 완료, Phase 6 전체 완료
 - **이유**: Spring Security 표준 방식(LoginFilter)으로 통일, 사업자 JWT 발급으로 `/api/business/**` 접근 가능
-## [2026-01-19 KST] Phase 33: 諛고룷 ???꾩닔 蹂댁븞 媛뺥솕 (Plan-31)
 
-### 33.1 ?ㅽ뻾 紐낅졊 (Command)
-- 紐낅졊 ?댁슜: "誘쇨컧 ?뺣낫 ?몄텧 諛⑹? - MemberResponseDTO, StoreMemberResponseDTO ?앹꽦"
-- 紐낅졊 ?댁슜: "Member.pw, StoreMember.pw ?꾨뱶??@JsonIgnore 異붽?"
-- 紐낅졊 ?댁슜: "Firebase CDN ESM import瑜?npm ?⑦궎吏濡?蹂寃?
-- 紐낅졊 ?댁슜: "濡쒓렇??寃쎈줈 /login ??/api/login ?듭씪"
-- 紐낅졊 ?댁슜: "以묐났 ?뚯썝媛????409 Conflict ?묐떟"
-- 紐낅졊 ?댁슜: "Optional.get() ??orElseThrow() 蹂寃?
+---
 
-### 33.2 遺꾩꽍 寃곌낵 ?붿빟 (AI Analysis)
-- **?좉퇋 ?뚯씪 (Backend)**:
-  - `MemberResponseDTO.java`: 鍮꾨?踰덊샇 ?쒖쇅 ?뚯썝 ?묐떟 DTO
-  - `StoreMemberResponseDTO.java`: 鍮꾨?踰덊샇 ?쒖쇅 ?ъ뾽???묐떟 DTO
-- **?섏젙 ?뚯씪 (Backend)**:
-  - `Member.java`: `@JsonIgnore` 異붽? (pw ?꾨뱶)
-  - `StoreMember.java`: `@JsonIgnore` 異붽? (pw ?꾨뱶)
-  - `AddressController.java`: getMemberInfo() ??MemberResponseDTO 諛섑솚
-  - `StoreMemberController.java`: getCurrentUser() ??StoreMemberResponseDTO 諛섑솚
-  - `StoreMemberUserDetails.java`: getStoreMember() getter 異붽?
-  - `SecurityConfig.java`: PUBLIC_URLS??`/api/login` 異붽?, LoginFilter 寃쎈줈 蹂寃?
-  - `MemberService.java`: 以묐났 ?뚯썝媛?????덉쇅 諛쒖깮
-  - `MemberController.java`: 以묐났 ?덉쇅 catch ??409 Conflict ?묐떟
-  - `StoreMemberService.java`: Optional.get() ??orElseThrow() 蹂寃?
-- **?섏젙 ?뚯씪 (Frontend)**:
-  - `Login.js`: Firebase npm import, `/api/login` 寃쎈줈, HttpOnly TODO 二쇱꽍
-- **寃利?*: Backend Gradle 鍮뚮뱶 ?깃났 (exit 0)
+## [2026-01-19 KST] Phase 33: 배포 전 필수 보안 강화 (Plan-31)
 
-### 33.3 ?섏궗寃곗젙 (Decision)
-- **寃곗젙**: Plan-31 ?꾨즺, Phase 6E ?꾨즺
-- **?댁쑀**: GCP 諛고룷 ??REVIEW_3.md ?댁뒋 ?닿껐濡?蹂댁븞/鍮뚮뱶/湲곕뒫 ?덉젙???꾨즺
+### 33.1 실행 명령 (Command)
+- 명령 내용: "민감 정보 노출 방지 - MemberResponseDTO, StoreMemberResponseDTO 생성"
+- 명령 내용: "Member.pw, StoreMember.pw 필드에 @JsonIgnore 추가"
+- 명령 내용: "Firebase CDN ESM import를 npm 패키지로 변경"
+- 명령 내용: "로그인 경로 /login -> /api/login 통일"
+- 명령 내용: "중복 회원가입 시 409 Conflict 응답"
+- 명령 내용: "Optional.get() -> orElseThrow() 변경"
 
+### 33.2 분석 결과 요약 (AI Analysis)
+- **신규 파일 (Backend)**:
+  - `MemberResponseDTO.java`: 비밀번호 제외 회원 응답 DTO
+  - `StoreMemberResponseDTO.java`: 비밀번호 제외 사업자 응답 DTO
+- **수정 파일 (Backend)**:
+  - `Member.java`, `StoreMember.java`: @JsonIgnore 추가
+  - `AddressController.java`, `StoreMemberController.java`: DTO 반환
+  - `SecurityConfig.java`: /api/login 경로 통일
+  - `MemberService.java`, `MemberController.java`: 중복 가입 409 응답
+  - `StoreMemberService.java`: Optional.get() -> orElseThrow()
+- **수정 파일 (Frontend)**:
+  - `Login.js`: Firebase npm import, /api/login 경로
+- **검증**: Backend 빌드 성공 (exit 0)
+
+### 33.3 의사결정 (Decision)
+- **결정**: Plan-31 완료, Phase 6E 완료
+- **이유**: REVIEW_3.md 이슈 해결로 보안/빌드/기능 안정화 완료
+
+---
+
+## [2026-01-19 KST] Phase 34: JWT HttpOnly Cookie 전환 (Plan-32)
+
+### 34.1 실행 명령 (Command)
+- 명령 내용: "LoginFilter, StoreMemberLoginFilter에서 JWT를 Set-Cookie로 발급"
+- 명령 내용: "JWTFilter에서 쿠키 기반 토큰 추출 지원"
+- 명령 내용: "Login.js, BizLogin.js에서 토큰 저장 코드 제거"
+- 명령 내용: "axiosConfig.js에서 Authorization 헤더 주입 제거"
+
+### 34.2 분석 결과 요약 (AI Analysis)
+- **수정 파일 (Backend)**:
+  - `LoginFilter.java`, `StoreMemberLoginFilter.java`: Set-Cookie로 JWT 발급
+  - `JWTFilter.java`: 쿠키에서 토큰 추출 (Header fallback 유지)
+- **수정 파일 (Frontend)**:
+  - `Login.js`, `BizLogin.js`: 토큰 저장 코드 제거
+  - `axiosConfig.js`: Authorization 헤더 수동 주입 제거
+- **검증**: Backend 빌드 성공 (exit 0)
+
+### 34.3 의사결정 (Decision)
+- **결정**: Plan-32 완료, Phase 6F 완료
+- **이유**: REVIEW_4.md 기반 XSS 방지를 위한 HttpOnly Cookie 전환 완료

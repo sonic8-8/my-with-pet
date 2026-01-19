@@ -63,25 +63,15 @@ function StoreLogin() {
 
         axios
             .post('/api/login', formData, {
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                withCredentials: true // Plan-32: HttpOnly Cookie 수신을 위해 필요
             })
             .then((response) => {
-                // LoginFilter는 Header에 Authorization 반환
-                const authHeader = response.headers['authorization'];
-                if (authHeader && authHeader.startsWith('Bearer ')) {
-                    const token = authHeader.substring(7);
-                    Cookies.set('token', token, {
-                        expires: 7, // 쿠키에 토큰 저장 (7일 유효)
-                        // TODO(Plan-31): HttpOnly Cookie 전환 필요 - XSS 취약점
-                        path: '/'
-                    });
-                    Cookies.set('MemberId', MemberId, { expires: 7 });
-                    alert('로그인 성공');
-                    nav('/');
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                } else {
-                    setMessage('로그인 응답에서 토큰을 찾을 수 없습니다.');
-                }
+                // Plan-32: 백엔드에서 HttpOnly Cookie로 JWT 자동 발급됨
+                // 토큰을 JS에서 저장할 필요 없음 (XSS 방지)
+                Cookies.set('MemberId', MemberId, { expires: 7 });
+                alert('로그인 성공');
+                nav('/');
             })
             .catch((error) => {
                 console.log('로그인 실패', error);

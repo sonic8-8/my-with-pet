@@ -4,6 +4,7 @@ import com.apple.shop.member.CustomUserDetails;
 import com.apple.shop.member.Member;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -60,16 +61,27 @@ public class JWTFilter extends OncePerRequestFilter {
     }
 
     /**
-     * Authorization 헤더에서 Bearer 토큰을 추출합니다.
+     * Authorization 헤더 또는 쿠키에서 토큰을 추출합니다.
+     * Plan-32: 쿠키 방식 우선, Header는 fallback으로 유지
      */
     private Optional<String> extractToken(HttpServletRequest request) {
-        String authorization = request.getHeader(AUTHORIZATION_HEADER);
-
-        if (authorization == null || !authorization.startsWith(BEARER_PREFIX)) {
-            return Optional.empty();
+        // 1. 쿠키에서 토큰 추출 시도 (HttpOnly Cookie)
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("jwt".equals(cookie.getName())) {
+                    return Optional.of(cookie.getValue());
+                }
+            }
         }
 
-        return Optional.of(authorization.substring(BEARER_PREFIX.length()));
+        // 2. Header에서 토큰 추출 (fallback)
+        String authorization = request.getHeader(AUTHORIZATION_HEADER);
+        if (authorization != null && authorization.startsWith(BEARER_PREFIX)) {
+            return Optional.of(authorization.substring(BEARER_PREFIX.length()));
+        }
+
+        return Optional.empty();
     }
 
     /**

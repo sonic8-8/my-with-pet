@@ -2,6 +2,7 @@ package com.apple.shop.storeMember;
 
 import com.apple.shop.member.jwt.JWTUtil;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,16 @@ public class StoreMemberLoginFilter extends UsernamePasswordAuthenticationFilter
         String role = extractRoleFromAuthorities(authentication.getAuthorities());
 
         String token = jwtUtil.createJwt(id, role, JWT_EXPIRATION_MS);
+
+        // Plan-32: HttpOnly Cookie로 JWT 발급 (XSS 방지)
+        Cookie jwtCookie = new Cookie("jwt", token);
+        jwtCookie.setHttpOnly(true);
+        jwtCookie.setSecure(false); // 로컬: false, 배포: true
+        jwtCookie.setPath("/");
+        jwtCookie.setMaxAge((int) (JWT_EXPIRATION_MS / 1000)); // 10시간
+        response.addCookie(jwtCookie);
+
+        // 기존 Header 방식도 유지 (호환성)
         response.addHeader("Authorization", "Bearer " + token);
     }
 

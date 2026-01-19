@@ -10,12 +10,10 @@ const api = axios.create({
 });
 
 // Request Interceptor
+// Plan-32: HttpOnly Cookie가 자동으로 전송되므로 Authorization 헤더 수동 주입 불필요
 api.interceptors.request.use(
   (config) => {
-    const token = Cookies.get('token'); // Cookie에서 토큰 조회
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    // 쿠키는 withCredentials: true로 자동 전송됨
     return config;
   },
   (error) => {
