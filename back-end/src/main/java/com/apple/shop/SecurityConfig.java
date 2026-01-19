@@ -9,6 +9,7 @@ import com.apple.shop.storeMember.StoreMemberUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -53,8 +54,11 @@ public class SecurityConfig {
 
     /**
      * 일반 사용자(Member) 인증용 AuthenticationManager
+     * 
+     * @Primary: Spring Security가 기본으로 사용할 AuthenticationManager 지정
      */
     @Bean
+    @Primary
     public AuthenticationManager memberAuthenticationManager() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(customUserDetailsService);
