@@ -97,70 +97,44 @@ axios.post('/login', { id, pw }, { headers: { 'Content-Type': 'application/x-www
 ## 체크리스트
 
 ### Backend
-- [ ] `StoreMemberUserDetails.java` 생성
-- [ ] `StoreMemberUserDetailsService.java` 생성
-- [ ] `StoreMemberLoginFilter.java` 생성
-- [ ] `SecurityConfig.java` 수정 (필터 등록, AuthenticationManager 분리)
-- [ ] `MemberController.login()` 삭제
-- [ ] `CustomUserDetailsService.java` 예외 처리 개선 (.get() → orElseThrow)
-- [ ] Gradle 빌드 테스트
+- [x] `StoreMemberUserDetails.java` 생성
+- [x] `StoreMemberUserDetailsService.java` 생성
+- [x] `StoreMemberLoginFilter.java` 생성
+- [x] `SecurityConfig.java` 수정 (필터 등록, AuthenticationManager 분리)
+- [x] `MemberController.login()` 삭제
+- [x] `StoreMemberController.login()` 삭제
+- [x] `CustomUserDetailsService.java` 예외 처리 개선 (.get() → orElseThrow)
+- [x] Gradle 빌드 테스트
 
 ### Frontend
-- [ ] `Login.js` 수정 (Header에서 토큰 추출)
-- [ ] `BizLogin.js` 수정 (Header에서 토큰 추출)
-- [ ] 로그인 테스트
+- [x] `Login.js` 수정 (Header에서 토큰 추출, form-urlencoded 전송)
+- [x] `BizLogin.js` 수정 (Header에서 토큰 추출, form-urlencoded 전송)
+- [x] `Redux/store.js` extraReducers 중복 제거, await 추가
 
 ---
 
 ## 검증 방법
 
-1. Backend 빌드 성공
+1. Backend 빌드 성공 ✅
 2. 일반 사용자 로그인 → JWT 쿠키 저장 → 보호 API 접근
 3. 사업자 로그인 → JWT 쿠키 저장 → `/api/business/**` 접근
 
 ---
 
-## GCP MySQL 구성 권장 (질문 3 답변)
+## 수정된 파일 목록
 
-### 부하 테스트용 DB 구성
+### Backend (신규)
+- `storeMember/StoreMemberUserDetails.java`
+- `storeMember/StoreMemberUserDetailsService.java`
+- `storeMember/StoreMemberLoginFilter.java`
 
-| 단계 | 환경 | DB 구성 | 비용 |
-|------|------|---------|------|
-| **개발** | Docker Compose | MySQL 컨테이너 | 무료 |
-| **테스트 배포** | GCP | Cloud SQL db-g1-small | ~$25/월 |
-| **부하 테스트** | GCP | Cloud SQL db-custom-2-7680 (2 vCPU) | ~$100/월 |
-| **데모 유지** | GCP | 필요 시만 Cloud SQL 켜기 | 가변 |
+### Backend (수정)
+- `SecurityConfig.java` - 두 개의 AuthenticationManager 설정, 필터 등록
+- `MemberController.java` - login() 메서드 삭제
+- `StoreMemberController.java` - login() 메서드 삭제
+- `CustomUserDetailsService.java` - .get() → orElseThrow() 변경
 
-### 권장 전략
-
-```
-[개발/로컬]
-  Docker Compose
-  ├── backend:8080
-  ├── frontend:80 (Nginx)
-  └── mysql:3306 (컨테이너)
-
-[부하 테스트용 GCP 배포]
-  Cloud Run (Backend) ──────┐
-  Cloud Run (Frontend) ─────┼──▶ Cloud SQL (MySQL)
-                            │     - db-g1-small (테스트)
-                            │     - db-custom-2-7680 (부하 테스트)
-```
-
-### 부하 테스트 시 DB 권장 사양
-
-| 테스트 유형 | 예상 RPS | Cloud SQL 권장 |
-|------------|---------|---------------|
-| 가벼운 테스트 | 10-50 RPS | db-g1-small (1.7GB) |
-| 중간 부하 | 50-200 RPS | db-custom-2-7680 (2 vCPU, 7.5GB) |
-| 높은 부하 | 200+ RPS | db-custom-4-15360 (4 vCPU, 15GB) |
-
-> **팁**: 부하 테스트 시에만 스펙 업그레이드 후 테스트 완료하면 다운그레이드
-
----
-
-## 예상 영향
-
-- **신규 파일**: 3개 (StoreMember 인증 관련)
-- **수정 파일**: 4개 (SecurityConfig, Login.js, BizLogin.js, CustomUserDetailsService)
-- **삭제**: MemberController.login() 메서드
+### Frontend (수정)
+- `Login.js` - form-urlencoded 전송, Header에서 토큰 추출
+- `BizLogin.js` - 동일하게 LoginFilter 방식으로 변경
+- `Redux/store.js` - extraReducers 중복 제거, await 추가, Authorization 헤더 사용
