@@ -19,14 +19,18 @@ public class StoreMemberController {
     private final StoreMemberService storeMemberService;
     private final JWTUtil jwtUtil;
 
+    /**
+     * 사업자 회원가입
+     * Plan-31: 일반 회원과 동일하게 409 Conflict 응답으로 통일
+     */
     @PostMapping("/sign-up")
-    public String join(@RequestBody StoreMember storeMember) {
-
+    public ResponseEntity<String> join(@RequestBody StoreMember storeMember) {
         if (storeMemberService.checkDuplicateId(storeMember.getId())) {
-            return "이미 등록된 아이디입니다.";
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("이미 등록된 아이디입니다: " + storeMember.getId());
         }
         storeMemberService.registerMember(storeMember);
-        return "회원가입 성공";
+        return ResponseEntity.ok("회원가입 성공");
     }
 
     // login() 메서드 삭제됨 - StoreMemberLoginFilter 방식으로 통일 (Plan-30)
