@@ -1,6 +1,6 @@
 # Project Summary
 
-> 마지막 업데이트: 2026-01-14
+> 마지막 업데이트: 2026-01-19
 
 ---
 
@@ -89,11 +89,40 @@
 
 ---
 
+## Phase 6: 코드 리뷰 이슈 수정 ✅ 완료
+
+### 완료일: 2026-01-19
+
+### 변경 요약
+
+| 서브페이즈 | 이슈 | 해결 방법 | Plan |
+|-----------|------|-----------|------|
+| 6A | SSR 관련 더미 코드 정리 | 불필요 주석/코드 제거 | Plan-28 |
+| 6B | IDOR 취약점 | JWT 기반 사용자 검증 | Plan-25 |
+| 6C | 기타 정리 | 미사용 코드 제거, 구조 개선 | Plan-26,27 |
+| 6D | 인증 이중화 | LoginFilter로 통일, 사업자 JWT 발급 | Plan-30 |
+| 6E | 배포 전 보안 | 민감정보 노출 방지, 409 응답, Firebase npm | Plan-31 |
+| 6F | JWT 저장 보안 | HttpOnly Cookie 전환 (XSS 방지) | Plan-32 |
+
+### 주요 변경 파일
+
+**Backend (인증/보안)**
+- `LoginFilter.java`, `StoreMemberLoginFilter.java`: HttpOnly Cookie JWT 발급
+- `JWTFilter.java`: 쿠키에서 토큰 추출
+- `MemberResponseDTO.java`, `StoreMemberResponseDTO.java`: 민감정보 제외 DTO
+- `SecurityConfig.java`: `/api/login`, `/api/business/login` 경로 통일
+
+**Frontend**
+- `Login.js`, `BizLogin.js`: 토큰 저장 코드 제거
+- `axiosConfig.js`: Authorization 헤더 수동 주입 제거
+
+---
+
 ## 다음 단계 (Part B: 인프라 및 배포)
 
 | Phase | 작업 | 상태 |
 |-------|------|------|
-| 6 | Docker 컨테이너화 | 🔄 진행 예정 |
-| 7 | GCP 배포 및 자동화 | ⬜ 대기 |
-| 8 | 모니터링 & 부하테스트 (K6, Prometheus, Grafana) | ⬜ 대기 |
-| 9 | 성능 최적화 | ⬜ 대기 |
+| 7 | Docker 컨테이너화 | 🔄 진행 예정 |
+| 8 | GCP 배포 및 자동화 | ⬜ 대기 |
+| 9 | 모니터링 & 부하테스트 (K6, Prometheus, Grafana) | ⬜ 대기 |
+| 10 | 성능 최적화 | ⬜ 대기 |
