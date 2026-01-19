@@ -2,6 +2,7 @@ package com.apple.shop.address;
 
 import com.apple.shop.member.Member;
 import com.apple.shop.member.MemberRepository;
+import com.apple.shop.member.MemberResponseDTO;
 import com.apple.shop.member.MemberService;
 import com.apple.shop.member.jwt.JWTUtil;
 import lombok.RequiredArgsConstructor;
@@ -144,6 +145,7 @@ public class AddressController {
     /**
      * 회원 정보 조회
      * ADR-002: JWT 토큰에서 사용자 ID 추출 (IDOR 방지)
+     * Plan-31: MemberResponseDTO로 반환하여 민감정보 노출 방지
      */
     @PostMapping("/memberinfo")
     public ResponseEntity<?> getMemberInfo(@RequestHeader("Authorization") String token) {
@@ -151,7 +153,8 @@ public class AddressController {
             String memberId = extractMemberIdFromToken(token);
             Optional<Member> memberOpt = memberRepository.findById(memberId);
 
-            return memberOpt.map(ResponseEntity::ok)
+            return memberOpt
+                    .map(member -> ResponseEntity.ok(MemberResponseDTO.from(member)))
                     .orElse(ResponseEntity.notFound().build());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

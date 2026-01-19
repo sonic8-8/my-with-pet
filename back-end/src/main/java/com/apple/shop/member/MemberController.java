@@ -15,11 +15,17 @@ public class MemberController {
     private final MemberService memberService;
     private final JWTUtil jwtUtil;
 
+    /**
+     * Plan-31: 중복 회원가입 시 409 Conflict 응답
+     */
     @PostMapping("/sign-up")
     public ResponseEntity<String> join(@RequestBody MemberDTO memberDTO) {
         try {
-            memberService.registerMember(memberDTO); // MemberService에서 회원 가입 로직 처리
+            memberService.registerMember(memberDTO);
             return ResponseEntity.ok("회원가입 성공");
+        } catch (IllegalStateException e) {
+            // 중복 회원가입
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 실패");
         }

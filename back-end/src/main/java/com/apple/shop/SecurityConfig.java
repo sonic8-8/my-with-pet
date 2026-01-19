@@ -31,8 +31,9 @@ public class SecurityConfig {
     private final StoreMemberUserDetailsService storeMemberUserDetailsService;
 
     // 공개 API 경로 (인증 불필요)
+    // Plan-31: 로그인 경로를 /api/login으로 통일하여 프록시 설정과 일치시킴
     private static final String[] PUBLIC_URLS = {
-            "/login", "/api/sign-up",
+            "/api/login", "/api/sign-up",
             "/api/business/login", "/api/business/sign-up",
             "/api/store-list/**", "/api/shop/**", "/api/store-info",
             "/api/review", "/api/main/**"
@@ -115,9 +116,9 @@ public class SecurityConfig {
      * JWT 필터와 로그인 필터를 등록합니다.
      */
     private void configureFilters(HttpSecurity http) throws Exception {
-        // 일반 사용자 로그인 필터 (/login)
+        // 일반 사용자 로그인 필터 (/api/login) - Plan-31: 프록시 설정과 통일
         LoginFilter memberLoginFilter = new LoginFilter(memberAuthenticationManager(), jwtUtil);
-        memberLoginFilter.setFilterProcessesUrl("/login");
+        memberLoginFilter.setFilterProcessesUrl("/api/login");
 
         // 사업자 로그인 필터 (/api/business/login)
         StoreMemberLoginFilter storeMemberLoginFilter = new StoreMemberLoginFilter(

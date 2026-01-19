@@ -584,3 +584,35 @@
 ### 32.3 의사결정 (Decision)
 - **결정**: Plan-30 완료, Phase 6D 완료, Phase 6 전체 완료
 - **이유**: Spring Security 표준 방식(LoginFilter)으로 통일, 사업자 JWT 발급으로 `/api/business/**` 접근 가능
+## [2026-01-19 KST] Phase 33: 諛고룷 ???꾩닔 蹂댁븞 媛뺥솕 (Plan-31)
+
+### 33.1 ?ㅽ뻾 紐낅졊 (Command)
+- 紐낅졊 ?댁슜: "誘쇨컧 ?뺣낫 ?몄텧 諛⑹? - MemberResponseDTO, StoreMemberResponseDTO ?앹꽦"
+- 紐낅졊 ?댁슜: "Member.pw, StoreMember.pw ?꾨뱶??@JsonIgnore 異붽?"
+- 紐낅졊 ?댁슜: "Firebase CDN ESM import瑜?npm ?⑦궎吏濡?蹂寃?
+- 紐낅졊 ?댁슜: "濡쒓렇??寃쎈줈 /login ??/api/login ?듭씪"
+- 紐낅졊 ?댁슜: "以묐났 ?뚯썝媛????409 Conflict ?묐떟"
+- 紐낅졊 ?댁슜: "Optional.get() ??orElseThrow() 蹂寃?
+
+### 33.2 遺꾩꽍 寃곌낵 ?붿빟 (AI Analysis)
+- **?좉퇋 ?뚯씪 (Backend)**:
+  - `MemberResponseDTO.java`: 鍮꾨?踰덊샇 ?쒖쇅 ?뚯썝 ?묐떟 DTO
+  - `StoreMemberResponseDTO.java`: 鍮꾨?踰덊샇 ?쒖쇅 ?ъ뾽???묐떟 DTO
+- **?섏젙 ?뚯씪 (Backend)**:
+  - `Member.java`: `@JsonIgnore` 異붽? (pw ?꾨뱶)
+  - `StoreMember.java`: `@JsonIgnore` 異붽? (pw ?꾨뱶)
+  - `AddressController.java`: getMemberInfo() ??MemberResponseDTO 諛섑솚
+  - `StoreMemberController.java`: getCurrentUser() ??StoreMemberResponseDTO 諛섑솚
+  - `StoreMemberUserDetails.java`: getStoreMember() getter 異붽?
+  - `SecurityConfig.java`: PUBLIC_URLS??`/api/login` 異붽?, LoginFilter 寃쎈줈 蹂寃?
+  - `MemberService.java`: 以묐났 ?뚯썝媛?????덉쇅 諛쒖깮
+  - `MemberController.java`: 以묐났 ?덉쇅 catch ??409 Conflict ?묐떟
+  - `StoreMemberService.java`: Optional.get() ??orElseThrow() 蹂寃?
+- **?섏젙 ?뚯씪 (Frontend)**:
+  - `Login.js`: Firebase npm import, `/api/login` 寃쎈줈, HttpOnly TODO 二쇱꽍
+- **寃利?*: Backend Gradle 鍮뚮뱶 ?깃났 (exit 0)
+
+### 33.3 ?섏궗寃곗젙 (Decision)
+- **寃곗젙**: Plan-31 ?꾨즺, Phase 6E ?꾨즺
+- **?댁쑀**: GCP 諛고룷 ??REVIEW_3.md ?댁뒋 ?닿껐濡?蹂댁븞/鍮뚮뱶/湲곕뒫 ?덉젙???꾨즺
+

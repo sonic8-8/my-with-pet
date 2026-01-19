@@ -15,6 +15,13 @@ public class StoreMemberUserDetails implements UserDetails {
 
     private final StoreMember storeMember;
 
+    /**
+     * StoreMember 엔티티 접근자 (DTO 변환용)
+     */
+    public StoreMember getStoreMember() {
+        return storeMember;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new ArrayList<>();

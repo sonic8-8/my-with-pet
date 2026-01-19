@@ -228,6 +228,21 @@
 | 6D.4 | FE 주소 API 계약 불일치 | memberId 쿼리 → Authorization 헤더 | Plan-30 | ✅ 완료 |
 | 6D.5 | Redux extraReducers 중복 | 앞 블록이 덮어쓰기 되는 문제 | Plan-30 | ✅ 완료 |
 
+### 6E. 배포 전 필수 보안 강화 (REVIEW_3.md)
+
+> 목표: GCP 배포 전 오류/리스크 최소화 및 부하테스트 신뢰도 확보  
+> **참조**: `REVIEW_3.md`, `plans/plan-31-predeploy-hardening.md`  
+> **상태**: ✅ 완료
+
+| # | 이슈 | 설명 | Plan | 상태 |
+|---|------|------|------|------|
+| 6E.1 | 민감 정보 노출 방지 | Member/StoreMember 응답 DTO 생성, pw 필드 제외 | Plan-31 | ✅ 완료 |
+| 6E.2 | 결제 검증 추가 | Toss 결제 confirm 검증 로직 + 문서화 | Plan-31 | ✅ TODO 문서화 |
+| 6E.3 | JWT 저장 방식 문서화 | HttpOnly Cookie 전환 계획 문서화 | Plan-31 | ✅ TODO 주석 |
+| 6E.4 | Firebase import 수정 | CDN URL import 제거, npm 패키지 사용 | Plan-31 | ✅ 완료 |
+| 6E.5 | 로그인 경로 통일 | `/api/login` 경로 통일 및 Security/FE 업데이트 | Plan-31 | ✅ 완료 |
+| 6E.6 | 기능 오류 수정 | 중복 가입 처리, Optional.get() 제거 | Plan-31 | ✅ 완료 |
+
 ---
 
 ## Phase 7: Docker 컨테이너화 🔄 진행 예정

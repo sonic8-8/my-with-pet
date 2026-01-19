@@ -19,9 +19,12 @@ public class MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JWTUtil jwtUtil;
 
+    /**
+     * Plan-31: 중복 회원가입 시 예외 발생
+     */
     public void registerMember(MemberDTO memberDTO) {
         if (isExistingMember(memberDTO.getId())) {
-            return;
+            throw new IllegalStateException("이미 등록된 회원입니다: " + memberDTO.getId());
         }
 
         Member member = createMemberFromDTO(memberDTO);

@@ -5,6 +5,7 @@ import com.apple.shop.like.Like;
 import com.apple.shop.myPet.MyPet;
 import com.apple.shop.orders.Orders;
 import com.apple.shop.review.Review;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,7 @@ public class Member {
     @Column(name = "mem_id", nullable = false, length = 30)
     private String id;
 
+    @JsonIgnore
     @Column(name = "mem_pw", nullable = false, length = 96)
     private String pw;
 

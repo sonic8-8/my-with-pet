@@ -1,6 +1,7 @@
 package com.apple.shop.storeMember;
 
 import com.apple.shop.store.Store;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class StoreMember {
     @Column(name = "mem_id", nullable = false, length = 30)
     private String id;
 
+    @JsonIgnore
     @Column(name = "mem_pw", nullable = false, length = 96)
     private String pw;
 

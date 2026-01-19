@@ -46,18 +46,20 @@ public class StoreMemberService {
         return passwordEncoder.matches(pw, storeMember.getPw());
     }
 
-    // 마이페이지 로직
+    /**
+     * 마이페이지 로직
+     * Plan-31: Optional.get() 대신 orElseThrow() 사용
+     */
     public StoreMemberDTO getMemberById(String id) {
-        StoreMember storeMember = storeMemberRepository.findById(id).get();
-        if (storeMember != null) {
-            StoreMemberDTO storeMemberDTO = new StoreMemberDTO();
-            storeMemberDTO.setId(storeMember.getId());
-            storeMemberDTO.setName(storeMember.getName());
-            storeMemberDTO.setPhone(storeMember.getPhone());
-            storeMemberDTO.setRole(storeMember.getRole());
-            return storeMemberDTO;
-        }
-        return null;
+        StoreMember storeMember = storeMemberRepository.findById(id)
+                .orElseThrow(() -> new java.util.NoSuchElementException("회원을 찾을 수 없습니다: " + id));
+
+        StoreMemberDTO storeMemberDTO = new StoreMemberDTO();
+        storeMemberDTO.setId(storeMember.getId());
+        storeMemberDTO.setName(storeMember.getName());
+        storeMemberDTO.setPhone(storeMember.getPhone());
+        storeMemberDTO.setRole(storeMember.getRole());
+        return storeMemberDTO;
     }
 
 }

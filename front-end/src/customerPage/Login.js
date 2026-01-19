@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import styles from './Login.module.css';
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+// Plan-31: Firebase CDN ESM import를 npm 패키지로 변경 (CRA 빌드 호환)
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
 function StoreLogin() {
     const firebaseConfig = {
@@ -55,12 +56,13 @@ function StoreLogin() {
         }
 
         // LoginFilter 방식: form-urlencoded로 전송, Header에서 토큰 추출
+        // Plan-31: /login → /api/login 경로 통일 (프록시 설정과 일치)
         const formData = new URLSearchParams();
         formData.append('id', MemberId);
         formData.append('pw', MemberPw);
 
         axios
-            .post('/login', formData, {
+            .post('/api/login', formData, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
             .then((response) => {
@@ -70,6 +72,7 @@ function StoreLogin() {
                     const token = authHeader.substring(7);
                     Cookies.set('token', token, {
                         expires: 7, // 쿠키에 토큰 저장 (7일 유효)
+                        // TODO(Plan-31): HttpOnly Cookie 전환 필요 - XSS 취약점
                         path: '/'
                     });
                     Cookies.set('MemberId', MemberId, { expires: 7 });

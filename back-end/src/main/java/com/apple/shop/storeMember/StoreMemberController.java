@@ -31,13 +31,18 @@ public class StoreMemberController {
 
     // login() 메서드 삭제됨 - StoreMemberLoginFilter 방식으로 통일 (Plan-30)
 
+    /**
+     * 현재 로그인한 사업자 정보 조회
+     * Plan-31: StoreMemberResponseDTO로 반환하여 민감정보 노출 방지
+     */
     @GetMapping("/current-user")
-    public UserDetails getCurrentUser() {
+    public ResponseEntity<StoreMemberResponseDTO> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            return (UserDetails) authentication.getPrincipal();
+        if (authentication != null && authentication.getPrincipal() instanceof StoreMemberUserDetails userDetails) {
+            StoreMember storeMember = userDetails.getStoreMember();
+            return ResponseEntity.ok(StoreMemberResponseDTO.from(storeMember));
         }
-        return null;
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @GetMapping("/mypage")
